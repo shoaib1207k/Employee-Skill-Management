@@ -1,0 +1,95 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@* 
+
+Home page will show data based on filters
+Manage Employee will create, update, or delete data of employee
+Manage Skills create, update, or delete data of skill 
+ 
+Create partials view to show the data for the employee cards
+Create partials view for the data-table to generate the report with export buttons 
+
+Create 
+create three input
+    1) Search by Skill (options dropdown)
+    2) Search by Name
+    3) Search by Role (Hard coded values)
+
+
+    ** Figure out how to use ajax 
+    Take input from frontend send it to the controller using post
+    then filter the data from database and send it to the view 
+
+    Will have to split views in smaller parts just like we do in components in react
+    
+    DO NOT USE THE FOLLOWING SYNTAX!! USE PARTIAL VIEWS!!
+    ******
+    Maybe can use the following syntax:
+    @{Html.RenderAction("Sliders", "Home");}
+    *****
+    
+    or use partial views 
+
+    Most probably will have to use partial views to show the table
+
+    Not sure but think controller are also different for partial views. Need to research more!
+
+    make table in two format
+    1) Where search is done by skills (This will seperate skills 2 column : Primary and Other )
+    2) Where search are not done by skills
+
+
+    Also use Jquery Datatable to export the data in excel and pdf files
+
+
+   
+ *@
+
+
+ <div class="form-header  p-1   mb-3">
+    <h4>Employees List</h4>
+</div>
+<div class="p-4 mt-2">
+    <div class="filters-contianer d-flex gap-4 mt-3">
+        <div class="form-group col-md-5 text-start">
+            <label for="filter-name">Search by Employee Name</label>
+            <input type="text" class="form-control" id="filter-name" placeholder="Enter Name">
+            @* <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> *@
+        </div>
+        <div class="form-group col-md-5 text-start">
+            <label for="filter-skill">Search by Skills</label>
+            <select id="filter-skill" class="form-select " aria-label="Default select example">
+                <option selected>Select Skills</option>
+                <option value="1">Java</option>
+                <option value="2">Python</option>
+                <option value="3">C#</option>
+            </select>
+        </div>
+    </div>
+
+    <div id="result" class="mt-4">
+        <div class="">
+            <h6>Employees</h6>
+        </div>
+
+        <table id="example" class="table table-striped table-bordered" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Position</th>
+                    <th>Office</th>
+                    <th>Age</th>
+                    <th>Start date</th>
+                    <th>Salary</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Your data goes here -->
+            </tbody>
+        </table>
+
+
+    </div>
+
+</div>

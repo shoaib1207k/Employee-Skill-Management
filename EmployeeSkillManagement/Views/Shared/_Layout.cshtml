@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - EmployeeSkillManagement</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Home-Index.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Employee.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/EmployeeSkillManagement.styles.css" asp-append-version="true" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,400;0,500;1,100;1,500;1,700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="super-contianer d-sm-flex">
+        <header class="side-navbar-header col-sm-3 ">
+            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-sm-bottom  pt-4">
+                <div class="container-fluid flex-sm-column">
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Employee Skill Management</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                        <ul class="navbar-nav flex-grow-1 flex-sm-column">
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Employee" asp-action="Index">Manage Employee</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Employee" asp-action="Create">Create Employee</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Skill" asp-action="Index">Manage Skills</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <div class="container main-container">
+            <main role="main" class="">
+                @RenderBody()
+            </main>
+        </div>
+    </div>
+
+    <footer class="border-top bg-dark text-muted p-3 ">
+        <div class="container d-flex justify-content-center align-items-center">
+            &copy; 2023 - EmployeeSkillManagement - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/Employee.js" asp-append-version="true"></script>
+    <script src="~/js/Skill.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

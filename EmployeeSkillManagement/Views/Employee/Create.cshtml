@@ -1,0 +1,97 @@
+@model CreateEmployeeViewModel
+
+<div class="form-header shadow-sm p-1 rounded  mb-3">
+    <h4>Create New Employee</h4>
+</div>
+
+<div class="p-4 shadow-sm rounded mt-2">
+
+<form class="row" method="post" asp-controller="Employee" asp-action="Create">
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+  <div class="form-group col-sm-5 mb-4">
+    <label asp-for="FirstName"></label>
+    <input asp-for="FirstName" class="form-control" placeholder="Enter ">
+    <span asp-validation-for="FirstName"></span>
+  </div>
+  <div class="form-group col-sm-5 mb-4">
+    <label asp-for="LastName"></label>
+    <input asp-for="LastName" class="form-control" placeholder="Enter ">
+    <span asp-validation-for="LastName"></span>
+  </div>
+  <div class="form-group col-sm-5 mb-4">
+    <label asp-for="DesignationId"></label>
+    <select asp-for="DesignationId" class="form-select">
+        <option value="">Select Designation</option>
+        @foreach (var designation in Model.DesignationOptions)
+        {
+            <option value="@designation.Value">@designation.Text</option>
+        }
+    </select>
+    <span asp-validation-for="DesignationId"></span>
+  </div>
+  <div class="form-group col-sm-5 mb-4">
+    <label asp-for="Email"></label>
+    <input asp-for="Email" class="form-control" placeholder="Enter ">
+    <span asp-validation-for="Email"></span>
+  </div>
+  <div class="form-group col-sm-5 mb-4">
+    <label asp-for="DateOfJoining"></label>
+    <input asp-for="DateOfJoining" value="2022/07/12" class="form-control" type="date" placeholder="Enter ">
+    <span asp-validation-for="DateOfJoining"></span>
+  </div>
+
+    <div class="form-group">
+        <label>Add Skills</label>
+        <div class="col-sm-10 d-flex gap-3">
+            
+            <div>
+
+            <select id="SelectedSkillIds" name="SelectedSkillIds" class="form-select" >
+                <option value="" disabled selected>Select Skills</option>
+
+                @foreach (var skill in Model.SkillOptions)
+                {
+                    <option value="@skill.Value">@skill.Text</option>
+                }
+
+            </select>
+                <span asp-validation-for="SkillIds"></span>
+            </div>
+            <div>
+
+             <select id="levelSelect" class="form-select">
+                <option value="" disabled selected>Select Skill Level</option>
+                @for(int i = 1; i<=10;i++){
+                    <option value="@i">@i</option>
+                }
+                
+            </select>
+                <span asp-validation-for="SkillLevel"></span>
+            </div>
+
+            <div class="col-sm-3">
+                <button id="addSkill" class="btn btn-primary w-100">Add</button>
+            </div>
+        </div>
+        <div id="skillsContainer" class="d-flex gap-4 flex-wrap col-sm-11 mt-4">
+
+        </div>
+
+        <div id="Skills" class="d-none">
+            <div class="skill">
+                <label for="Skills[0].SkillName">Skill Name</label>
+                <input type="text" id="Skills[0].SkillName" name="Skills[0].SkillName">
+
+                <label for="Skills[0].SkillLevel">Skill Level</label>
+                <input type="text" id="Skills[0].SkillLevel" name="Skills[0].SkillLevel">
+            </div>
+        </div>
+
+    </div>
+
+    <div class="from-group col-sm-5 mt-3">
+        <button type="submit" class="btn btn-primary col-sm-6">Submit</button>
+    </div>
+</form>
+</div>

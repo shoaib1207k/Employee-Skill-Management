@@ -1,0 +1,14 @@
+.skill-level i {   
+    display: block;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+.skill-level .bi::before, [class*=" bi-"]::before, [class^=bi-]::before {
+    vertical-align: top;
+}
+.skill-level {
+    flex-basis: fit-content;
+    padding: 5px;
+    padding-left: 10px;
+}

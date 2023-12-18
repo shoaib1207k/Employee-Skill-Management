@@ -1,0 +1,14 @@
+@model Skill
+<div class="shadow-sm rounded mt-3 p-4">
+    <form method="post" class="row align-items-end">
+        <div class="form-group col-sm-5 ">
+            <label asp-for="SkillName"></label>
+            <input asp-for="SkillName" class="form-control" placeholder="Enter Skill Name ">
+        </div>
+        <div class="col-sm-3 ">
+            <button type="submit" class="btn btn-primary w-100">Save</button>
+        </div>
+            <span asp-validation-for="SkillName" class="text-danger"></span>
+
+    </form>
+</div>
