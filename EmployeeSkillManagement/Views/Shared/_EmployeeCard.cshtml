@@ -1,0 +1,26 @@
+@model Employee
+<div class="d-sm-flex p-3 mb-2 border rounded bg-white ">
+        <div class="col-sm-4 mb-4 mb-sm-0">
+            <h6 class="text-primary fw-bold m-0">@Model.FirstName @Model.LastName</h6>
+            <p class="text-muted">@Model.DesignationName</p>
+            <p class="mb-1"><span class="fw-normal fst-italic">Date of Joining:</span> <span class="fw-bold">@Model.DateOfJoining</span></p>
+            <p class="mb-1"><span class="fw-normal fst-italic">Email Address:</span> <span class="fw-bold">@Model.Email</span></p>
+        </div>        
+        <div class="col-sm-4">
+            <h6>Skills and Levels:</h6>
+            <ul>
+                @foreach (var skillLevel in Model.EmployeeSkillsAndLevels)
+                {
+                    <li>@skillLevel.SkillName: @skillLevel.SkillLevel</li>
+                }
+            </ul>
+        </div>
+        <div class="col-sm-3 d-flex flex-column justify-content-evenly">
+            <div>
+                <button class="btn btn-secondary w-100">Edit</button>
+            </div>
+            <div>
+                <button class="btn btn-danger w-100">Delete</button>
+            </div>
+        </div>
+    </div>

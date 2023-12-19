@@ -1,3 +1,30 @@
-<div class="form-header  p-1 rounded  mb-3">
-    <h4>Manage Employee</h4>
+@model EmployeeSkillManagement.Models.ViewModels.EmployeesListViewModel
+
+    <h4 class="p-2">Manage Employee</h4>
+
+<div class="p-2 bg-light">
+    @* <pre>
+         @System.Text.Json.JsonSerializer.Serialize(Model, new System.Text.Json.JsonSerializerOptions { WriteIndented = true })
+    </pre> *@
+
+    <div class="filters-contianer d-flex gap-4 mb-4 ">
+        <div class="form-group col-md-5 text-start">
+            <label for="filter-name">Search by Employee Name</label>
+            <input type="text" class="form-control" id="filter-name" placeholder="Enter Name">
+            @* <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> *@
+        </div>
+        <div class="form-group col-md-5 text-start">
+            <label for="filter-skill">Search by Skills</label>
+            <select id="filter-skill" class="form-select " aria-label="Default select example">
+                <option selected>Select Skills</option>
+                @foreach(var skill in Model.Skills){
+                    <option value="@skill.Value">@skill.Text</option>
+                }
+            </select>
+        </div>
+    </div>
+
+    @foreach(var employee in Model.Employees){
+      await Html.RenderPartialAsync("_EmployeeCard", employee);
+    }
 </div>

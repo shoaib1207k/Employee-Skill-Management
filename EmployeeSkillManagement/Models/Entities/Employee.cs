@@ -16,7 +16,7 @@ namespace EmployeeSkillManagement.Models
         public string LastName { get; set; } = string.Empty;
       
         [Required]
-        public Designation Designation { get; set; } = new Designation();
+        public string DesignationName { get; set; } = string.Empty;
           [Required]
         [EmailAddress]
         public String Email { get; set; } = string.Empty;

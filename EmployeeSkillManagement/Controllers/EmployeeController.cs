@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using EmployeeSkillManagement.Data;
 using EmployeeSkillManagement.Models;
+using EmployeeSkillManagement.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -24,16 +25,23 @@ namespace EmployeeSkillManagement.Controllers
             _db = db;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            EmployeesListViewModel employeesViewModel = new EmployeesListViewModel
+            {
+                Skills = await GetSkillOptions(),
+                Employees = await _db.Employees.Include(e => e.EmployeeSkillsAndLevels).ToListAsync()
+            };
+
+            return View(employeesViewModel);
         }
 
-        public IActionResult Create(){
+
+        public async Task<IActionResult> Create(){
 
             var viewModel = new CreateEmployeeViewModel{
-                DesignationOptions = GetDesignationOptions(),
-                SkillOptions = GetSkillOptions(),
+                DesignationOptions = await GetDesignationOptions(),
+                SkillOptions = await GetSkillOptions(),
                 // Employee = new Employee()
             };
 
@@ -41,13 +49,13 @@ namespace EmployeeSkillManagement.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(CreateEmployeeViewModel viewModel){
+        public async Task<IActionResult> Create(CreateEmployeeViewModel viewModel){
             if(ModelState.IsValid){
                 var newEmployee = new Employee
                 {
                     FirstName = viewModel.FirstName,
                     LastName = viewModel.LastName,
-                    Designation = _db.Designations.FirstOrDefault(u=>u.Id==viewModel.DesignationId),
+                    DesignationName = _db.Designations.FirstOrDefault(u=>u.Id==viewModel.DesignationId).DesignationName,
                     Email = viewModel.Email,
                     DateOfJoining = viewModel.DateOfJoining,
                     EmployeeSkillsAndLevels = new List<EmployeeSkillAndLevel>()
@@ -64,6 +72,7 @@ namespace EmployeeSkillManagement.Controllers
                         var employeeSkillAndLevel = new EmployeeSkillAndLevel
                         {
                             SkillId = _db.Skills.FirstOrDefault(s => s.Id == skillId).Id,
+                            SkillName = _db.Skills.FirstOrDefault(s => s.Id == skillId).SkillName,
                             SkillLevel = viewModel.SkillLevel[index]
                         };
 
@@ -73,14 +82,14 @@ namespace EmployeeSkillManagement.Controllers
                 }
                 
 
-            _db.Employees.Add(newEmployee);
-            _db.SaveChanges(); // Save changes to get the newEmployee.Id
+            await _db.Employees.AddAsync(newEmployee);
+            await _db.SaveChangesAsync(); // Save changes to get the newEmployee.Id
 
             // Now, handle the skills
                 return RedirectToAction("Index");
             }
-            viewModel.SkillOptions = GetSkillOptions();
-            viewModel.DesignationOptions = GetDesignationOptions();
+            viewModel.SkillOptions = await GetSkillOptions();
+            viewModel.DesignationOptions = await GetDesignationOptions();
             return View(viewModel);
         }
 
@@ -118,12 +127,15 @@ namespace EmployeeSkillManagement.Controllers
         // }
 
 
-        private List<SelectListItem> GetSkillOptions(){
-            var skills = _db.Skills.ToList();
-            return skills.Select(s=>new SelectListItem{Value=s.Id.ToString(), Text=s.SkillName.ToString()}).ToList();
+        private async Task<List<SelectListItem>> GetSkillOptions()
+        {
+            var skills = await _db.Skills.ToListAsync();
+            return skills.Select(s => new SelectListItem { Value = s.Id.ToString(), Text = s.SkillName.ToString() }).ToList();
         }
-        private List<SelectListItem> GetDesignationOptions(){
-            var designations = _db.Designations.ToList();
+
+        private async Task<List<SelectListItem>> GetDesignationOptions()
+        {
+            var designations = await _db.Designations.ToListAsync();
             return designations.Select(s=>new SelectListItem{Value=s.Id.ToString(), Text=s.DesignationName!.ToString()}).ToList();
         }
 
