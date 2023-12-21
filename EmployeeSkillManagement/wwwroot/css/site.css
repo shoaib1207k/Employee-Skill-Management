@@ -36,9 +36,6 @@ main>div{
 footer{
   background-color: white;
 } 
-.main-container {
-  /* height: 100vh; */
-}
 /* navbar  */
 
 @media (min-width: 576px) {

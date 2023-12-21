@@ -93,8 +93,66 @@ namespace EmployeeSkillManagement.Controllers
             return View(viewModel);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id){
+            if(id==0){
+                return NotFound();
+            }
+            Employee? employee = await _db.Employees
+                                .Include(e=>e.EmployeeSkillsAndLevels)
+                                .FirstOrDefaultAsync(e=>e.Id == id);
+            if(employee == null){
+                return NotFound();
+            }
 
-        //[HttpPost]
+            if(employee.EmployeeSkillsAndLevels != null){
+                _db.EmployeeSkillAndLevels.RemoveRange(employee.EmployeeSkillsAndLevels);
+            }
+
+            _db.Remove(employee);
+            await _db.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> GetEmployeeDeleteModal(int employee_id){
+            if(employee_id == 0){
+                return NotFound();
+            }
+
+            Employee? employee = await _db.Employees.FirstOrDefaultAsync(e => e.Id == employee_id);
+            
+            if(employee == null){
+                return NotFound();
+            }
+            var employeeDeleteModal = PartialView("_DeleteEmployeeModal", employee);
+          
+            return employeeDeleteModal;
+        }
+
+        private async Task<List<SelectListItem>> GetSkillOptions()
+        {
+            var skills = await _db.Skills.ToListAsync();
+            return skills.Select(s => new SelectListItem { Value = s.Id.ToString(), Text = s.SkillName.ToString() }).ToList();
+        }
+
+        private async Task<List<SelectListItem>> GetDesignationOptions()
+        {
+            var designations = await _db.Designations.ToListAsync();
+            return designations.Select(s=>new SelectListItem{Value=s.Id.ToString(), Text=s.DesignationName!.ToString()}).ToList();
+        }
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View("Error!");
+        }
+
+        
+    }
+}
+
+ //[HttpPost]
         // public IActionResult DeleteSkill(int skillId, int employeeId)
         // {
         //     // Retrieve the employee based on the employeeId
@@ -125,26 +183,3 @@ namespace EmployeeSkillManagement.Controllers
 
         //     return RedirectToAction("Index"); // Redirect to wherever you want
         // }
-
-
-        private async Task<List<SelectListItem>> GetSkillOptions()
-        {
-            var skills = await _db.Skills.ToListAsync();
-            return skills.Select(s => new SelectListItem { Value = s.Id.ToString(), Text = s.SkillName.ToString() }).ToList();
-        }
-
-        private async Task<List<SelectListItem>> GetDesignationOptions()
-        {
-            var designations = await _db.Designations.ToListAsync();
-            return designations.Select(s=>new SelectListItem{Value=s.Id.ToString(), Text=s.DesignationName!.ToString()}).ToList();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View("Error!");
-        }
-
-        
-    }
-}
