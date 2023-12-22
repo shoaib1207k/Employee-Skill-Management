@@ -1,4 +1,6 @@
 jQuery(document).ready(function($){
+
+    // adding skill in create employee form
     $('#addSkill').on('click', function(event){
         event.preventDefault();
         // var selectedOptionText = ;
@@ -23,5 +25,64 @@ jQuery(document).ready(function($){
         }else{
             alert("Please Select correct options")
         }
-    })
+    });
+
+
+    // Delete ajax function
+    $(document).on('click', '.delete-employee', function(){
+        let employee_id = $(this).attr('data-emp-id');
+        console.log(employee_id);
+        try {
+            $.ajax({
+                url: "/Employee/GetEmployeeDeleteModal",
+                type: "POST",
+                data: { employee_id: employee_id },
+                success: function (response) {
+                    console.log(response);
+                    $("#deleteModal").html(response);
+                    $("#deleteModal .modal").modal('show');
+                }
+            });
+
+        }catch (error) {
+           console.log(error);
+        }
+
+    });
+
+    let timeOut;
+    $("#filter-name").on("input", function(){
+        clearTimeout(timeOut);
+        timeOut = setTimeout(() => {
+            employeesFilterAjax();
+        }, 500);
+    });
+
+    $("#filter-skill").on("change", function(){
+        employeesFilterAjax();
+    });
+
+    function employeesFilterAjax(){
+        let empNameOrId = $("#filter-name").val();
+        let skillId = $("#filter-skill").val();
+       
+        let filterData = {
+            'empNameOrId': empNameOrId,
+            'skillId': skillId
+            }
+        
+        try {
+            $.ajax({
+                url: "Employee/SearchEmployee",
+                type: "POST",
+                data: filterData,
+                success: function(response){
+                    console.log(response)
+                    $("#employeeListDiv").html(response);
+                }
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    }
 })

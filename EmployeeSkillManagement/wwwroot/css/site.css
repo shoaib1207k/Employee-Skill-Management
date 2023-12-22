@@ -23,34 +23,23 @@ html {
 }
 
 body {
-  /* margin-bottom: 60px; */
   background: var(--bs-gray-100);
 }
 body *{
   font-family: 'Poppins', sans-serif;
 }
 
-main{
-  /* height: 100%; */
-}
-main>div{
-  background-color: white;
- }
+
+
 footer{
   background-color: white;
 } 
-.main-container {
-  /* height: 100vh; */
-}
 /* navbar  */
 
 @media (min-width: 576px) {
   .side-navbar-header {
       min-height: calc(100vh - 57px);
-      /* position: fixed;
-      left: 0;
-      top: 0;
-      bottom: 0; */
+      width: 25%;
   }
   .side-navbar-header .navbar{
       height: 100%;
@@ -58,7 +47,6 @@ footer{
   }
 
   .main-container {
-      /* padding-left: 16%; */
       padding-top: 1.5rem;
       padding-bottom: 1rem;
   }

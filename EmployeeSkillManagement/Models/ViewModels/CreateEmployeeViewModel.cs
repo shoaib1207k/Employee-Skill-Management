@@ -3,20 +3,21 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace EmployeeSkillManagement.Models
+namespace EmployeeSkillManagement.Models.ViewModels
 {
     public class CreateEmployeeViewModel
     {
         // public Employee Employee {get; set;}
 
         [Required]
-        public string? FirstName { get; set; }
-        [Required]
-        public string? LastName { get; set; }
+        public string FirstName { get; set; } = string.Empty;
 
         [Required]
-        public String? Email { get; set; } 
-      
+        public string LastName { get; set; } = string.Empty;
+
+        [Required]
+        public String Email { get; set; }  = string.Empty;
+
         [Required]
         public DateOnly DateOfJoining { get; set; }
 
