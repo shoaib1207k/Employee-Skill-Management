@@ -1,8 +1,12 @@
 @model EmployeeSkillManagement.Models.ViewModels.EmployeesListViewModel
 
-<h4 class="p-2">Manage Employee</h4>
-
-<div class="p-2 bg-light">
+<div class="d-sm-flex">
+    <h4 class="p-2 col-12 col-sm-6 text-center text-lg-start">Manage Employee</h4>
+    <div class="col-sm-6 text-center text-lg-end">
+        <a asp-controller="Skill" asp-action="Create" class="btn btn-primary ">Create New Employee</a>
+    </div>
+</div>
+<div class="p-2">
     @* <pre>
          @System.Text.Json.JsonSerializer.Serialize(Model, new System.Text.Json.JsonSerializerOptions { WriteIndented = true })
     </pre> *@
@@ -28,9 +32,7 @@
     </div>
 
     <div id="employeeListDiv">    
-        @foreach(var employee in Model.Employees){
-        await Html.RenderPartialAsync("_EmployeeCard", employee);
-        }
+        @await Html.PartialAsync("_EmployeeCard",  Model.Employees)
     </div>
 </div>
 

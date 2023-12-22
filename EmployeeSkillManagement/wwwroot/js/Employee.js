@@ -41,9 +41,6 @@ jQuery(document).ready(function($){
                     console.log(response);
                     $("#deleteModal").html(response);
                     $("#deleteModal .modal").modal('show');
-                },
-                error: function () {
-                    console.log(employee_id ," error");
                 }
             });
 
@@ -52,4 +49,40 @@ jQuery(document).ready(function($){
         }
 
     });
+
+    let timeOut;
+    $("#filter-name").on("input", function(){
+        clearTimeout(timeOut);
+        timeOut = setTimeout(() => {
+            employeesFilterAjax();
+        }, 500);
+    });
+
+    $("#filter-skill").on("change", function(){
+        employeesFilterAjax();
+    });
+
+    function employeesFilterAjax(){
+        let empNameOrId = $("#filter-name").val();
+        let skillId = $("#filter-skill").val();
+       
+        let filterData = {
+            'empNameOrId': empNameOrId,
+            'skillId': skillId
+            }
+        
+        try {
+            $.ajax({
+                url: "Employee/SearchEmployee",
+                type: "POST",
+                data: filterData,
+                success: function(response){
+                    console.log(response)
+                    $("#employeeListDiv").html(response);
+                }
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    }
 })

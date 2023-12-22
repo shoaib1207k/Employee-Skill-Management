@@ -130,6 +130,36 @@ namespace EmployeeSkillManagement.Controllers
             return employeeDeleteModal;
         }
 
+        [HttpPost]
+        public async Task<IActionResult> SearchEmployee(string empNameOrId, int skillId){
+            List<Employee> employeesFiltered = await _db.Employees
+                                    .Include(e=>e.EmployeeSkillsAndLevels).ToListAsync();
+
+            string empName = "";
+            if (int.TryParse(empNameOrId, out int empId)){
+                if(empId!=0){
+                    employeesFiltered = employeesFiltered.Where(e=>e.Id == empId).ToList();
+                }
+            }
+            else if (!string.IsNullOrWhiteSpace(empNameOrId))
+            {
+              empName = empNameOrId;
+              employeesFiltered =  employeesFiltered
+                    .Where(e => (e.FirstName + " " + e.LastName).Contains(empName, StringComparison.OrdinalIgnoreCase)
+                                // e.LastName.Contains(empName, StringComparison.OrdinalIgnoreCase)
+                                
+                        ).ToList();
+            }
+            if(skillId!=0){
+                employeesFiltered = employeesFiltered
+                    .Where(e => e.EmployeeSkillsAndLevels.Any(esl => esl.SkillId == skillId))
+                    .ToList();
+            }
+            var employeesFilteredHtml = PartialView("_EmployeeCard", employeesFiltered);
+
+            return employeesFilteredHtml;
+        }
+
         private async Task<List<SelectListItem>> GetSkillOptions()
         {
             var skills = await _db.Skills.ToListAsync();
