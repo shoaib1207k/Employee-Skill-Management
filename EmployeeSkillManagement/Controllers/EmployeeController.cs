@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using EmployeeSkillManagement.Data;
 using EmployeeSkillManagement.Models;
+using EmployeeSkillManagement.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -24,16 +25,23 @@ namespace EmployeeSkillManagement.Controllers
             _db = db;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            EmployeesListViewModel employeesViewModel = new EmployeesListViewModel
+            {
+                Skills = await GetSkillOptions(),
+                Employees = await _db.Employees.Include(e => e.EmployeeSkillsAndLevels).ToListAsync()
+            };
+
+            return View(employeesViewModel);
         }
 
-        public IActionResult Create(){
+
+        public async Task<IActionResult> Create(){
 
             var viewModel = new CreateEmployeeViewModel{
-                DesignationOptions = GetDesignationOptions(),
-                SkillOptions = GetSkillOptions(),
+                DesignationOptions = await GetDesignationOptions(),
+                SkillOptions = await GetSkillOptions(),
                 // Employee = new Employee()
             };
 
@@ -41,13 +49,13 @@ namespace EmployeeSkillManagement.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(CreateEmployeeViewModel viewModel){
+        public async Task<IActionResult> Create(CreateEmployeeViewModel viewModel){
             if(ModelState.IsValid){
                 var newEmployee = new Employee
                 {
                     FirstName = viewModel.FirstName,
                     LastName = viewModel.LastName,
-                    Designation = _db.Designations.FirstOrDefault(u=>u.Id==viewModel.DesignationId),
+                    DesignationName = _db.Designations.FirstOrDefault(u=>u.Id==viewModel.DesignationId).DesignationName,
                     Email = viewModel.Email,
                     DateOfJoining = viewModel.DateOfJoining,
                     EmployeeSkillsAndLevels = new List<EmployeeSkillAndLevel>()
@@ -64,6 +72,7 @@ namespace EmployeeSkillManagement.Controllers
                         var employeeSkillAndLevel = new EmployeeSkillAndLevel
                         {
                             SkillId = _db.Skills.FirstOrDefault(s => s.Id == skillId).Id,
+                            SkillName = _db.Skills.FirstOrDefault(s => s.Id == skillId).SkillName,
                             SkillLevel = viewModel.SkillLevel[index]
                         };
 
@@ -73,19 +82,107 @@ namespace EmployeeSkillManagement.Controllers
                 }
                 
 
-            _db.Employees.Add(newEmployee);
-            _db.SaveChanges(); // Save changes to get the newEmployee.Id
+            await _db.Employees.AddAsync(newEmployee);
+            await _db.SaveChangesAsync(); // Save changes to get the newEmployee.Id
 
             // Now, handle the skills
                 return RedirectToAction("Index");
             }
-            viewModel.SkillOptions = GetSkillOptions();
-            viewModel.DesignationOptions = GetDesignationOptions();
+            viewModel.SkillOptions = await GetSkillOptions();
+            viewModel.DesignationOptions = await GetDesignationOptions();
             return View(viewModel);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id){
+            if(id==0){
+                return NotFound();
+            }
+            Employee? employee = await _db.Employees
+                                .Include(e=>e.EmployeeSkillsAndLevels)
+                                .FirstOrDefaultAsync(e=>e.Id == id);
+            if(employee == null){
+                return NotFound();
+            }
 
-        //[HttpPost]
+            if(employee.EmployeeSkillsAndLevels != null){
+                _db.EmployeeSkillAndLevels.RemoveRange(employee.EmployeeSkillsAndLevels);
+            }
+
+            _db.Remove(employee);
+            await _db.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> GetEmployeeDeleteModal(int employee_id){
+            if(employee_id == 0){
+                return NotFound();
+            }
+
+            Employee? employee = await _db.Employees.FirstOrDefaultAsync(e => e.Id == employee_id);
+            
+            if(employee == null){
+                return NotFound();
+            }
+            var employeeDeleteModal = PartialView("_DeleteEmployeeModal", employee);
+          
+            return employeeDeleteModal;
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SearchEmployee(string empNameOrId, int skillId){
+            List<Employee> employeesFiltered = await _db.Employees
+                                    .Include(e=>e.EmployeeSkillsAndLevels).ToListAsync();
+
+            string empName = "";
+            if (int.TryParse(empNameOrId, out int empId)){
+                if(empId!=0){
+                    employeesFiltered = employeesFiltered.Where(e=>e.Id == empId).ToList();
+                }
+            }
+            else if (!string.IsNullOrWhiteSpace(empNameOrId))
+            {
+              empName = empNameOrId;
+              employeesFiltered =  employeesFiltered
+                    .Where(e => (e.FirstName + " " + e.LastName).Contains(empName, StringComparison.OrdinalIgnoreCase)
+                                // e.LastName.Contains(empName, StringComparison.OrdinalIgnoreCase)
+                                
+                        ).ToList();
+            }
+            if(skillId!=0){
+                employeesFiltered = employeesFiltered
+                    .Where(e => e.EmployeeSkillsAndLevels.Any(esl => esl.SkillId == skillId))
+                    .ToList();
+            }
+            var employeesFilteredHtml = PartialView("_EmployeeCard", employeesFiltered);
+
+            return employeesFilteredHtml;
+        }
+
+        private async Task<List<SelectListItem>> GetSkillOptions()
+        {
+            var skills = await _db.Skills.ToListAsync();
+            return skills.Select(s => new SelectListItem { Value = s.Id.ToString(), Text = s.SkillName.ToString() }).ToList();
+        }
+
+        private async Task<List<SelectListItem>> GetDesignationOptions()
+        {
+            var designations = await _db.Designations.ToListAsync();
+            return designations.Select(s=>new SelectListItem{Value=s.Id.ToString(), Text=s.DesignationName!.ToString()}).ToList();
+        }
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View("Error!");
+        }
+
+        
+    }
+}
+
+ //[HttpPost]
         // public IActionResult DeleteSkill(int skillId, int employeeId)
         // {
         //     // Retrieve the employee based on the employeeId
@@ -116,23 +213,3 @@ namespace EmployeeSkillManagement.Controllers
 
         //     return RedirectToAction("Index"); // Redirect to wherever you want
         // }
-
-
-        private List<SelectListItem> GetSkillOptions(){
-            var skills = _db.Skills.ToList();
-            return skills.Select(s=>new SelectListItem{Value=s.Id.ToString(), Text=s.SkillName.ToString()}).ToList();
-        }
-        private List<SelectListItem> GetDesignationOptions(){
-            var designations = _db.Designations.ToList();
-            return designations.Select(s=>new SelectListItem{Value=s.Id.ToString(), Text=s.DesignationName!.ToString()}).ToList();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View("Error!");
-        }
-
-        
-    }
-}
