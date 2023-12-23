@@ -51,20 +51,48 @@ jQuery(document).ready(function($){
     });
 
     let timeOut;
-    $("#filter-name").on("input", function(){
+    $("#filterNameOrId").on("input", function(){
         clearTimeout(timeOut);
         timeOut = setTimeout(() => {
             employeesFilterAjax();
         }, 500);
     });
 
-    $("#filter-skill").on("change", function(){
+    $("#filterSkill").on("change", function(){
         employeesFilterAjax();
     });
 
+
+    let reportTable = $('#generatedReport').DataTable( {
+        dom: 'Bfrtip',
+        buttons: [
+            'excel', 'pdf'
+        ],
+        searching: false,
+        pageLength: 15,
+    });
+
+    if($('#generatedReport').length>0){
+        // Check the total number of records and apply styling
+        if (reportTable.page.info().recordsDisplay <= 15) {
+            $('.dataTables_paginate, .dataTables_info').hide();
+        }
+
+        // Listen for changes to the page length
+        reportTable.on('length.dt', function (e, settings, len) {
+            // Apply styling when the total number of records is less than 20
+            if (table.page.info().recordsDisplay <= 15) {
+                $('.dataTables_paginate, .dataTables_info').hide();
+            } else {
+                $('.dataTables_paginate, .dataTables_info').show();
+            }
+        });
+    }
+
+
     function employeesFilterAjax(){
-        let empNameOrId = $("#filter-name").val();
-        let skillId = $("#filter-skill").val();
+        let empNameOrId = $("#filterNameOrId").val();
+        let skillId = $("#filterSkill").val();
        
         let filterData = {
             'empNameOrId': empNameOrId,

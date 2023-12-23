@@ -1,0 +1,58 @@
+@model EmployeeSkillManagement.Models.ViewModels.EmployeeReportViewModel
+   
+<div class="p-2">
+    <h4>Employees Report</h4>
+</div>
+
+<div id="result" class="mt-4 bg-white p-2 border rounded">
+    <table id="generatedReport" class="table table-striped table-bordered" style="width:100%">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Designation</th>
+                <th>DOJ</th>
+                @if(Model.PrimarySkill!=""){
+                    <th>Primary Skill</th>
+                    <th>Other Skills</th>
+                }else{
+                    <th>Skills</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Your data goes here -->
+            @if(Model.Employees != null){
+                @foreach(var employee in Model.Employees){
+                    <tr>
+                        <td>@employee.FirstName @employee.LastName</td>
+                        <td>@employee.Email</td>
+                        <td>@employee.DesignationName</td>
+                        <td>@employee.DateOfJoining</td>
+                        @if(Model.PrimarySkill!=""){
+                            <td>@Model.PrimarySkill</td>
+                        }
+                        <td>
+                            @foreach(var skills in employee.EmployeeSkillsAndLevels){
+                                @skills.SkillName
+                                @if (skills != employee.EmployeeSkillsAndLevels.Last())
+                                {
+                                    @:,
+                                }
+                                
+                            }
+                        </td>
+                        
+
+                    </tr>
+                }
+            }
+            
+        </tbody>
+    </table>
+
+    @* @Model.Employees.Count
+<pre>
+         @System.Text.Json.JsonSerializer.Serialize(Model, new System.Text.Json.JsonSerializerOptions { WriteIndented = true })
+    </pre> *@
+</div>

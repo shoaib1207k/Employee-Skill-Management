@@ -1,9 +1,9 @@
 @model EmployeeSkillManagement.Models.ViewModels.EmployeesListViewModel
 
-<div class="d-sm-flex">
+<div class="d-sm-flex align-items-end">
     <h4 class="p-2 col-12 col-sm-6 text-center text-lg-start">Manage Employee</h4>
     <div class="col-sm-6 text-center text-lg-end">
-        <a asp-controller="Skill" asp-action="Create" class="btn btn-primary ">Create New Employee</a>
+        <a asp-controller="Skill" asp-action="Create" class="btn btn-primary bg-gradient">Create New Employee</a>
     </div>
 </div>
 <div class="p-2">
@@ -11,29 +11,31 @@
          @System.Text.Json.JsonSerializer.Serialize(Model, new System.Text.Json.JsonSerializerOptions { WriteIndented = true })
     </pre> *@
 
-    <div class="filters-contianer d-flex gap-4 mb-4 align-items-end">
-        <div class="form-group col-md-5 text-start">
-            <label for="filter-name">Search by Employee Name</label>
-            <input type="text" class="form-control" id="filter-name" placeholder="Enter Name">
+    <form class="filters-contianer d-md-flex gap-4 mb-4 align-items-end" asp-controller="Employee" asp-action="SearchEmployee">
+        <div class="form-group col-12 col-md-5 text-start mt-2 mb-2">
+            <label for="filterNameOrId">Search by Employee Name</label>
+            <input id="filterNameOrId" name="empNameOrId" type="text" class="form-control" placeholder="Enter Name">
             @* <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> *@
         </div>
-        <div class="form-group col-md-3 text-start">
-            <label for="filter-skill">Search by Skills</label>
-            <select id="filter-skill" class="form-select " aria-label="Default select example">
+        <div class="form-group col-12 col-md-3 text-start mt-2 mb-2">
+            <label for="filterSkill">Search by Skills</label>
+            <select id="filterSkill" name="skillId" class="form-select " aria-label="Default select example">
                 <option selected>Select Skills</option>
                 @foreach(var skill in Model.Skills){
                     <option value="@skill.Value">@skill.Text</option>
                 }
             </select>
         </div>
-        <div class="col-md-3">
-            <button class="btn btn-success">Generate Report</button>
+        <div class="col-12 col-md-3 mt-2 mb-2">
+            <input hidden name="generateReport" value="true" />
+            <button type="submit" class="btn btn-success  bg-gradient">Generate Report</button>
         </div>
-    </div>
+    </form>
 
     <div id="employeeListDiv">    
-        @await Html.PartialAsync("_EmployeeCard",  Model.Employees)
+        @await Html.PartialAsync("_EmployeeCard", Model.Employees)
     </div>
+
 </div>
 
 <div id="deleteModal"></div>

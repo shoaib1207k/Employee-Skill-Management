@@ -131,7 +131,7 @@ namespace EmployeeSkillManagement.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> SearchEmployee(string empNameOrId, int skillId){
+        public async Task<IActionResult> SearchEmployee(string empNameOrId, int skillId, bool generateReport){
             List<Employee> employeesFiltered = await _db.Employees
                                     .Include(e=>e.EmployeeSkillsAndLevels).ToListAsync();
 
@@ -154,6 +154,22 @@ namespace EmployeeSkillManagement.Controllers
                 employeesFiltered = employeesFiltered
                     .Where(e => e.EmployeeSkillsAndLevels.Any(esl => esl.SkillId == skillId))
                     .ToList();
+            }
+            if(generateReport){
+                
+                string primarySkill = "";
+                if(skillId!=0){
+                    primarySkill = _db.Skills.FirstOrDefault(s => s.Id == skillId).SkillName;
+                    employeesFiltered.ForEach(employee => employee.EmployeeSkillsAndLevels.RemoveAll(skill => skill.SkillId == skillId));
+                }
+
+
+
+                EmployeeReportViewModel employeeReportViewModel = new EmployeeReportViewModel{
+                    Employees = employeesFiltered,
+                    PrimarySkill = primarySkill
+                };
+                return View("GenerateReport", employeeReportViewModel);
             }
             var employeesFilteredHtml = PartialView("_EmployeeCard", employeesFiltered);
 
@@ -181,35 +197,3 @@ namespace EmployeeSkillManagement.Controllers
         
     }
 }
-
- //[HttpPost]
-        // public IActionResult DeleteSkill(int skillId, int employeeId)
-        // {
-        //     // Retrieve the employee based on the employeeId
-        //     var employee = _db.Employees.Include(e => e.EmployeeSkillsAndLevels)
-        //                                 .SingleOrDefault(e => e.Id == employeeId);
-
-        //     if (employee == null)
-        //     {
-        //         // Handle the case where the employee is not found
-        //         return NotFound();
-        //     }
-
-        //     // Find the skill in the employee's skills
-        //     var skillToRemove = employee.EmployeeSkillsAndLevels
-        //                                 .SingleOrDefault(esl => esl.SkillId == skillId);
-
-        //     if (skillToRemove == null)
-        //     {
-        //         // Handle the case where the skill is not found
-        //         return NotFound();
-        //     }
-
-        //     // Remove the skill from the employee's skills
-        //     employee.EmployeeSkillsAndLevels.Remove(skillToRemove);
-
-        //     // Save changes to update the database
-        //     _db.SaveChanges();
-
-        //     return RedirectToAction("Index"); // Redirect to wherever you want
-        // }

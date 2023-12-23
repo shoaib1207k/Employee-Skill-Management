@@ -80,21 +80,53 @@ namespace EmployeeSkillManagement.Controllers
             return RedirectToAction("Index");
         }
 
-        public IActionResult Update(Skill skill){
+        public IActionResult Update(Skill skill)
+        {
+            if (ModelState.IsValid)
+            {
+                using (var transaction = _db.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        Skill existingSkill = _db.Skills.Find(skill.Id);
 
-            if(ModelState.IsValid){
-                Skill? exisitingSkill = _db.Skills.Find(skill.Id);
-                if(exisitingSkill == null){
-                    return NotFound();
-                }else{
-                    exisitingSkill.SkillName = skill.SkillName;
-                    _db.SaveChanges();
+                        if (existingSkill == null)
+                        {
+                            return NotFound();
+                        }
+
+                        // Update SkillName in Skills table
+                        existingSkill.SkillName = skill.SkillName;
+                        _db.SaveChanges();
+
+                        // Update SkillName in EmployeeSkillAndLevels table
+                        var employeeSkillAndLevels = _db.EmployeeSkillAndLevels
+                            .Where(esl => esl.SkillId == existingSkill.Id)
+                            .ToList();
+
+                        foreach (var esl in employeeSkillAndLevels)
+                        {
+                            esl.SkillName = skill.SkillName;
+                        }
+
+                        _db.SaveChanges();
+
+                        // Commit the transaction
+                        transaction.Commit();
+
+                        return RedirectToAction("Index");
+                    }
+                    catch (Exception)
+                    {
+                        // Log or handle exceptions
+                        transaction.Rollback();
+                        return View("Error");
+                    }
                 }
-                return RedirectToAction("Index");
             }
-            return RedirectToAction("Index",skill);
-        }
 
+            return RedirectToAction("Index", skill);
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
