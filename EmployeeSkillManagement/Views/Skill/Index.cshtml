@@ -3,7 +3,7 @@
 <div class="d-flex">
     <h4 class="p-2 col-4">Skills</h4>
     <div class="col-3">
-        <a asp-controller="Skill" asp-action="Create" class="btn btn-primary ">Create New Skill</a>
+        <a asp-controller="Skill" asp-action="Create" class="btn btn-primary  bg-gradient ">Create New Skill</a>
     </div>
 </div>
 
@@ -18,18 +18,18 @@
                     <input id="skill-@index" class="skill-name col-3 form-control" value="@skill.SkillName" disabled />
                 </div>
                 <div  class="col-2 justify-content-between mb-2">
-                    <button data-skill="skill-@index" class="btn edit-btn btn-secondary w-100">Edit</button>
+                    <button data-skill="skill-@index" class="btn edit-btn btn-secondary  bg-gradient w-100">Edit</button>
                 </div>
 
                 <form asp-controller="Skill" asp-action="Update" method="post" class="col-3 justify-content-between mb-2">
                     <input type="hidden" asp-for="@skill.Id" value="@skill.Id" />
                     <input id="update-skill-@index" type="hidden" asp-for="@skill.SkillName" value="@skill.SkillName" />
-                    <button type="submit" class="btn btn-primary w-100" >Update</button>
+                    <button type="submit" class="btn btn-info  bg-gradient w-100" >Update</button>
                 </form>
 
                 <form asp-controller="Skill" asp-action="Delete" method="post" class="col-3 justify-content-between mb-2">
                     <input type="hidden" name="id" value="@skill.Id" />
-                    <button type="submit" class="btn btn-danger w-100">Delete</button>
+                    <button type="submit" class="btn btn-danger  bg-gradient w-100">Delete</button>
                 </form>
             </div>
             index++;
