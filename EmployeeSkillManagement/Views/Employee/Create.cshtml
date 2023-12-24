@@ -3,7 +3,13 @@
 @* <div class="form-header shadow-sm p-1 rounded  mb-3"> *@
     <h4 class="p-2">Create New Employee</h4>
 @* </div> *@
+@{
+    var message = TempData["ErrorMessage"] as string;
+}
 
+<div>
+    <p class="text-danger">@message</p>
+</div>
 <div class="p-4 shadow-sm rounded mt-2 bg-white">
 
 <form class="row" method="post" asp-controller="Employee" asp-action="Create">
@@ -75,16 +81,6 @@
         </div>
         <div id="skillsContainer" class="d-flex gap-4 flex-wrap col-sm-11 mt-4">
 
-        </div>
-
-        <div id="Skills" class="d-none">
-            <div class="skill">
-                <label for="Skills[0].SkillName">Skill Name</label>
-                <input type="text" id="Skills[0].SkillName" name="Skills[0].SkillName">
-
-                <label for="Skills[0].SkillLevel">Skill Level</label>
-                <input type="text" id="Skills[0].SkillLevel" name="Skills[0].SkillLevel">
-            </div>
         </div>
 
     </div>

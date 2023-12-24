@@ -37,17 +37,13 @@ namespace EmployeeSkillManagement.Controllers
 
         [HttpPost]
         public async Task<IActionResult> Create(Skill skill){
-            if(ModelState.IsValid){
-                try
-                {
+            try{
+                if(ModelState.IsValid){
                     await _skillRepository.AddSkillAsync(skill);
                     return RedirectToAction("Index");
                 }
-                catch (InvalidOperationException)
-                {
-                    TempData["ErrorMessage"] = "Skill already exists.";
-                    return View(skill);
-                }
+            } catch(System.Exception ex){
+                TempData["ErrorMessage"] = ex.Message;
             }
             return View(skill);
         }
@@ -64,13 +60,13 @@ namespace EmployeeSkillManagement.Controllers
 
         public async Task<IActionResult> Update(Skill skill)
         {
-            if (ModelState.IsValid)
-            {
-                try{
+            try{
+                if (ModelState.IsValid)
+                {
                     await _skillRepository.UpdateSkillAsync(skill);
-                }catch(InvalidOperationException){
-                    TempData["ErrorMessage"] = "Something went wrong";
                 }
+            }catch(System.Exception ex){
+                TempData["ErrorMessage"] = ex.Message;
             }
 
             return RedirectToAction("Index", skill);

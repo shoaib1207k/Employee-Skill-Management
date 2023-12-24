@@ -9,6 +9,6 @@ namespace EmployeeSkillManagement.Models.ViewModels
     public class EmployeeReportViewModel
     {
         public List<Employee>? Employees { get; set; }
-        public string PrimarySkill { get; set; } 
+        public string PrimarySkill { get; set; } = string.Empty;
     }
 }
