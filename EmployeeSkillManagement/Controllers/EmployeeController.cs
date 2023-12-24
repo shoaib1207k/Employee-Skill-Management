@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using EmployeeSkillManagement.Data;
 using EmployeeSkillManagement.Models;
 using EmployeeSkillManagement.Models.ViewModels;
+using EmployeeSkillManagement.Repository;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -17,12 +18,17 @@ namespace EmployeeSkillManagement.Controllers
     public class EmployeeController : Controller
     {
         private readonly ILogger<EmployeeController> _logger;
-        private readonly ApplicationDbContext _db;
+        private readonly IEmployeeRepository _employeeRepository;
+        private readonly ISkillRepository _skillRepository;
 
-        public EmployeeController(ILogger<EmployeeController> logger, ApplicationDbContext db)
+        private readonly ApplicationDbContext _db;
+        public EmployeeController(ILogger<EmployeeController> logger, IEmployeeRepository employeeRepository, 
+                                    ApplicationDbContext db, ISkillRepository skillRepository)
         {
             _logger = logger;
+            _employeeRepository = employeeRepository;
             _db = db;
+            _skillRepository = skillRepository;
         }
 
         public async Task<IActionResult> Index()
@@ -30,7 +36,7 @@ namespace EmployeeSkillManagement.Controllers
             EmployeesListViewModel employeesViewModel = new EmployeesListViewModel
             {
                 Skills = await GetSkillOptions(),
-                Employees = await _db.Employees.Include(e => e.EmployeeSkillsAndLevels).ToListAsync()
+                Employees = await _employeeRepository.GetAllEmployeesAsync()
             };
 
             return View(employeesViewModel);
@@ -50,43 +56,16 @@ namespace EmployeeSkillManagement.Controllers
 
         [HttpPost]
         public async Task<IActionResult> Create(CreateEmployeeViewModel viewModel){
-            if(ModelState.IsValid){
-                var newEmployee = new Employee
-                {
-                    FirstName = viewModel.FirstName,
-                    LastName = viewModel.LastName,
-                    DesignationName = _db.Designations.FirstOrDefault(u=>u.Id==viewModel.DesignationId).DesignationName,
-                    Email = viewModel.Email,
-                    DateOfJoining = viewModel.DateOfJoining,
-                    EmployeeSkillsAndLevels = new List<EmployeeSkillAndLevel>()
-                    // Assign other properties accordingly
-                };
-
-                // Now, handle the skills
-                if(viewModel.SkillIds!=null && viewModel.SkillLevel!=null){
-                    int index = 0;
-                    foreach (var skillId in viewModel.SkillIds)
-                    {
-                        // var skillId = skillViewModel.Skill.Id;  // Assuming Skill has an Id property
-
-                        var employeeSkillAndLevel = new EmployeeSkillAndLevel
-                        {
-                            SkillId = _db.Skills.FirstOrDefault(s => s.Id == skillId).Id,
-                            SkillName = _db.Skills.FirstOrDefault(s => s.Id == skillId).SkillName,
-                            SkillLevel = viewModel.SkillLevel[index]
-                        };
-
-                        newEmployee.EmployeeSkillsAndLevels.Add(employeeSkillAndLevel);
-                        index++;
-                    }
+            try
+            {
+                if(ModelState.IsValid){
+                    await _employeeRepository.AddEmployeeFromCreateViewModelAsync(viewModel);
+                    return RedirectToAction("Index");
                 }
-                
-
-            await _db.Employees.AddAsync(newEmployee);
-            await _db.SaveChangesAsync(); // Save changes to get the newEmployee.Id
-
-            // Now, handle the skills
-                return RedirectToAction("Index");
+            }
+            catch (System.Exception ex)
+            {
+                TempData["ErrorMessage"] = ex.Message;
             }
             viewModel.SkillOptions = await GetSkillOptions();
             viewModel.DesignationOptions = await GetDesignationOptions();
@@ -95,22 +74,14 @@ namespace EmployeeSkillManagement.Controllers
 
         [HttpPost]
         public async Task<IActionResult> Delete(int id){
-            if(id==0){
-                return NotFound();
+            try
+            {
+                await _employeeRepository.DeleteEmployeeAsync(id);
             }
-            Employee? employee = await _db.Employees
-                                .Include(e=>e.EmployeeSkillsAndLevels)
-                                .FirstOrDefaultAsync(e=>e.Id == id);
-            if(employee == null){
-                return NotFound();
+            catch (System.Exception)
+            {
+                TempData["ErrorMessage"] ="Something went wrong.";
             }
-
-            if(employee.EmployeeSkillsAndLevels != null){
-                _db.EmployeeSkillAndLevels.RemoveRange(employee.EmployeeSkillsAndLevels);
-            }
-
-            _db.Remove(employee);
-            await _db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
 
@@ -119,8 +90,8 @@ namespace EmployeeSkillManagement.Controllers
             if(employee_id == 0){
                 return NotFound();
             }
-
-            Employee? employee = await _db.Employees.FirstOrDefaultAsync(e => e.Id == employee_id);
+            
+            Employee? employee = await _employeeRepository.GetEmployeeById(employee_id);
             
             if(employee == null){
                 return NotFound();
@@ -132,8 +103,8 @@ namespace EmployeeSkillManagement.Controllers
 
         [HttpPost]
         public async Task<IActionResult> SearchEmployee(string empNameOrId, int skillId, bool generateReport){
-            List<Employee> employeesFiltered = await _db.Employees
-                                    .Include(e=>e.EmployeeSkillsAndLevels).ToListAsync();
+            
+            List<Employee> employeesFiltered = await _employeeRepository.GetAllEmployeesAsync();
 
             string empName = "";
             if (int.TryParse(empNameOrId, out int empId)){
@@ -145,10 +116,9 @@ namespace EmployeeSkillManagement.Controllers
             {
               empName = empNameOrId;
               employeesFiltered =  employeesFiltered
-                    .Where(e => (e.FirstName + " " + e.LastName).Contains(empName, StringComparison.OrdinalIgnoreCase)
-                                // e.LastName.Contains(empName, StringComparison.OrdinalIgnoreCase)
-                                
-                        ).ToList();
+                    .Where(e => (e.FirstName + " " + e.LastName)
+                    .Contains(empName, StringComparison.OrdinalIgnoreCase))
+                    .ToList();
             }
             if(skillId!=0){
                 employeesFiltered = employeesFiltered
@@ -159,7 +129,7 @@ namespace EmployeeSkillManagement.Controllers
                 
                 string primarySkill = "";
                 if(skillId!=0){
-                    primarySkill = _db.Skills.FirstOrDefault(s => s.Id == skillId).SkillName;
+                    primarySkill = _skillRepository.GetSkillByIdAsync(skillId).Result.SkillName;
                     employeesFiltered.ForEach(employee => employee.EmployeeSkillsAndLevels.RemoveAll(skill => skill.SkillId == skillId));
                 }
 
