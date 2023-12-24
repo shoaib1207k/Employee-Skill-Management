@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using EmployeeSkillManagement.Validation;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace EmployeeSkillManagement.Models.ViewModels
@@ -8,7 +9,7 @@ namespace EmployeeSkillManagement.Models.ViewModels
     public class CreateEmployeeViewModel
     {
         // public Employee Employee {get; set;}
-
+        public int MyProperty { get; set; }
         [Required]
         public string FirstName { get; set; } = string.Empty;
 
@@ -24,10 +25,8 @@ namespace EmployeeSkillManagement.Models.ViewModels
         [Required]
         public int DesignationId{get; set;}
 
-        [Required]
-        public List<int>? SkillIds{get; set;}
-        [Required]
-        public List<int>? SkillLevel{get; set;}
+        [MinimumElements(1, ErrorMessage = "Please add at least one element.")]
+        public List<EmployeeSkillAndLevel> EmployeeSkillAndLevels{get; set;} = new List<EmployeeSkillAndLevel>();
 
         public List<SelectListItem> DesignationOptions { get; set; }
 
