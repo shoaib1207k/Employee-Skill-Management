@@ -71,25 +71,25 @@ namespace EmployeeSkillManagement.Repository
                     DesignationName = _db.Designations.FirstOrDefault(u=>u.Id==viewModel.DesignationId)!.DesignationName,
                     Email = viewModel.Email,
                     DateOfJoining = viewModel.DateOfJoining,
-                    EmployeeSkillsAndLevels = new List<EmployeeSkillAndLevel>()
+                    EmployeeSkillsAndLevels = viewModel.EmployeeSkillAndLevels
                 };
 
                 // Now, handle the skills
-                if(viewModel.SkillIds!=null && viewModel.SkillLevel!=null){
-                    int index = 0;
-                    foreach (var skillId in viewModel.SkillIds)
-                    {
-                        var employeeSkillAndLevel = new EmployeeSkillAndLevel
-                        {
-                            SkillId = _db.Skills.FirstOrDefault(s => s.Id == skillId)!.Id,
-                            SkillName = _db.Skills.FirstOrDefault(s => s.Id == skillId)!.SkillName,
-                            SkillLevel = viewModel.SkillLevel[index]
-                        };
+                // if(viewModel.EmployeeSkillAndLevels!=null ){
+                //     int index = 0;
+                //     foreach (var esl in viewModel.EmployeeSkillAndLevels)
+                //     {
+                //         var employeeSkillAndLevel = new EmployeeSkillAndLevel
+                //         {
+                //             SkillId = _db.Skills.FirstOrDefault(s => s.Id == esl.SkillId)!.Id,
+                //             SkillName = _db.Skills.FirstOrDefault(s => s.Id == esl.SkillId)!.SkillName,
+                //             SkillLevel = esl.SkillLevel
+                //         };
 
-                        newEmployee.EmployeeSkillsAndLevels.Add(employeeSkillAndLevel);
-                        index++;
-                    }
-                }
+                //         newEmployee.EmployeeSkillsAndLevels.Add(employeeSkillAndLevel);
+                //         index++;
+                //     }
+                // }
                 await _db.Employees.AddAsync(newEmployee);
                 await _db.SaveChangesAsync(); // Save changes to get the newEmployee.Id
             }
@@ -119,3 +119,84 @@ namespace EmployeeSkillManagement.Repository
        
     }
 }
+
+
+
+// UPSERT METHOD for Employees
+/*
+public async Task UpsertEmployeeFromViewModelAsync(UpsertEmployeeViewModel viewModel)
+{
+    var existingEmployee = await _db.Employees.FirstOrDefaultAsync(e => e.Email == viewModel.Email);
+
+    if (existingEmployee == null)
+    {
+        // Insert operation
+        var newEmployee = new Employee
+        {
+            FirstName = viewModel.FirstName,
+            LastName = viewModel.LastName,
+            DesignationName = _db.Designations.FirstOrDefault(u => u.Id == viewModel.DesignationId)!.DesignationName,
+            Email = viewModel.Email,
+            DateOfJoining = viewModel.DateOfJoining,
+            EmployeeSkillsAndLevels = new List<EmployeeSkillAndLevel>()
+        };
+
+        // Handle the skills
+        if (viewModel.SkillIds != null && viewModel.SkillLevel != null)
+        {
+            int index = 0;
+            foreach (var skillId in viewModel.SkillIds)
+            {
+                var employeeSkillAndLevel = new EmployeeSkillAndLevel
+                {
+                    SkillId = _db.Skills.FirstOrDefault(s => s.Id == skillId)!.Id,
+                    SkillName = _db.Skills.FirstOrDefault(s => s.Id == skillId)!.SkillName,
+                    SkillLevel = viewModel.SkillLevel[index]
+                };
+
+                newEmployee.EmployeeSkillsAndLevels.Add(employeeSkillAndLevel);
+                index++;
+            }
+        }
+
+        await _db.Employees.AddAsync(newEmployee);
+    }
+    else
+    {
+        // Update operation
+        existingEmployee.FirstName = viewModel.FirstName;
+        existingEmployee.LastName = viewModel.LastName;
+        existingEmployee.DesignationName = _db.Designations.FirstOrDefault(u => u.Id == viewModel.DesignationId)!.DesignationName;
+        existingEmployee.DateOfJoining = viewModel.DateOfJoining;
+
+        // Handle the skills
+        if (viewModel.SkillIds != null && viewModel.SkillLevel != null)
+        {
+            // Remove existing skills
+            _db.EmployeeSkillsAndLevels.RemoveRange(existingEmployee.EmployeeSkillsAndLevels);
+
+            // Add new skills
+            int index = 0;
+            foreach (var skillId in viewModel.SkillIds)
+            {
+                var employeeSkillAndLevel = new EmployeeSkillAndLevel
+                {
+                    SkillId = _db.Skills.FirstOrDefault(s => s.Id == skillId)!.Id,
+                    SkillName = _db.Skills.FirstOrDefault(s => s.Id == skillId)!.SkillName,
+                    SkillLevel = viewModel.SkillLevel[index]
+                };
+
+                existingEmployee.EmployeeSkillsAndLevels.Add(employeeSkillAndLevel);
+                index++;
+            }
+        }
+
+        _db.Employees.Update(existingEmployee);
+    }
+
+    await _db.SaveChangesAsync();
+}
+
+
+
+*/

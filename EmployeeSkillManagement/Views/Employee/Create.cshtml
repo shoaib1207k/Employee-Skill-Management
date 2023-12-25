@@ -48,37 +48,35 @@
 
     <div class="form-group">
         <label>Add Skills</label>
-        <div class="col-sm-10 d-flex gap-3">
+        <div class="col-sm-10 d-flex gap-3 flex-wrap">
             
-            <div>
+            <div class="col-12 col-sm-4">
+                <select id="SelectedSkillIds" name="SelectedSkillIds" class="form-select" >
+                    <option value="0" selected>Select Skill</option>
 
-            <select id="SelectedSkillIds" name="SelectedSkillIds" class="form-select" >
-                <option value="" disabled selected>Select Skills</option>
+                    @foreach (var skill in Model.SkillOptions)
+                    {
+                        <option value="@skill.Value">@skill.Text</option>
+                    }
 
-                @foreach (var skill in Model.SkillOptions)
-                {
-                    <option value="@skill.Value">@skill.Text</option>
-                }
-
-            </select>
-                <span asp-validation-for="SkillIds"></span>
+                </select>
             </div>
-            <div>
-
-             <select id="levelSelect" class="form-select">
-                <option value="" disabled selected>Select Skill Level</option>
-                @for(int i = 1; i<=10;i++){
-                    <option value="@i">@i</option>
-                }
-                
-            </select>
-                <span asp-validation-for="SkillLevel"></span>
+            <div class="col-12 col-sm-4">
+                <select id="levelSelect" class="form-select">
+                    <option value="0" selected>Select Proficiency</option>
+                    @for(int i = 1; i<=10;i++){
+                        <option value="@i">@i</option>
+                    }
+                    
+                </select>
             </div>
 
-            <div class="col-sm-3">
+            <div class="col-6 col-sm-3">
                 <button id="addSkill" class="btn btn-info  bg-gradient  w-100">Add</button>
             </div>
         </div>
+                <span asp-validation-for="EmployeeSkillAndLevels"></span>
+        <div id="skill-form-error" class="text-danger"></div>
         <div id="skillsContainer" class="d-flex gap-4 flex-wrap col-sm-11 mt-4">
 
         </div>

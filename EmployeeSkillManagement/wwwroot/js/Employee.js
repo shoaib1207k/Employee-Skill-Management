@@ -7,26 +7,58 @@ jQuery(document).ready(function($){
         let level = $('#levelSelect').val();
         let skillId = $("#SelectedSkillIds").val();
         let skill = $("#SelectedSkillIds").find("option[value='" + skillId + "']").text();
-        console.log(skill);
-        console.log(level);
         let skillIndex = $('.skill-level').length;
 
-        if(skill!==null && level !==null){
+         // Check if the skill is already added
+        let isSkillAdded = false;
+        $('#skillsContainer .skill-level').each(function() {
+            let existingSkillId = $(this).find('input[name^="SkillIds"]').val();
+            if (existingSkillId == skillId) {
+                isSkillAdded = true;
+                return false; // Break the loop
+            }
+        });
+        if(isSkillAdded){
+            $("#skill-form-error").show();
+            $("#skill-form-error").text("This skill is already added!")
+        } else if(skill!=null && level !=null && skillId!=null && level!=0 && skillId!=0){
+            console.log(skillId);
             let skill_level =  `<div class="skill-level d-flex justify-content-around align-items-center border border-primary rounded col-3">`
                                     +skill+` Level-`+level+`
-                                    <div class="btn "> 
+                                    <div class="btn remove-skill"> 
                                         <i class="bi bi-x-circle btn-outline-danger rounded-circle"></i>
                                     </div>
-                                    <input type="text" value="${skillId}" name="SkillIds[${skillIndex}]" hidden>
-                                    <input type="text" value="${level}" name="SkillLevel[`+skillIndex+`]" hidden>
+                                    <input type="text" value="${skillId}" name="EmployeeSkillAndLevels[${skillIndex}].SkillId" hidden>
+                                    <input type="text" value="${skill}" name="EmployeeSkillAndLevels[${skillIndex}].SkillName" hidden>
+                                    <input type="text" value="${level}" name="EmployeeSkillAndLevels[${skillIndex}].SkillLevel" hidden>
 
                                 </div>`;
-            $('#skillsContainer').prepend(skill_level);
+            $('#skillsContainer').append(skill_level);
+            $('#SelectedSkillIds').prop('selectedIndex', 0);
+            $('#levelSelect').prop('selectedIndex', 0);
+
+            $("#skill-form-error").hide();
         }else{
-            alert("Please Select correct options")
+            $("#skill-form-error").show();
+            $("#skill-form-error").text("Please choose a skill and proficiency level")
         }
+
     });
 
+    $(document).on('click', '.remove-skill', function(){ 
+        $(this).closest('.skill-level').remove();       
+        updateSkillIndex();                             
+    });
+    
+    // update indexing on remove 
+    function updateSkillIndex() {
+        $('.skill-level').each(function(index) {        
+            console.log(index);
+            $(this).find('input[name^="SkillIds"]').attr('name', 'SkillIds[' + index + ']');     // Update the name attribute of the input with name starting with 'skillids'
+            $(this).find('input[name^="SkillLevel"]').attr('name', 'SkillLevel[' + index + ']'); // Update the name attribute of the input with name starting with 'skilllevel'
+        });
+    }
+    
 
     // Delete ajax function
     $(document).on('click', '.delete-employee', function(){

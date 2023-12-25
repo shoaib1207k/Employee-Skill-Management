@@ -52,3 +52,15 @@ footer{
   }
   
 }
+
+@media(max-width: 576px){
+  footer{
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+  body{
+    padding-bottom: 60px;
+  }
+}
