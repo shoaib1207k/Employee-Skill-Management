@@ -19,7 +19,8 @@ namespace EmployeeSkillManagement.Repository
 
         public async Task<List<Employee>> GetAllEmployeesAsync()
         {
-            List<Employee> employees = await _db.Employees.Include(e => e.EmployeeSkillsAndLevels).ToListAsync();
+            List<Employee> employees = await _db.Employees.Include(e=>e.Designation)
+                            .Include(e => e.EmployeeSkillsAndLevels).ToListAsync();
             return employees;
         }
 
@@ -68,28 +69,12 @@ namespace EmployeeSkillManagement.Repository
                 {
                     FirstName = viewModel.FirstName,
                     LastName = viewModel.LastName,
-                    DesignationName = _db.Designations.FirstOrDefault(u=>u.Id==viewModel.DesignationId)!.DesignationName,
+                    Designation = _db.Designations.FirstOrDefault(u=>u.Id==viewModel.DesignationId),
                     Email = viewModel.Email,
                     DateOfJoining = viewModel.DateOfJoining,
                     EmployeeSkillsAndLevels = viewModel.EmployeeSkillAndLevels
                 };
 
-                // Now, handle the skills
-                // if(viewModel.EmployeeSkillAndLevels!=null ){
-                //     int index = 0;
-                //     foreach (var esl in viewModel.EmployeeSkillAndLevels)
-                //     {
-                //         var employeeSkillAndLevel = new EmployeeSkillAndLevel
-                //         {
-                //             SkillId = _db.Skills.FirstOrDefault(s => s.Id == esl.SkillId)!.Id,
-                //             SkillName = _db.Skills.FirstOrDefault(s => s.Id == esl.SkillId)!.SkillName,
-                //             SkillLevel = esl.SkillLevel
-                //         };
-
-                //         newEmployee.EmployeeSkillsAndLevels.Add(employeeSkillAndLevel);
-                //         index++;
-                //     }
-                // }
                 await _db.Employees.AddAsync(newEmployee);
                 await _db.SaveChangesAsync(); // Save changes to get the newEmployee.Id
             }
@@ -115,6 +100,8 @@ namespace EmployeeSkillManagement.Repository
             _db.Remove(employee);
             await _db.SaveChangesAsync();
         }
+
+       
 
        
     }

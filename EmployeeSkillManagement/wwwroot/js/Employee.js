@@ -12,7 +12,7 @@ jQuery(document).ready(function($){
          // Check if the skill is already added
         let isSkillAdded = false;
         $('#skillsContainer .skill-level').each(function() {
-            let existingSkillId = $(this).find('input[name^="SkillIds"]').val();
+            let existingSkillId = $(this).find('.skill-id-input').val();
             if (existingSkillId == skillId) {
                 isSkillAdded = true;
                 return false; // Break the loop
@@ -28,7 +28,7 @@ jQuery(document).ready(function($){
                                     <div class="btn remove-skill"> 
                                         <i class="bi bi-x-circle btn-outline-danger rounded-circle"></i>
                                     </div>
-                                    <input type="text" value="${skillId}" name="EmployeeSkillAndLevels[${skillIndex}].SkillId" hidden>
+                                    <input class="skill-id-input" type="text" value="${skillId}" name="EmployeeSkillAndLevels[${skillIndex}].SkillId" hidden>
                                     <input type="text" value="${skill}" name="EmployeeSkillAndLevels[${skillIndex}].SkillName" hidden>
                                     <input type="text" value="${level}" name="EmployeeSkillAndLevels[${skillIndex}].SkillLevel" hidden>
 
