@@ -64,12 +64,12 @@ namespace EmployeeSkillManagement.Migrations
                         new
                         {
                             Id = 3,
-                            DesignationName = "CIO/Chief Digital Officer/Chief Innovation Officer"
+                            DesignationName = "CIO"
                         },
                         new
                         {
                             Id = 4,
-                            DesignationName = "VP of Product Management/Head of Product"
+                            DesignationName = "Head of Product"
                         },
                         new
                         {
@@ -84,7 +84,7 @@ namespace EmployeeSkillManagement.Migrations
                         new
                         {
                             Id = 7,
-                            DesignationName = "VP of Engineering/Director of Engineering"
+                            DesignationName = "VP of Engineering"
                         },
                         new
                         {
@@ -99,12 +99,12 @@ namespace EmployeeSkillManagement.Migrations
                         new
                         {
                             Id = 10,
-                            DesignationName = "Engineering Project Manager/Engineering Manager"
+                            DesignationName = "Engineering Manager"
                         },
                         new
                         {
                             Id = 11,
-                            DesignationName = "Technical Lead/Engineering Lead/Team Lead"
+                            DesignationName = "Team Lead"
                         },
                         new
                         {
@@ -114,7 +114,7 @@ namespace EmployeeSkillManagement.Migrations
                         new
                         {
                             Id = 13,
-                            DesignationName = "Senior Software Engineer/Senior Software Developer"
+                            DesignationName = "Senior Software Developer"
                         },
                         new
                         {
@@ -147,9 +147,8 @@ namespace EmployeeSkillManagement.Migrations
                     b.Property<DateOnly>("DateOfJoining")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("DesignationName")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int>("DesignationId")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -164,6 +163,8 @@ namespace EmployeeSkillManagement.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DesignationId");
 
                     b.ToTable("Employees");
                 });
@@ -405,6 +406,17 @@ namespace EmployeeSkillManagement.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("EmployeeSkillManagement.Models.Employee", b =>
+                {
+                    b.HasOne("EmployeeSkillManagement.Models.Designation", "Designation")
+                        .WithMany()
+                        .HasForeignKey("DesignationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Designation");
                 });
 
             modelBuilder.Entity("EmployeeSkillManagement.Models.EmployeeSkillAndLevel", b =>

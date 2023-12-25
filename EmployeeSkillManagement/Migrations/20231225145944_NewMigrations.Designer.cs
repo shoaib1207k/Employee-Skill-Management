@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EmployeeSkillManagement.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231218193310_AddedIdentity")]
-    partial class AddedIdentity
+    [Migration("20231225145944_NewMigrations")]
+    partial class NewMigrations
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -67,12 +67,12 @@ namespace EmployeeSkillManagement.Migrations
                         new
                         {
                             Id = 3,
-                            DesignationName = "CIO/Chief Digital Officer/Chief Innovation Officer"
+                            DesignationName = "CIO"
                         },
                         new
                         {
                             Id = 4,
-                            DesignationName = "VP of Product Management/Head of Product"
+                            DesignationName = "Head of Product"
                         },
                         new
                         {
@@ -87,7 +87,7 @@ namespace EmployeeSkillManagement.Migrations
                         new
                         {
                             Id = 7,
-                            DesignationName = "VP of Engineering/Director of Engineering"
+                            DesignationName = "VP of Engineering"
                         },
                         new
                         {
@@ -102,12 +102,12 @@ namespace EmployeeSkillManagement.Migrations
                         new
                         {
                             Id = 10,
-                            DesignationName = "Engineering Project Manager/Engineering Manager"
+                            DesignationName = "Engineering Manager"
                         },
                         new
                         {
                             Id = 11,
-                            DesignationName = "Technical Lead/Engineering Lead/Team Lead"
+                            DesignationName = "Team Lead"
                         },
                         new
                         {
@@ -117,7 +117,7 @@ namespace EmployeeSkillManagement.Migrations
                         new
                         {
                             Id = 13,
-                            DesignationName = "Senior Software Engineer/Senior Software Developer"
+                            DesignationName = "Senior Software Developer"
                         },
                         new
                         {
@@ -186,6 +186,10 @@ namespace EmployeeSkillManagement.Migrations
 
                     b.Property<int>("SkillLevel")
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("SkillName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 

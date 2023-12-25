@@ -18,6 +18,7 @@ namespace EmployeeSkillManagement.Repository
 
         public Task AddEmployeeFromCreateViewModelAsync(CreateEmployeeViewModel viewModel);
 
+
         public Task DeleteEmployeeAsync(int id);
     }
 }
