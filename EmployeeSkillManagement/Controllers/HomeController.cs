@@ -4,7 +4,7 @@ using EmployeeSkillManagement.Models;
 using Microsoft.AspNetCore.Authorization;
 
 namespace EmployeeSkillManagement.Controllers;
-
+[Authorize(Policy = "RequireAdminRole")]
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;

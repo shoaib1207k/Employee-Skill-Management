@@ -8,6 +8,7 @@ using EmployeeSkillManagement.Data;
 using EmployeeSkillManagement.Models;
 using EmployeeSkillManagement.Models.ViewModels;
 using EmployeeSkillManagement.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -15,7 +16,7 @@ using Microsoft.Extensions.Logging;
 
 namespace EmployeeSkillManagement.Controllers
 {
-    // [Route("[controller]")]
+    [Authorize(Policy = "RequireAdminRole")]
     public class EmployeeController : Controller
     {
         private readonly ILogger<EmployeeController> _logger;

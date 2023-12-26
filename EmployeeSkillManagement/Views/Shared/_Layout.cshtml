@@ -23,10 +23,11 @@
 </head>
 <body>
     <div class="super-contianer d-sm-flex">
+        @if(User.Identity!.IsAuthenticated){
         <header class="side-navbar-header col-sm-3 ">
             <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-sm-bottom  pt-4">
                 <div class="container-fluid flex-sm-column p-0">
-                    <a class=" mt-sm-5 mb-sm-5 text-dark" asp-area="" asp-controller="Home" asp-action="Index">Employee Skill Management</a>
+                    <a class="text-center mt-sm-5 mb-sm-5 text-dark" asp-area="" asp-controller="Home" asp-action="Index">Employee Skill Management</a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                             aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
@@ -50,6 +51,7 @@
                 </div>
             </nav>
         </header>
+        }
         <div class="container main-container">
             <main role="main" class="">
                 @RenderBody()
@@ -57,11 +59,13 @@
         </div>
     </div>
 
-    <footer class="border-top bg-dark text-muted p-3 ">
+    @if(User.Identity!.IsAuthenticated){
+    <footer class="bg-dark text-muted p-3 ">
         <div class="container d-flex justify-content-center align-items-center">
             &copy; 2023 - EmployeeSkillManagement - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
+    }
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
