@@ -28,9 +28,9 @@ jQuery(document).ready(function($){
                                     <div class="btn remove-skill"> 
                                         <i class="bi bi-x-circle btn-outline-danger rounded-circle"></i>
                                     </div>
-                                    <input class="skill-id-input" type="text" value="${skillId}" name="EmployeeSkillAndLevels[${skillIndex}].SkillId" hidden>
-                                    <input type="text" value="${skill}" name="EmployeeSkillAndLevels[${skillIndex}].SkillName" hidden>
-                                    <input type="text" value="${level}" name="EmployeeSkillAndLevels[${skillIndex}].SkillLevel" hidden>
+                                    <input class="skill-id-input" type="text" value="${skillId}" name="EmployeeSkillsAndLevels[${skillIndex}].SkillId" hidden>
+                                    <input type="text" value="${skill}" name="EmployeeSkillsAndLevels[${skillIndex}].SkillName" hidden>
+                                    <input type="text" value="${level}" name="EmployeeSkillsAndLevels[${skillIndex}].SkillLevel" hidden>
 
                                 </div>`;
             $('#skillsContainer').append(skill_level);
@@ -52,10 +52,10 @@ jQuery(document).ready(function($){
     
     // update indexing on remove 
     function updateSkillIndex() {
-        $('.skill-level').each(function(index) {        
-            console.log(index);
-            $(this).find('input[name^="SkillIds"]').attr('name', 'SkillIds[' + index + ']');     // Update the name attribute of the input with name starting with 'skillids'
-            $(this).find('input[name^="SkillLevel"]').attr('name', 'SkillLevel[' + index + ']'); // Update the name attribute of the input with name starting with 'skilllevel'
+        $('.skill-level').each(function (index) {
+            $(this).find('input[name$=".SkillId"]').attr('name', `EmployeeSkillsAndLevels[${index}].SkillId`);
+            $(this).find('input[name$=".SkillName"]').attr('name', `EmployeeSkillsAndLevels[${index}].SkillName`);
+            $(this).find('input[name$=".SkillLevel"]').attr('name', `EmployeeSkillsAndLevels[${index}].SkillLevel`);
         });
     }
     
@@ -133,7 +133,7 @@ jQuery(document).ready(function($){
         
         try {
             $.ajax({
-                url: "Employee/SearchEmployee",
+                url: "/Employee/SearchEmployee",
                 type: "POST",
                 data: filterData,
                 success: function(response){

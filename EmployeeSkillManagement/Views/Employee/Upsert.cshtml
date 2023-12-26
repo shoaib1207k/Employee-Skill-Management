@@ -1,8 +1,13 @@
-@model EmployeeSkillManagement.Models.ViewModels.CreateEmployeeViewModel
+@model EmployeeSkillManagement.Models.ViewModels.UpsertEmployeeViewModel
 
-@* <div class="form-header shadow-sm p-1 rounded  mb-3"> *@
-    <h4 class="p-2">Create New Employee</h4>
-@* </div> *@
+@{
+    if(Model.EmployeeId==0){
+        <h4 class="p-2">Create New Employee</h4>
+    }else{
+        <h4 class="p-2">Update Employee's Details</h4>
+    }
+}
+
 @{
     var message = TempData["ErrorMessage"] as string;
 }
@@ -12,8 +17,8 @@
 </div>
 <div class="p-4 shadow-sm rounded mt-2 bg-white">
 
-<form class="row" method="post" asp-controller="Employee" asp-action="Create">
-
+<form class="row" method="post" asp-controller="Employee" asp-action="Upsert">
+    <input hidden asp-for="EmployeeId" value="@Model.EmployeeId">
   <div class="form-group col-sm-5 mb-4">
     <label asp-for="FirstName"></label>
     <input asp-for="FirstName" class="form-control" placeholder="Enter ">
@@ -26,12 +31,8 @@
   </div>
   <div class="form-group col-sm-5 mb-4">
     <label asp-for="DesignationId"></label>
-    <select asp-for="DesignationId" class="form-select">
+    <select asp-for="DesignationId" asp-items="@Model.DesignationOptions" value="@Model.DesignationId" class="form-select">
         <option value="">Select Designation</option>
-        @foreach (var designation in Model.DesignationOptions)
-        {
-            <option value="@designation.Value">@designation.Text</option>
-        }
     </select>
     <span asp-validation-for="DesignationId"></span>
   </div>
@@ -42,7 +43,12 @@
   </div>
   <div class="form-group col-sm-5 mb-4">
     <label asp-for="DateOfJoining"></label>
-    <input asp-for="DateOfJoining" class="form-control" type="date" placeholder="Enter ">
+    @{
+        var dateValue = Model.DateOfJoining != default(DateOnly)
+            ? Model.DateOfJoining.ToString("yyyy-MM-dd")
+            : null;
+    }
+    <input asp-for="DateOfJoining" class="form-control" type="date" placeholder="Enter" value="@dateValue">
     <span asp-validation-for="DateOfJoining"></span>
   </div>
 
@@ -75,16 +81,33 @@
                 <button id="addSkill" class="btn btn-info  bg-gradient  w-100">Add</button>
             </div>
         </div>
-                <span asp-validation-for="EmployeeSkillAndLevels"></span>
+                <span asp-validation-for="EmployeeSkillsAndLevels"></span>
         <div id="skill-form-error" class="text-danger"></div>
         <div id="skillsContainer" class="d-flex gap-4 flex-wrap col-sm-11 mt-4">
-
+            @for (int index = 0; index < Model.EmployeeSkillsAndLevels.Count; index++)
+            {
+                var skill = Model.EmployeeSkillsAndLevels[index];
+                <div class="skill-level d-flex justify-content-around align-items-center border border-primary rounded col-3">
+                    @($"{skill.SkillName} Level-{skill.SkillLevel}")
+                    <div class="btn remove-skill"> 
+                        <i class="bi bi-x-circle btn-outline-danger rounded-circle"></i>
+                    </div>
+                    <input type="hidden" value="@skill.SkillId" name="EmployeeSkillsAndLevels[@index].SkillId">
+                    <input type="hidden" value="@skill.SkillName" name="EmployeeSkillsAndLevels[@index].SkillName">
+                    <input type="hidden" value="@skill.SkillLevel" name="EmployeeSkillsAndLevels[@index].SkillLevel">
+                </div>
+            }
         </div>
-
     </div>
 
     <div class="from-group col-sm-5 mt-3">
-        <button type="submit" class="btn btn-primary bg-gradient col-sm-6">Submit</button>
+        @{
+            if(Model.EmployeeId==0){
+                <button type="submit" class="btn btn-primary bg-gradient col-sm-6">Save</button>
+            }else{
+                <button type="submit" class="btn btn-primary bg-gradient col-sm-6">Update</button>
+            }
+        }
     </div>
 
     <div asp-validation-summary="All" class="text-danger"></div>
