@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using EmployeeSkillManagement.Data;
 using EmployeeSkillManagement.Models;
@@ -57,7 +58,7 @@ namespace EmployeeSkillManagement.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateEmployeeViewModel viewModel){
             try
-            {
+            { 
                 if(ModelState.IsValid){
                     await _employeeRepository.AddEmployeeFromCreateViewModelAsync(viewModel);
                     return RedirectToAction("Index");
