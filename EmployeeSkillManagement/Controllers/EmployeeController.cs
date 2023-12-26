@@ -65,7 +65,7 @@ namespace EmployeeSkillManagement.Controllers
                     LastName = employee.LastName,
                     Email = employee.Email,
                     DateOfJoining = employee.DateOfJoining,
-                    DesignationId = employee.Designation.Id.ToString(),
+                    DesignationId = employee.Designation!.Id.ToString(),
                     EmployeeSkillsAndLevels = employee.EmployeeSkillsAndLevels,
                     DesignationOptions = await GetDesignationOptions(),
                     SkillOptions = await GetSkillOptions()
