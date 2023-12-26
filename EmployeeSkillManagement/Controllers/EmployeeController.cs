@@ -46,21 +46,44 @@ namespace EmployeeSkillManagement.Controllers
 
         public async Task<IActionResult> Create(){
 
-            var viewModel = new CreateEmployeeViewModel{
+            var viewModel = new UpsertEmployeeViewModel{
                 DesignationOptions = await GetDesignationOptions(),
                 SkillOptions = await GetSkillOptions(),
                 // Employee = new Employee()
             };
 
-            return View(viewModel);
+            return View("Upsert",viewModel);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateEmployeeViewModel viewModel){
+        public async Task<IActionResult> Update(int id){
+            try{
+                Employee employee = await _employeeRepository.GetEmployeeById(id);
+                var viewModel = new UpsertEmployeeViewModel{
+                    EmployeeId = id,
+                    FirstName = employee.FirstName,
+                    LastName = employee.LastName,
+                    Email = employee.Email,
+                    DateOfJoining = employee.DateOfJoining,
+                    DesignationId = employee.Designation.Id.ToString(),
+                    EmployeeSkillsAndLevels = employee.EmployeeSkillsAndLevels,
+                    DesignationOptions = await GetDesignationOptions(),
+                    SkillOptions = await GetSkillOptions()
+                };
+                return View("Upsert", viewModel);
+            } catch(Exception ex){
+                TempData["ErrorMessage"] = ex.Message;
+                return View("Index"); 
+            }
+            
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Upsert(UpsertEmployeeViewModel viewModel){
             try
             { 
                 if(ModelState.IsValid){
-                    await _employeeRepository.AddEmployeeFromCreateViewModelAsync(viewModel);
+                    await _employeeRepository.UpsertEmployeeFromCreateViewModelAsync(viewModel);
                     return RedirectToAction("Index");
                 }
             }
@@ -70,7 +93,7 @@ namespace EmployeeSkillManagement.Controllers
             }
             viewModel.SkillOptions = await GetSkillOptions();
             viewModel.DesignationOptions = await GetDesignationOptions();
-            return View(viewModel);
+            return View("Upsert",viewModel);
         }
 
         [HttpPost]

@@ -16,16 +16,16 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Projects\EmployeeSkillManagement\EmployeeSkillManagement
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Projects/EmployeeSkillManagement/EmployeeSkillManagement/Views/Employee/Create.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVcQ3JlYXRlLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Projects/EmployeeSkillManagement/EmployeeSkillManagement/Views/Employee/GenerateReport.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVcR2VuZXJhdGVSZXBvcnQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Projects/EmployeeSkillManagement/EmployeeSkillManagement/Views/Employee/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Projects/EmployeeSkillManagement/EmployeeSkillManagement/Views/Employee/Upsert.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRW1wbG95ZWVcVXBzZXJ0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Projects/EmployeeSkillManagement/EmployeeSkillManagement/Views/Employee/_DeleteEmployeeModal.cshtml]

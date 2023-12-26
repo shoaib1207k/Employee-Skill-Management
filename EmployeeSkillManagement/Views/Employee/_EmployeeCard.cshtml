@@ -32,7 +32,10 @@
     </div>
     <div class="col-sm-3 d-flex flex-sm-column justify-content-evenly ms-sm-5">
         <div class="col-5 col-sm-12">
-            <button class="btn btn-secondary bg-gradient w-100">Edit</button>
+            <form asp-controller="Employee" asp-action="Update" method="POST">
+                <input hidden name="id" value="@employee.Id"/>
+                <button type="submit" class="btn btn-secondary bg-gradient w-100">Edit</button>
+            </form>
         </div>
         <div class="col-5 col-sm-12">
             <button class="btn btn-danger bg-gradient w-100 delete-employee" data-emp-id="@employee.Id">

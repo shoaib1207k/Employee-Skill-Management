@@ -26,7 +26,9 @@ namespace EmployeeSkillManagement.Repository
 
         public async Task<Employee> GetEmployeeById(int id){
             if(id != 0){
-                Employee? employee = await _db.Employees.FirstOrDefaultAsync(e => e.Id == id);
+                Employee? employee = await _db.Employees.Include(e=>e.Designation)
+                                .Include(e=>e.EmployeeSkillsAndLevels)
+                                .FirstOrDefaultAsync(e => e.Id == id);
                 if(employee == null){
                     throw new Exception("Employee Not Found");
                 }
@@ -59,25 +61,44 @@ namespace EmployeeSkillManagement.Repository
 
         }
 
-        public async Task AddEmployeeFromCreateViewModelAsync(CreateEmployeeViewModel viewModel)
-        {
-            if(await IsEmployeeExistByEmailAsync(viewModel.Email)){
-                throw new Exception("Employee already exist with this email");
+        public async Task UpsertEmployeeFromCreateViewModelAsync(UpsertEmployeeViewModel viewModel)
+        {   
+            if(viewModel.EmployeeId==0){
+                if(await IsEmployeeExistByEmailAsync(viewModel.Email)){
+                    throw new Exception("Employee already exist with this email");
+                }else{
+
+                    var newEmployee = new Employee
+                    {
+                        FirstName = viewModel.FirstName,
+                        LastName = viewModel.LastName,
+                        Designation = await _db.Designations
+                                    .FirstOrDefaultAsync(u=>u.Id==int.Parse(viewModel.DesignationId)),
+                        Email = viewModel.Email,
+                        DateOfJoining = viewModel.DateOfJoining,
+                        EmployeeSkillsAndLevels = viewModel.EmployeeSkillsAndLevels
+                    };
+
+                    await _db.Employees.AddAsync(newEmployee);
+                    await _db.SaveChangesAsync(); // Save changes to get the newEmployee.Id
+                }
             }else{
+                Employee existingEmployee = await GetEmployeeById(viewModel.EmployeeId);
+                existingEmployee.FirstName = viewModel.FirstName;
+                existingEmployee.LastName = viewModel.LastName;
+                existingEmployee.Email = viewModel.Email;
+                existingEmployee.Designation = await _db
+                        .Designations.FirstOrDefaultAsync(u=>u.Id==int.Parse(viewModel.DesignationId));
+                
+                _db.EmployeeSkillAndLevels.RemoveRange(existingEmployee.EmployeeSkillsAndLevels);
+                _db.EmployeeSkillAndLevels.AddRange(viewModel.EmployeeSkillsAndLevels);
 
-                var newEmployee = new Employee
-                {
-                    FirstName = viewModel.FirstName,
-                    LastName = viewModel.LastName,
-                    Designation = _db.Designations.FirstOrDefault(u=>u.Id==viewModel.DesignationId),
-                    Email = viewModel.Email,
-                    DateOfJoining = viewModel.DateOfJoining,
-                    EmployeeSkillsAndLevels = viewModel.EmployeeSkillAndLevels
-                };
+                existingEmployee.EmployeeSkillsAndLevels = viewModel.EmployeeSkillsAndLevels;
 
-                await _db.Employees.AddAsync(newEmployee);
-                await _db.SaveChangesAsync(); // Save changes to get the newEmployee.Id
+                _db.Update(existingEmployee);
+                await _db.SaveChangesAsync();
             }
+
 
         }
 

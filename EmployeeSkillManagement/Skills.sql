@@ -1,2 +1,2 @@
 -- SQLite
-SELECT * FROM Employees;
+SELECT * FROM EmployeeSkillAndLevels;

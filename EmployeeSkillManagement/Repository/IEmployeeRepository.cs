@@ -16,7 +16,7 @@ namespace EmployeeSkillManagement.Repository
 
         public Task<bool> IsEmployeeExistByEmailAsync(string email);
 
-        public Task AddEmployeeFromCreateViewModelAsync(CreateEmployeeViewModel viewModel);
+        public Task UpsertEmployeeFromCreateViewModelAsync(UpsertEmployeeViewModel viewModel);
 
 
         public Task DeleteEmployeeAsync(int id);
