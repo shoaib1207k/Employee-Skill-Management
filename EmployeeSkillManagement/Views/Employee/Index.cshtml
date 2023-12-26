@@ -7,10 +7,10 @@
     <p class="text-danger">@message</p>
 </div>
 
-<div class="d-sm-flex align-items-end">
-    <h4 class="p-2 col-12 col-sm-6 text-center text-lg-start">Manage Employee</h4>
-    <div class="col-sm-6 text-center text-lg-end">
-        <a asp-controller="Skill" asp-action="Create" class="btn btn-primary bg-gradient">Create New Employee</a>
+<div class="d-flex align-items-center justify-content-between pe-sm-2">
+    <h4 class="p-2 col-6 text-center text-lg-start m-0">Manage Employee</h4>
+    <div class="col-6 col-lg-4 col-xl-3 text-center text-lg-end">
+        <a asp-controller="Skill" asp-action="Create" class="btn btn-primary bg-gradient w-100">Create New Employee</a>
     </div>
 </div>
 <div class="p-2">
@@ -18,13 +18,13 @@
          @System.Text.Json.JsonSerializer.Serialize(Model, new System.Text.Json.JsonSerializerOptions { WriteIndented = true })
     </pre> *@
 
-    <form class="filters-contianer d-md-flex gap-4 mb-4 align-items-end" asp-controller="Employee" asp-action="SearchEmployee">
-        <div class="form-group col-12 col-md-5 text-start mt-2 mb-2">
+    <form class="filters-contianer d-flex flex-wrap mb-4 align-items-end justify-content-between" asp-controller="Employee" asp-action="SearchEmployee">
+        <div class="form-group col-6 col-md-5 text-start mt-2 mb-2">
             <label for="filterNameOrId">Search by Employee Name</label>
             <input id="filterNameOrId" name="empNameOrId" type="text" class="form-control" placeholder="Enter Name">
             @* <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> *@
         </div>
-        <div class="form-group col-12 col-md-3 text-start mt-2 mb-2">
+        <div class="form-group col-5 col-md-3 text-start mt-2 mb-2">
             <label for="filterSkill">Search by Skills</label>
             <select id="filterSkill" name="skillId" class="form-select " aria-label="Default select example">
                 <option selected>Select Skills</option>
@@ -35,7 +35,7 @@
         </div>
         <div class="col-12 col-md-3 mt-2 mb-2">
             <input hidden name="generateReport" value="true" />
-            <button type="submit" class="btn btn-success  bg-gradient">Generate Report</button>
+            <button type="submit" class="btn btn-success bg-gradient w-100">Generate Report</button>
         </div>
     </form>
 

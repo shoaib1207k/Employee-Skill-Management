@@ -19,29 +19,29 @@
 
 <form class="row" method="post" asp-controller="Employee" asp-action="Upsert">
     <input hidden asp-for="EmployeeId" value="@Model.EmployeeId">
-  <div class="form-group col-sm-5 mb-4">
+  <div class="form-group col-sm-6 col-md-5 mb-4">
     <label asp-for="FirstName"></label>
     <input asp-for="FirstName" class="form-control" placeholder="Enter ">
     <span asp-validation-for="FirstName"></span>
   </div>
-  <div class="form-group col-sm-5 mb-4">
+  <div class="form-group col-sm-6 col-md-5 mb-4">
     <label asp-for="LastName"></label>
     <input asp-for="LastName" class="form-control" placeholder="Enter ">
     <span asp-validation-for="LastName"></span>
   </div>
-  <div class="form-group col-sm-5 mb-4">
+  <div class="form-group col-sm-6 col-md-5 mb-4">
     <label asp-for="DesignationId"></label>
     <select asp-for="DesignationId" asp-items="@Model.DesignationOptions" value="@Model.DesignationId" class="form-select">
         <option value="">Select Designation</option>
     </select>
     <span asp-validation-for="DesignationId"></span>
   </div>
-  <div class="form-group col-sm-5 mb-4">
+  <div class="form-group col-sm-6 col-md-5 mb-4">
     <label asp-for="Email"></label>
     <input asp-for="Email" class="form-control" placeholder="Enter ">
     <span asp-validation-for="Email"></span>
   </div>
-  <div class="form-group col-sm-5 mb-4">
+  <div class="form-group col-sm-6 col-md-5 mb-4">
     <label asp-for="DateOfJoining"></label>
     @{
         var dateValue = Model.DateOfJoining != default(DateOnly)
@@ -54,9 +54,9 @@
 
     <div class="form-group">
         <label>Add Skills</label>
-        <div class="col-sm-10 d-flex gap-3 flex-wrap">
+        <div class="col-sm-12 col-md-10 d-flex justify-content-between flex-wrap">
             
-            <div class="col-12 col-sm-4">
+            <div class="col-12 col-sm-4 mb-3">
                 <select id="SelectedSkillIds" name="SelectedSkillIds" class="form-select" >
                     <option value="0" selected>Select Skill</option>
 
@@ -67,7 +67,7 @@
 
                 </select>
             </div>
-            <div class="col-12 col-sm-4">
+            <div class="col-12 col-sm-4 mb-3">
                 <select id="levelSelect" class="form-select">
                     <option value="0" selected>Select Proficiency</option>
                     @for(int i = 1; i<=10;i++){
@@ -77,13 +77,13 @@
                 </select>
             </div>
 
-            <div class="col-6 col-sm-3">
+            <div class="col-6 col-sm-3 mb-2">
                 <button id="addSkill" class="btn btn-info  bg-gradient  w-100">Add</button>
             </div>
         </div>
                 <span asp-validation-for="EmployeeSkillsAndLevels"></span>
         <div id="skill-form-error" class="text-danger"></div>
-        <div id="skillsContainer" class="d-flex gap-4 flex-wrap col-sm-11 mt-4">
+        <div id="skillsContainer" class="d-flex gap-4 flex-wrap col-sm-11 mt-1">
             @for (int index = 0; index < Model.EmployeeSkillsAndLevels.Count; index++)
             {
                 var skill = Model.EmployeeSkillsAndLevels[index];
