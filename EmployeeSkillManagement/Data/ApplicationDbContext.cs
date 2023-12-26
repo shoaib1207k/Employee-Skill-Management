@@ -15,7 +15,6 @@ namespace EmployeeSkillManagement.Data
         {
             
         }
-        public DbSet<Admin> Admins { get; set; }
         public DbSet<Employee> Employees { get; set; }
         
         public DbSet<EmployeeSkillAndLevel> EmployeeSkillAndLevels { get; set; }
