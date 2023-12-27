@@ -42,9 +42,11 @@ namespace EmployeeSkillManagement.Controllers
             try{
                 if(ModelState.IsValid){
                     await _skillRepository.AddSkillAsync(skill);
+                    TempData["SuccessMessage"] = "New skill created successfully!";
+
                     return RedirectToAction("Index");
                 }
-            } catch(System.Exception ex){
+            } catch(Exception ex){
                 TempData["ErrorMessage"] = ex.Message;
             }
             return View(skill);
@@ -54,6 +56,9 @@ namespace EmployeeSkillManagement.Controllers
         {
             try{
                 await _skillRepository.DeleteSkillAsync(id);
+                
+                TempData["SuccessMessage"] = "Skill deleted successfully!";
+
             }catch(Exception ex){
                 TempData["ErrorMessage"] = ex.Message;
             }
@@ -66,8 +71,11 @@ namespace EmployeeSkillManagement.Controllers
                 if (ModelState.IsValid)
                 {
                     await _skillRepository.UpdateSkillAsync(skill);
+
+                    TempData["SuccessMessage"] = "Skill updated successfully!";
+                    
                 }
-            }catch(System.Exception ex){
+            }catch(Exception ex){
                 TempData["ErrorMessage"] = ex.Message;
             }
 

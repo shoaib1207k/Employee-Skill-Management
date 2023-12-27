@@ -1,0 +1,46 @@
+@{
+    if(TempData["ErrorMessage"]!=null){
+        var message = TempData["ErrorMessage"] as string;
+        <div class="toast-container position-absolute top-0 end-0 p-3">
+            <div class="toast align-items-center text-white bg-danger bg-gradient shadow border-0" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="d-flex">
+                    <div class="toast-body">
+                        <text class="fw-bold">@message</text>
+                    </div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                var toastElement = document.querySelector('.toast');
+                var toast = new bootstrap.Toast(toastElement);
+                toast.show();
+            });
+
+        </script>
+    }
+    if(TempData["SuccessMessage"]!=null){
+        var message = TempData["SuccessMessage"] as string;
+        <div class="toast-container position-absolute top-0 end-0 p-3">
+            <div class="toast align-items-center text-white bg-success bg-gradient shadow border-0" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="d-flex">
+                    <div class="toast-body">
+                        <text>@message</text>
+                    </div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                var toastElement = document.querySelector('.toast');
+                var toast = new bootstrap.Toast(toastElement);
+                toast.show();
+            });
+
+        </script>
+    }
+}

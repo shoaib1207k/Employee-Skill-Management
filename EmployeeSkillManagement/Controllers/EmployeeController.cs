@@ -50,7 +50,6 @@ namespace EmployeeSkillManagement.Controllers
             var viewModel = new UpsertEmployeeViewModel{
                 DesignationOptions = await GetDesignationOptions(),
                 SkillOptions = await GetSkillOptions(),
-                // Employee = new Employee()
             };
 
             return View("Upsert",viewModel);
@@ -83,17 +82,19 @@ namespace EmployeeSkillManagement.Controllers
         public async Task<IActionResult> Upsert(UpsertEmployeeViewModel viewModel){
             try
             {   
-                if(viewModel.EmployeeSkillsAndLevels.Count==0){
-                    ModelState.AddModelError("EmployeeSkillsAndLevels","Atleast one skill is required");
-                }
-
-
                 if(ModelState.IsValid){
                     await _employeeRepository.UpsertEmployeeFromCreateViewModelAsync(viewModel);
+
+                    if(viewModel.EmployeeId==0){
+                        TempData["SuccessMessage"] = "New Employee created successfully!";
+                    }else{
+                        TempData["SuccessMessage"] = "Employee data updated successfully!";
+                    }
+
                     return RedirectToAction("Index");
                 }
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 TempData["ErrorMessage"] = ex.Message;
             }
@@ -107,10 +108,11 @@ namespace EmployeeSkillManagement.Controllers
             try
             {
                 await _employeeRepository.DeleteEmployeeAsync(id);
+                TempData["SuccessMessage"] = "Employee deleted successfully!";
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
-                TempData["ErrorMessage"] ="Something went wrong.";
+                TempData["ErrorMessage"] = ex.Message;
             }
             return RedirectToAction("Index");
         }
