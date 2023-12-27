@@ -29,11 +29,33 @@ body *{
   font-family: 'Poppins', sans-serif;
 }
 
-
-
 footer{
   background-color: white;
 } 
+
+input,select{
+  border: 1.5px solid hsl(246, 25%, 77%)!important;
+}
+input:focus,select:focus{
+  border: 2px solid #5D54A3!important;
+}
+label{
+  color: #4b0082b0;
+}
+/* form validation */
+.input-validation-error, .input-validation-error:focus{
+  border-color: rgba(220,53,69)!important;
+  color: rgba(220,53,69);
+}
+.input-validation-error::placeholder{
+  color: rrgba(220,53,69)ed;
+}
+.form-group small {
+  height: 20px;
+  display: block;
+}
+
+
 /* navbar  */
 
 @media (min-width: 576px) {

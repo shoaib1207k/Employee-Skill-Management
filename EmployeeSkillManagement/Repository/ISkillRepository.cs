@@ -13,6 +13,6 @@ namespace EmployeeSkillManagement.Repository
         public Task AddSkillAsync(Skill skill);
         public Task DeleteSkillAsync(int id);
         public Task UpdateSkillAsync(Skill skill);
-        public Task<bool> IsSkillExistByNameAsync(string skillName);
+        public Task<bool> IsSkillExistByNameAsync(Skill skill);
     }
 }

@@ -82,7 +82,12 @@ namespace EmployeeSkillManagement.Controllers
         [HttpPost]
         public async Task<IActionResult> Upsert(UpsertEmployeeViewModel viewModel){
             try
-            { 
+            {   
+                if(viewModel.EmployeeSkillsAndLevels.Count==0){
+                    ModelState.AddModelError("EmployeeSkillsAndLevels","Atleast one skill is required");
+                }
+
+
                 if(ModelState.IsValid){
                     await _employeeRepository.UpsertEmployeeFromCreateViewModelAsync(viewModel);
                     return RedirectToAction("Index");

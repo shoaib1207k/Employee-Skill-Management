@@ -17,7 +17,12 @@
         <div class="col-sm-3 ">
             <button type="submit" class="btn btn-primary  bg-gradient w-100">Save</button>
         </div>
-            <span asp-validation-for="SkillName" class="text-danger"></span>
+           <small> <span asp-validation-for="SkillName" class="text-danger"></span></small>
 
     </form>
 </div>
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial"/>
+    }
+}

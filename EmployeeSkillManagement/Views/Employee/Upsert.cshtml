@@ -19,37 +19,37 @@
 
 <form class="row" method="post" asp-controller="Employee" asp-action="Upsert">
     <input hidden asp-for="EmployeeId" value="@Model.EmployeeId">
-  <div class="form-group col-sm-6 col-md-5 mb-4">
+  <div class="form-group col-sm-6 col-md-5 mb-1">
     <label asp-for="FirstName"></label>
-    <input asp-for="FirstName" class="form-control" placeholder="Enter ">
-    <span asp-validation-for="FirstName"></span>
+    <input asp-for="FirstName" class="form-control" placeholder="First Name ">
+    <small><span asp-validation-for="FirstName" class="text-danger"></span></small>
   </div>
-  <div class="form-group col-sm-6 col-md-5 mb-4">
+  <div class="form-group col-sm-6 col-md-5 mb-1">
     <label asp-for="LastName"></label>
-    <input asp-for="LastName" class="form-control" placeholder="Enter ">
-    <span asp-validation-for="LastName"></span>
+    <input asp-for="LastName" class="form-control" placeholder="Last Name ">
+    <small><span asp-validation-for="LastName" class="text-danger"></span></small>
   </div>
-  <div class="form-group col-sm-6 col-md-5 mb-4">
+  <div class="form-group col-sm-6 col-md-5 mb-1">
     <label asp-for="DesignationId"></label>
     <select asp-for="DesignationId" asp-items="@Model.DesignationOptions" value="@Model.DesignationId" class="form-select">
         <option value="">Select Designation</option>
     </select>
-    <span asp-validation-for="DesignationId"></span>
+    <small><span asp-validation-for="DesignationId" class="text-danger"></span></small>
   </div>
-  <div class="form-group col-sm-6 col-md-5 mb-4">
+  <div class="form-group col-sm-6 col-md-5 mb-1">
     <label asp-for="Email"></label>
-    <input asp-for="Email" class="form-control" placeholder="Enter ">
-    <span asp-validation-for="Email"></span>
+    <input asp-for="Email" class="form-control" placeholder="Email Address ">
+    <small><span asp-validation-for="Email" class="text-danger"></span></small>
   </div>
-  <div class="form-group col-sm-6 col-md-5 mb-4">
+  <div class="form-group col-sm-6 col-md-5 mb-1">
     <label asp-for="DateOfJoining"></label>
     @{
         var dateValue = Model.DateOfJoining != default(DateOnly)
             ? Model.DateOfJoining.ToString("yyyy-MM-dd")
             : null;
     }
-    <input asp-for="DateOfJoining" class="form-control" type="date" placeholder="Enter" value="@dateValue">
-    <span asp-validation-for="DateOfJoining"></span>
+    <input asp-for="DateOfJoining" class="form-control" type="date" placeholder="Date of joining" value="@dateValue">
+    <small><span asp-validation-for="DateOfJoining" class="text-danger"></span></small>
   </div>
 
     <div class="form-group">
@@ -81,7 +81,7 @@
                 <button id="addSkill" class="btn btn-info  bg-gradient  w-100">Add</button>
             </div>
         </div>
-                <span asp-validation-for="EmployeeSkillsAndLevels"></span>
+
         <div id="skill-form-error" class="text-danger"></div>
         <div id="skillsContainer" class="d-flex gap-4 flex-wrap col-sm-11 mt-1">
             @for (int index = 0; index < Model.EmployeeSkillsAndLevels.Count; index++)
@@ -103,9 +103,9 @@
     <div class="from-group col-sm-5 mt-3">
         @{
             if(Model.EmployeeId==0){
-                <button type="submit" class="btn btn-primary bg-gradient col-sm-6">Save</button>
+                <button type="submit" class="save-btn btn btn-primary bg-gradient col-sm-6">Save</button>
             }else{
-                <button type="submit" class="btn btn-primary bg-gradient col-sm-6">Update</button>
+                <button type="submit" class="save-btn btn btn-primary bg-gradient col-sm-6">Update</button>
             }
         }
     </div>
@@ -114,3 +114,9 @@
 
 </form>
 </div>
+
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial"/>
+    }
+}

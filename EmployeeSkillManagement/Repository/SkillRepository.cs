@@ -27,7 +27,7 @@ namespace EmployeeSkillManagement.Repository
 
         public async Task AddSkillAsync(Skill skill)
         {
-            if(await IsSkillExistByNameAsync(skill.SkillName)){
+            if(await IsSkillExistByNameAsync(skill)){
                 throw new Exception("Skill with this name already exists");
             }
            
@@ -66,7 +66,8 @@ namespace EmployeeSkillManagement.Repository
 
         public async Task UpdateSkillAsync(Skill skill)
         {   
-            if(await IsSkillExistByNameAsync(skill.SkillName)){
+            if(await IsSkillExistByNameAsync(skill)){
+
                 throw new Exception("Skill with this name already exist");
             }
             using (var transaction = _db.Database.BeginTransaction())
@@ -122,16 +123,17 @@ namespace EmployeeSkillManagement.Repository
                 throw new Exception("Skill Not Found");
         }
 
-        public async Task<bool> IsSkillExistByNameAsync(string skillName){
+        public async Task<bool> IsSkillExistByNameAsync(Skill skill){
             try{
-            Skill? skillInDb = await _db.Skills
-                        .FirstOrDefaultAsync(s=> s.SkillName.ToLower() == skillName.ToLower());
-            if(skillInDb==null){
-                return false;
-            }else{
-                return true;
-            }
-            
+                Skill? skillInDb = await _db.Skills
+                            .FirstOrDefaultAsync(s=> s.SkillName.ToLower() == skill.SkillName.ToLower());
+                if(skillInDb==null){
+                    return false;
+                }else if(skill.Id == skillInDb.Id){
+                    return false;
+                }else{
+                    return true;
+                }
             } catch(Exception){
                 throw new Exception("Something went wrong!");
             }
