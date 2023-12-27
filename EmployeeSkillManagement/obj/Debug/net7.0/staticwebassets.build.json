@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "a3mMMoxaP5zSUYm14viw9jCnJwGN1bVt/t2PDpdfppY=",
+  "Hash": "/PyduR5FaNxNl3/pGSSiPfibJx1olig5HkMtpfd35DM=",
   "Source": "EmployeeSkillManagement",
   "BasePath": "_content/EmployeeSkillManagement",
   "Mode": "Default",
@@ -66,23 +66,6 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\Employee.css"
-    },
-    {
-      "Identity": "C:\\Projects\\EmployeeSkillManagement\\EmployeeSkillManagement\\wwwroot\\css\\Home-Index.css",
-      "SourceId": "EmployeeSkillManagement",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Projects\\EmployeeSkillManagement\\EmployeeSkillManagement\\wwwroot\\",
-      "BasePath": "_content/EmployeeSkillManagement",
-      "RelativePath": "css/Home-Index.css",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\css\\Home-Index.css"
     },
     {
       "Identity": "C:\\Projects\\EmployeeSkillManagement\\EmployeeSkillManagement\\wwwroot\\css\\site.css",

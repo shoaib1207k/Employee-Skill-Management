@@ -40,7 +40,9 @@ jQuery(document).ready(function($){
             $("#skill-form-error").hide();
         }else{
             $("#skill-form-error").show();
-            $("#skill-form-error").text("Please choose a skill and proficiency level")
+            $("#skill-form-error").text("Please choose a skill and proficiency level");
+            $("#SelectedSkillIds").addClass("input-validation-error");
+            $("#levelSelect").addClass("input-validation-error");
         }
 
     });
@@ -50,14 +52,23 @@ jQuery(document).ready(function($){
         updateSkillIndex();                             
     });
     
-    // update indexing on remove 
-    function updateSkillIndex() {
-        $('.skill-level').each(function (index) {
-            $(this).find('input[name$=".SkillId"]').attr('name', `EmployeeSkillsAndLevels[${index}].SkillId`);
-            $(this).find('input[name$=".SkillName"]').attr('name', `EmployeeSkillsAndLevels[${index}].SkillName`);
-            $(this).find('input[name$=".SkillLevel"]').attr('name', `EmployeeSkillsAndLevels[${index}].SkillLevel`);
-        });
-    }
+    $('.save-btn').on('click', function(e){
+        if(!$('.skill-level').length > 0 && $('form').valid()){
+            e.preventDefault();
+            $("#skill-form-error").show();
+            $("#skill-form-error").text("Please choose a skill and proficiency level");
+            $("#SelectedSkillIds").addClass("input-validation-error");
+            $("#levelSelect").addClass("input-validation-error");
+        }
+
+        if(!$('.skill-level').length > 0 && !$('form').valid()){
+            $("#skill-form-error").show();
+            $("#skill-form-error").text("Please choose a skill and proficiency level");
+            $("#SelectedSkillIds").addClass("input-validation-error");
+            $("#levelSelect").addClass("input-validation-error");
+        }
+    })
+    
     
 
     // Delete ajax function
@@ -121,6 +132,14 @@ jQuery(document).ready(function($){
         });
     }
 
+    // update indexing on remove 
+    function updateSkillIndex() {
+        $('.skill-level').each(function (index) {
+            $(this).find('input[name$=".SkillId"]').attr('name', `EmployeeSkillsAndLevels[${index}].SkillId`);
+            $(this).find('input[name$=".SkillName"]').attr('name', `EmployeeSkillsAndLevels[${index}].SkillName`);
+            $(this).find('input[name$=".SkillLevel"]').attr('name', `EmployeeSkillsAndLevels[${index}].SkillLevel`);
+        });
+    }
 
     function employeesFilterAjax(){
         let empNameOrId = $("#filterNameOrId").val();
