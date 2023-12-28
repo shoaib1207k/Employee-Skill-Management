@@ -97,6 +97,28 @@ label{
 
 
 /* navbar  */
+
+.side-navbar-header{
+  background: indigo;
+}
+li.nav-item {
+  background: indigo;
+  width: 80%;
+  margin: 20px auto 0;
+  /* box-shadow: 0 3px 6px #e6e6fa24; */
+  border-radius: 8px;
+}
+li.nav-item:hover {
+  background: white;
+}
+li.nav-item .nav-link{
+  color: white!important;
+  font-weight: 500;
+}
+li.nav-item:hover .nav-link {
+  color: indigo!important;
+}
+
 @media (min-width: 576px) {
   .side-navbar-header {
       min-height: calc(100vh - 57px);
