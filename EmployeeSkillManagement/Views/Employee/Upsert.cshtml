@@ -8,13 +8,6 @@
     }
 }
 
-@{
-    var message = TempData["ErrorMessage"] as string;
-}
-
-<div>
-    <p class="text-danger">@message</p>
-</div>
 <div class="p-4 shadow-sm rounded mt-2 bg-white">
 
 <form class="row" method="post" asp-controller="Employee" asp-action="Upsert">

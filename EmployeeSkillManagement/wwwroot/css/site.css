@@ -55,9 +55,48 @@ label{
   display: block;
 }
 
+/* toast */
+.toast-container .toast-body{
+  letter-spacing: 1px;
+  font-weight: 500;
+}
+.btn-primary {
+  color: #fff;
+  background-color: rgba(103,2,175);
+  border-color: #0d6efd;
+  border-radius: 24px;
+  box-shadow: 0px 3px 0px rgba(59, 0, 101, 0.3);
+
+}
+.btn-primary:hover {
+  background-color: indigo;
+}
+.btn-info{
+  box-shadow: 0px 3px 0px #0069be70;
+  color: white;
+}
+ .btn.bg-light{
+  box-shadow: 0px 3px 0px rgba(0,0,0,0.3);
+}
+.btn-secondary{
+  box-shadow: 0px 3px 0px rgba(0,0,0,0.7);
+}
+.btn-danger{
+  box-shadow: 0px 3px 0px #901723;
+}
+.btn-success{
+  box-shadow: 0 3px 0px #086238;
+}
+.btn{
+  font-weight: 500;
+}
+.btn:active{
+  box-shadow: none;
+  transform: translateY(1px);
+}
+
 
 /* navbar  */
-
 @media (min-width: 576px) {
   .side-navbar-header {
       min-height: calc(100vh - 57px);

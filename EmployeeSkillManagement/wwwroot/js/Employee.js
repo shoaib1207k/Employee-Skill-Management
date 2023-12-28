@@ -144,7 +144,7 @@ jQuery(document).ready(function($){
     function employeesFilterAjax(){
         let empNameOrId = $("#filterNameOrId").val();
         let skillId = $("#filterSkill").val();
-       
+        $('#spinner-container').removeClass('d-none');
         let filterData = {
             'empNameOrId': empNameOrId,
             'skillId': skillId
@@ -156,6 +156,7 @@ jQuery(document).ready(function($){
                 type: "POST",
                 data: filterData,
                 success: function(response){
+                    $('#spinner-container').addClass('d-none');
                     console.log(response)
                     $("#employeeListDiv").html(response);
                 }
