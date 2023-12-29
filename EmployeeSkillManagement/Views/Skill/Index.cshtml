@@ -1,21 +1,15 @@
 @model List<Skill>
-
+@{
+    ViewData["Title"] = "Skills";
+}
 <div class="d-flex">
-    <h4 class="p-2 col-4">Skills</h4>
+    <h5 class="p-2 col-4 text-uppercase">Skills List</h5>
     <div class="col-3">
         <a asp-controller="Skill" asp-action="Create" class="btn btn-primary  bg-gradient ">Create New Skill</a>
     </div>
 </div>
 
-@{
-    var message = TempData["ErrorMessage"] as string;
-}
-
-<div>
-    <p class="text-danger">@message</p>
-</div>
-
-<div class="shadow p-4 bg-white">
+<div class="shadow-sm rounded p-4 bg-white">
     @{
         int index = 0;
         foreach (var skill in Model)
@@ -31,7 +25,7 @@
                 <form asp-controller="Skill" asp-action="Update" method="post" class="col-3 justify-content-between mb-2">
                     <input type="hidden" asp-for="@skill.Id" value="@skill.Id" />
                     <input id="update-skill-@index" type="hidden" asp-for="@skill.SkillName" value="@skill.SkillName" />
-                    <button type="submit" class="btn btn-info  bg-gradient w-100" >Update</button>
+                    <button type="submit" class="btn btn-warning  bg-gradient w-100" >Update</button>
                 </form>
 
                 <form asp-controller="Skill" asp-action="Delete" method="post" class="col-3 justify-content-between mb-2">

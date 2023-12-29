@@ -2,9 +2,11 @@
 
 @{
     if(Model.EmployeeId==0){
-        <h4 class="p-2">Create New Employee</h4>
+        ViewData["Title"] = "Create Employee";
+        <h5 class="p-2 text-uppercase">Create New Employee</h5>
     }else{
-        <h4 class="p-2">Update Employee's Details</h4>
+        ViewData["Title"] = "Update Employee";
+        <h5 class="p-2 text-uppercase">Update Employee's Details</h5>
     }
 }
 
@@ -71,7 +73,7 @@
             </div>
 
             <div class="col-6 col-sm-3 mb-2">
-                <button id="addSkill" class="btn btn-info  bg-gradient  w-100">Add</button>
+                <button id="addSkill" class="btn btn-secondary  bg-gradient  w-100">Add</button>
             </div>
         </div>
 

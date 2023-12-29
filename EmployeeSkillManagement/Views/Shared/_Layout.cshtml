@@ -15,25 +15,27 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.dataTables.min.css" />
 
-    @* ToastR *@
-    <link rel="stylesheet" href="cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
     @* Google font *@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,400;0,500;1,100;1,500;1,700&display=swap" rel="stylesheet">
+
 </head>
 <body>
     <div class="super-contianer d-sm-flex">
         @if(User.Identity!.IsAuthenticated){
-        <header class="side-navbar-header col-sm-3 bg-gradient">
-            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-sm-bottom  pt-4">
+        <header class="side-navbar-header col-sm-3 bg-gradient mb-4 mb-sm-0 border-end">
+            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark">
                 <div class="container-fluid flex-sm-column p-0">
-                    <a class="text-center mt-sm-5 mb-sm-5 text-light" style="text-decoration:none"asp-area="" asp-controller="Home" asp-action="Index">Employee Skill Management</a>
+                    <a class="text-center mt-sm-4 mb-sm-4 text-light logo" style="text-decoration:none"asp-area="" asp-controller="Home" asp-action="Index">
+                        <img src="~/Content/Images/capgemini-logo.png">
+                        @* <div>Employee <br>Skill Management</div> *@
+                        </a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                             aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
-                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between border-top w-100 text-center">
+                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between w-100 text-center">
                         <ul class="navbar-nav flex-grow-1 flex-sm-column">
                             <li class="nav-item">
                                 <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Index">Home</a>
@@ -53,21 +55,25 @@
             </nav>
         </header>
         }
-        <div class="container main-container">
-            <main role="main" class="">
-                <partial name="_Notifications"></partial>
-                @RenderBody()
-            </main>
+        <div class="w-100 right-side-content">
+            <div class="top-bar w-100 bg-gradient d-none d-sm-block"><h4 class="me-5">Employee Skill Management</h4></div>
+            <div class="container main-container">
+                <main role="main" class="">
+                    <partial name="_Notifications"></partial>
+                    @RenderBody()
+                </main>
+            </div>
+              @if(User.Identity!.IsAuthenticated){
+                <footer class=" p-3 ">
+                    <div class="container d-flex justify-content-center align-items-center">
+                        &copy; 2023 - Employee Skill Management - Made by Shoaib
+                    </div>
+                </footer>
+                }
         </div>
     </div>
 
-    @if(User.Identity!.IsAuthenticated){
-    <footer class="bg-dark text-muted p-3 ">
-        <div class="container d-flex justify-content-center align-items-center">
-            &copy; 2023 - EmployeeSkillManagement - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
-    }
+  
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
