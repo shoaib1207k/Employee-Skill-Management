@@ -123,16 +123,11 @@ main {
 }
 
 .logo img {
-  width: 4rem;
-  box-shadow: 0 1px 8px #12ABDB;
+  width: 60%;
   border-radius: 5px;
-  padding: 5px;
-  background: white;
 }
 
-.logo img:hover {
-  box-shadow: 0 1px 8px #fff;
-}
+
 
 .text-primary{
 color: #0070AD!important;
@@ -141,7 +136,7 @@ color: #0070AD!important;
 /* navbar  */
 
 .side-navbar-header{
-  background: #0070AD;
+  /* background: ; */
 }
 li.nav-item {
   width: 80%;
@@ -149,22 +144,48 @@ li.nav-item {
   border-radius: 4px;
 }
 li.nav-item:hover {
-  background: white;
+  background: #0070AD;
 }
 li.nav-item .nav-link{
-  color: white!important;
+  color: #0070AD!important;
   font-weight: 500;
   text-transform: uppercase;
 }
 li.nav-item:hover .nav-link {
-  color: #0070AD!important;
+  color: #fff!important;
 }
 
 .right-side-content{
   position: relative;
 }
 
+/* login page */
 
+.login-card{
+  width: 30%;
+  margin: auto;
+}
+.logo-text{
+  border-left: 3px solid #0070AD;
+  padding-left: 5px;
+  text-transform: capitalize;
+  font-weight: 500;
+  font-size: 1.25rem;
+}
+.logo-text span{
+  color: #0070AD;
+  font-weight: 700;
+}
+.left{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.left img {
+  width: 50%;
+}
 @media (min-width: 576px) {
   .side-navbar-header {
       min-height:100vh;
