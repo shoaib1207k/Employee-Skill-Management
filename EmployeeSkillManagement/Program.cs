@@ -44,8 +44,11 @@ builder.Services.AddAuthentication(options =>
     };
 });
 builder.Services.AddAuthorization(options =>
-{
-    options.AddPolicy("RequireAdminRole", policy => policy.RequireRole("Admin"));
+{   
+    options.AddPolicy("RequireAdminRole", policy =>{
+        policy.RequireAuthenticatedUser(); // Require authentication
+        policy.RequireRole("Admin"); // Required Admin authorization
+    });
 });
 
 

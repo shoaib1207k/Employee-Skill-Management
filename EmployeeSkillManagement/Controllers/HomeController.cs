@@ -15,7 +15,10 @@ public class HomeController : Controller
     }
 
     public IActionResult Index()
-    {
+    {var isAuthenticated = User.Identity.IsAuthenticated;
+
+        // Log authentication state
+        _logger.LogInformation($"User is authenticated: {isAuthenticated}");
         return View();
     }
 

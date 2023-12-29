@@ -12,3 +12,6 @@
     padding: 5px;
     padding-left: 10px;
 }
+.generate-report {
+    transform: translateY(-3px);
+}

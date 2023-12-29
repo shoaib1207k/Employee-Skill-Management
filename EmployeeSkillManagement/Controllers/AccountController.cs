@@ -90,9 +90,14 @@ namespace EmployeeSkillManagement.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
         {
-            await _signInManager.SignOutAsync();
-            return RedirectToAction("Index", "Home"); // Replace with your desired action and controller
+            if (User.Identity.IsAuthenticated)
+            {
+                await _signInManager.SignOutAsync();
+                await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            }
+            return RedirectToAction("Index", "Home");
         }
+
 
         public IActionResult Index()
         {

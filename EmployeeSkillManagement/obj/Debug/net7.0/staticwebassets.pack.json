@@ -5,6 +5,10 @@
       "PackagePath": "staticwebassets\\EmployeeSkillManagement.bundle.scp.css"
     },
     {
+      "Id": "C:\\Projects\\EmployeeSkillManagement\\EmployeeSkillManagement\\wwwroot\\Content\\Images\\capgemini-logo.png",
+      "PackagePath": "staticwebassets\\Content\\Images\\capgemini-logo.png"
+    },
+    {
       "Id": "C:\\Projects\\EmployeeSkillManagement\\EmployeeSkillManagement\\wwwroot\\Content\\Images\\cg-logo.png",
       "PackagePath": "staticwebassets\\Content\\Images\\cg-logo.png"
     },

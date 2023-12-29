@@ -25,11 +25,11 @@
     <div class="super-contianer d-sm-flex">
         @if(User.Identity!.IsAuthenticated){
         <header class="side-navbar-header col-sm-3 bg-gradient mb-4 mb-sm-0 border-end">
-            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark">
+            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light">
                 <div class="container-fluid flex-sm-column p-0">
-                    <a class="text-center mt-sm-4 mb-sm-4 text-light logo" style="text-decoration:none"asp-area="" asp-controller="Home" asp-action="Index">
-                        <img src="~/Content/Images/capgemini-logo.png">
-                        @* <div>Employee <br>Skill Management</div> *@
+                    <a class="text-center mt-sm-4 mb-sm-4 text-light logo" asp-controller="Home" asp-action="Index">
+                        <img src="~/Content/Images/capgemini-logo.png" class="logo-name mt-3">
+                        <img src="~/Content/Images/cg-logo.png" class="logo-icon mt-3" style="display:none">
                         </a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                             aria-expanded="false" aria-label="Toggle navigation">
@@ -38,25 +38,39 @@
                     <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between w-100 text-center">
                         <ul class="navbar-nav flex-grow-1 flex-sm-column">
                             <li class="nav-item">
-                                <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                                <a class="nav-link" asp-controller="Home" asp-action="Index">
+                                    <i class="bi bi-house-door-fill me-2"></i><span>Home</span></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link " asp-area="" asp-controller="Employee" asp-action="Index">Manage Employee</a>
+                                <a class="nav-link" asp-controller="Employee" asp-action="Index">
+                                    <i class="bi bi-people-fill me-2"></i><span>Manage Employees</span></a>
+                            </li>
+                            
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Skill" asp-action="Index">
+                                    <i class="bi bi-gear-fill me-2"></i><span>Manage Skills</span></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link " asp-area="" asp-controller="Employee" asp-action="Create">Create Employee</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link " asp-area="" asp-controller="Skill" asp-action="Index">Manage Skills</a>
+                                <a href="javascript:void(0)" class="nav-link" data-bs-toggle="modal" data-bs-target="#logout-modal">
+                                   <i class="bi bi-box-arrow-left me-2"></i><span>Logout</span></a>
                             </li>
                         </ul>
                     </div>
                 </div>
+                <div id="navbar-half-hide-toggle">
+                <i class="bi bi-chevron-double-left"></i>
+            </div>
             </nav>
+
+            
         </header>
         }
         <div class="w-100 right-side-content">
+        @if(User.Identity!.IsAuthenticated){
             <div class="top-bar w-100 bg-gradient d-none d-sm-block"><h4 class="me-5">Employee Skill Management</h4></div>
+        }else{
+            <div class="top-bar w-100 bg-gradient d-block mb-5"><h4 class="me-5">Employee Skill Management</h4></div>
+        }
             <div class="container main-container">
                 <main role="main" class="">
                     <partial name="_Notifications"></partial>
@@ -73,6 +87,9 @@
         </div>
     </div>
 
+    <div id="logoutModal">
+        <partial name="_LogoutConfirmModal"></partial>
+    </div>
   
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

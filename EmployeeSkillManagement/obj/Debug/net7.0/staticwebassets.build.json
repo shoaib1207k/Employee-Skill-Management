@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "/2VFR4tW8v6ZUhFhvLYnL2JuSBBRJCCgbJrZrPGwLmo=",
+  "Hash": "de5ZiFrk4Ww6MydH9bSSgbnu4KRCmRb56n/BBeGV488=",
   "Source": "EmployeeSkillManagement",
   "BasePath": "_content/EmployeeSkillManagement",
   "Mode": "Default",
@@ -49,6 +49,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "C:\\Projects\\EmployeeSkillManagement\\EmployeeSkillManagement\\obj\\Debug\\net7.0\\scopedcss\\projectbundle\\EmployeeSkillManagement.bundle.scp.css"
+    },
+    {
+      "Identity": "C:\\Projects\\EmployeeSkillManagement\\EmployeeSkillManagement\\wwwroot\\Content\\Images\\capgemini-logo.png",
+      "SourceId": "EmployeeSkillManagement",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Projects\\EmployeeSkillManagement\\EmployeeSkillManagement\\wwwroot\\",
+      "BasePath": "_content/EmployeeSkillManagement",
+      "RelativePath": "Content/Images/capgemini-logo.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Content\\Images\\capgemini-logo.png"
     },
     {
       "Identity": "C:\\Projects\\EmployeeSkillManagement\\EmployeeSkillManagement\\wwwroot\\Content\\Images\\cg-logo.png",

@@ -51,15 +51,34 @@ main {
   margin-bottom:50px;
 }
 .top-bar {
-  /* position: absolute; */
-  top: 0;
+  height: 56px;
   padding: 10px;
-  left: 0;
   background-color: #0070AD!important;
   color: white;
   text-align: center;
   text-transform: uppercase;
 }
+
+#navbar-half-hide-toggle {
+  height: 56px;
+  width: 56px;
+  background-color: red;
+  color: white;
+  font-weight: 700;
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 28px 0 0 28px;
+  cursor: pointer;
+  font-size: 1.65rem;
+}
+#navbar-half-hide-toggle i{
+transition: all 0.5s ease;
+}
+
 
 /* form validation */
 .input-validation-error, .input-validation-error:focus{
@@ -85,6 +104,9 @@ main {
   border-color: #0070AD;
   box-shadow: 0px 3px 0px #014a71;
 
+}
+.btn-danger {
+  background-color: #f00017;
 }
 .btn-primary:hover {
   background-color: #0070AD;
@@ -136,33 +158,31 @@ color: #0070AD!important;
 /* navbar  */
 
 .side-navbar-header{
-  /* background: ; */
+  background: #fff;
 }
 li.nav-item {
   width: 80%;
   margin: 20px auto 0;
-  border-radius: 4px;
 }
-li.nav-item:hover {
-  background: #0070AD;
-}
+
 li.nav-item .nav-link{
   color: #0070AD!important;
   font-weight: 500;
   text-transform: uppercase;
+  border-radius: 4px;
+
 }
-li.nav-item:hover .nav-link {
+li.nav-item .nav-link:hover, li.nav-item .nav-link.active{
   color: #fff!important;
+  background: #0070AD;
+
 }
 
-.right-side-content{
-  position: relative;
-}
 
 /* login page */
 
 .login-card{
-  width: 30%;
+  width: 36%;
   margin: auto;
 }
 .logo-text{
@@ -190,6 +210,19 @@ li.nav-item:hover .nav-link {
   .side-navbar-header {
       min-height:100vh;
       width: 25%;
+    transition: all 0.5s ease;
+
+  }
+  .side-navbar-header.half-hide{
+    width: 10%;
+    transition: all 0.5s ease;
+  }
+  .side-navbar-header.half-hide span{
+    display: none;
+  }
+  .nav-is-half-hide i {
+      transform: rotate(180deg);
+      transition: all 0.5s ease;
   }
   .side-navbar-header .navbar{
       height: 100%;
@@ -201,7 +234,21 @@ li.nav-item:hover .nav-link {
       padding-bottom: 1rem;
       position: relative;
     }
-  
+
+ 
+}
+@media(max-width: 1024px){
+  .login-card{
+    width: 50%;
+  }
+}
+@media (max-width:768px) {
+  label{
+    font-size: 11px;
+  }
+  .login-card{
+    width: 75%;
+  }
 }
 
 @media(max-width: 576px){
@@ -214,4 +261,11 @@ li.nav-item:hover .nav-link {
   body{
     padding-bottom: 60px;
   }
+  .logo{
+    width: 25%;
+  }
+  .login-card{
+    width: 90%;
+  }
+
 }

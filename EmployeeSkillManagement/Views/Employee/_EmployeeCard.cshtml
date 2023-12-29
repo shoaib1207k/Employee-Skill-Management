@@ -2,22 +2,26 @@
 
 @foreach(var employee in Model){
 
-<div class="d-sm-flex p-3 mb-2 border rounded bg-white ">
-    <div class="col-sm-4 mb-4 mb-sm-0">
-        <h6 class="text-primary fw-bold m-0 text-capitalize">@employee.FirstName @employee.LastName</h6>
-        <p class="text-muted">@employee.Designation!.DesignationName</p>
+<div class="d-sm-flex p-3 mb-2 border rounded bg-white justify-content-around flex-wrap">
+    <div class="col-sm-4 mb-4 mb-lg-0">
+        <h6 class="text-primary fw-bold m-0 text-capitalize">
+            <i class="bi bi-person-vcard me-1"></i>@employee.FirstName @employee.LastName</h6>
+        <p class="text-muted">
+            @employee.Designation!.DesignationName</p>
         <p class="mb-1">
-            <span class="fw-normal ">Date of Joining:</span> 
+            <span class="fw-normal ">
+                <i class="bi bi-calendar-day me-1"></i>Date of Joining:</span> 
             <br class="d-none d-sm-block d-lg-none">
             <span class="fw-bold">@employee.DateOfJoining</span>
         </p>
         <p class="mb-1">
-            <span class="fw-normal ">Email Address:</span> 
+            <span class="fw-normal">
+                <i class="bi bi-envelope-at me-1"></i>Email Address:</span> 
             <br class="d-none d-sm-block d-lg-none">
             <span class="fw-bold">@employee.Email</span>
         </p>
     </div>        
-    <div class="col-sm-4 text-center border-start border-end border-info rounded mb-4 mt-4 m-sm-0 pt-2 pb-2">
+    <div class="col-sm-4 text-center border-start border-end border-info rounded mb-4 mt-4 m-lg-0 pt-2 pb-2">
         <div class="d-flex">
             <div class="col-6 col-sm-5"><h6>Skills</h6></div>
             <div class="col-6 col-sm-5"><h6>Proficiency</h6></div>
@@ -32,16 +36,17 @@
             }
         </div>
     </div>
-    <div class="col-sm-3 d-flex flex-sm-column justify-content-evenly ms-sm-5">
-        <div class="col-5 col-sm-12">
+    <div class="col-12 col-lg-3 d-flex flex-lg-column justify-content-evenly ms-lg-5">
+        <div class="col-5 col-lg-12">
             <form asp-controller="Employee" asp-action="Update" method="POST">
                 <input hidden name="id" value="@employee.Id"/>
-                <button type="submit" class="btn btn-secondary bg-gradient w-100">Edit</button>
+                <button type="submit" class="btn btn-secondary bg-gradient w-100">
+                    <i class="bi bi-pencil-square me-2"></i>Edit</button>
             </form>
         </div>
-        <div class="col-5 col-sm-12">
+        <div class="col-5 col-lg-12">
             <button class="btn btn-danger bg-gradient w-100 delete-employee" data-emp-id="@employee.Id">
-                Delete
+                <i class="bi bi-trash3 me-2"></i>Delete
             </button>
         </div>
     </div>

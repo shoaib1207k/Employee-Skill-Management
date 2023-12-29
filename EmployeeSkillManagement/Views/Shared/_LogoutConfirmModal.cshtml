@@ -1,21 +1,19 @@
-@model Employee
-<div class="modal fade" id="delete-modal-@Model.Id" tabindex="-1" aria-labelledby="delete-modal-@Model.Id-label" aria-hidden="true">
+<div class="modal fade" id="logout-modal" tabindex="-1" aria-labelledby="logout-modal-label" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title text-uppercase" id="delete-modal-@Model.Id-label">Delete Employee</h5>
+        <h5 class="modal-title text-uppercase" id="logout-modal-label">Admin Logout</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        Are you sure you want to delete this employee data?
+        Are you sure you want to logout?
       </div>
       <div class="modal-footer">
-        <form asp-controller="Employee" asp-action="Delete" method="post" class="w-75 text-end">
-            <input type="hidden" asp-for="Id" value="@Model.Id" />
+        <form asp-controller="Account" asp-action="Logout" method="post" class="w-75 text-end">
             <button type="button" class="btn bg-light bg-gradient col-5" data-bs-dismiss="modal">
               <i class="bi bi-x me-2"></i>Cancel</button>
             <button type="submit" class="btn btn-danger bg-gradient col-5">
-              <i class="bi bi-trash3 me-2"></i>Delete</button>
+              <i class="bi bi-box-arrow-left me-2"></i>Logout</button>
         </form>
       </div>
     </div>
