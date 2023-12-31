@@ -10,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<ISkillRepository, SkillRepository>();
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+builder.Services.AddScoped<IHomeRepository, HomeRepository>();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options => 
     options.UseSqlite(builder.Configuration.GetConnectionString("localDb")));
@@ -18,9 +19,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>()
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
-// builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
-//     .AddEntityFrameworkStores<ApplicationDbContext>()
-//     .AddDefaultTokenProviders();
+
 
 // Configure authentication
 builder.Services.AddAuthentication(options =>
@@ -80,10 +79,6 @@ if (adminUser == null)
     adminUser = new IdentityUser { UserName = "admin@cg.com", Email = "admin@cg.com" };
     //  password
     await userManager.CreateAsync(adminUser, "Admin@123"); 
-    // Confirm the account
-    // var confirmationToken = await userManager.GenerateEmailConfirmationTokenAsync(adminUser);
-    // await userManager.ConfirmEmailAsync(adminUser, confirmationToken);
-
     await userManager.AddToRoleAsync(adminUser, "Admin");
 }
 

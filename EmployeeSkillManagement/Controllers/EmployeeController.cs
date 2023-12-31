@@ -164,9 +164,6 @@ namespace EmployeeSkillManagement.Controllers
                     primarySkill = _skillRepository.GetSkillByIdAsync(skillId).Result.SkillName;
                     employeesFiltered.ForEach(employee => employee.EmployeeSkillsAndLevels.RemoveAll(skill => skill.SkillId == skillId));
                 }
-
-
-
                 EmployeeReportViewModel employeeReportViewModel = new EmployeeReportViewModel{
                     Employees = employeesFiltered,
                     PrimarySkill = primarySkill

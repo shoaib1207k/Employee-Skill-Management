@@ -132,6 +132,13 @@ jQuery(document).ready(function($){
         });
     }
 
+    $("select").forEach(function(){
+        if($(this).val==0){
+            $(this).addClass("text-muted");
+        }else{
+            $(this).removeClass("text-muted");
+        }
+    })
     // update indexing on remove 
     function updateSkillIndex() {
         $('.skill-level').each(function (index) {

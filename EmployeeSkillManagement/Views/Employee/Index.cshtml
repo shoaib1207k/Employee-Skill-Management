@@ -15,11 +15,10 @@
          @System.Text.Json.JsonSerializer.Serialize(Model, new System.Text.Json.JsonSerializerOptions { WriteIndented = true })
     </pre> *@
 
-    <form class="filters-contianer d-flex flex-wrap mb-4 align-items-end justify-content-between" asp-controller="Employee" asp-action="SearchEmployee">
+    <form class="filters-contianer d-flex flex-wrap mb-4 align-items-end justify-content-between" asp-controller="Employee" asp-action="SearchEmployee"  target="_blank">
         <div class="form-group col-6 col-md-5 text-start mt-2 mb-2">
-            <label for="filterNameOrId">Search by Employee Name</label>
-            <input id="filterNameOrId" name="empNameOrId" type="text" class="form-control" placeholder="Enter Name">
-            @* <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> *@
+            <label for="filterNameOrId">Search by Employee Name or Id</label>
+            <input id="filterNameOrId" name="empNameOrId" type="text" class="form-control" placeholder="Enter Name or Id">
         </div>
         <div class="form-group col-5 col-md-3 text-start mt-2 mb-2">
             <label for="filterSkill">Search by Skills</label>

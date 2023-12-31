@@ -27,9 +27,9 @@
         <header class="side-navbar-header col-sm-3 bg-gradient mb-4 mb-sm-0 border-end">
             <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light">
                 <div class="container-fluid flex-sm-column p-0">
-                    <a class="text-center mt-sm-4 mb-sm-4 text-light logo" asp-controller="Home" asp-action="Index">
+                    <a class="text-center mt-sm-5 mt-lg-4 mb-sm-4 text-light logo" asp-controller="Home" asp-action="Index">
                         <img src="~/Content/Images/capgemini-logo.png" class="logo-name mt-3">
-                        <img src="~/Content/Images/cg-logo.png" class="logo-icon mt-3" style="display:none">
+                        <img src="~/Content/Images/cg-logo.png" class="logo-icon mt-3">
                         </a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                             aria-expanded="false" aria-label="Toggle navigation">
@@ -48,7 +48,7 @@
                             
                             <li class="nav-item">
                                 <a class="nav-link" asp-controller="Skill" asp-action="Index">
-                                    <i class="bi bi-gear-fill me-2"></i><span>Manage Skills</span></a>
+                                    <i class="bi bi-lightbulb skill-bulb  me-2"><i class="bi bi-gear-fill"></i></i><span>Manage Skills</span></a>
                             </li>
                             <li class="nav-item">
                                 <a href="javascript:void(0)" class="nav-link" data-bs-toggle="modal" data-bs-target="#logout-modal">
@@ -96,6 +96,7 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/js/Employee.js" asp-append-version="true"></script>
     <script src="~/js/Skill.js" asp-append-version="true"></script>
+    <script src="~/js/Home.js" asp-append-version="true"></script>
 
     @* CDNS for datatable *@
     <script type="text/javascript"src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
@@ -104,6 +105,9 @@
     <script type="text/javascript"src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
     <script type="text/javascript"src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
+
+    @* for chart *@
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>

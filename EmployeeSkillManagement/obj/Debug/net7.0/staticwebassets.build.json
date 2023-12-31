@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "de5ZiFrk4Ww6MydH9bSSgbnu4KRCmRb56n/BBeGV488=",
+  "Hash": "AHR78FzdFOh2t6SWo5u2yZFc+s6BAoo95G3I4JGFuOY=",
   "Source": "EmployeeSkillManagement",
   "BasePath": "_content/EmployeeSkillManagement",
   "Mode": "Default",
@@ -151,6 +151,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\Employee.js"
+    },
+    {
+      "Identity": "C:\\Projects\\EmployeeSkillManagement\\EmployeeSkillManagement\\wwwroot\\js\\Home.js",
+      "SourceId": "EmployeeSkillManagement",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Projects\\EmployeeSkillManagement\\EmployeeSkillManagement\\wwwroot\\",
+      "BasePath": "_content/EmployeeSkillManagement",
+      "RelativePath": "js/Home.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\Home.js"
     },
     {
       "Identity": "C:\\Projects\\EmployeeSkillManagement\\EmployeeSkillManagement\\wwwroot\\js\\site.js",

@@ -144,12 +144,10 @@ transition: all 0.5s ease;
   box-shadow: 0 3px 0px #ca7c00;
 }
 
-.logo img {
-  width: 60%;
-  border-radius: 5px;
+
+.half-hide .logo-icon{
+  width: 100%;
 }
-
-
 
 .text-primary{
 color: #0070AD!important;
@@ -178,7 +176,36 @@ li.nav-item .nav-link:hover, li.nav-item .nav-link.active{
 
 }
 
-
+.skill-bulb{
+  position: relative;
+}
+.skill-bulb i{
+  position: absolute;
+  font-size: 50%;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 15%;
+}
+.logo img {
+  border-radius: 5px;
+}
+.logo{
+  display: flex;
+  justify-content:center;
+  gap: 10px;
+}
+.logo-name, .logo-icon{
+  max-height: 58px;
+}
+.logo-icon{
+  max-width: 58px;
+}
+.logo-icon {
+  width: 18%;
+}
+.logo-name {
+  width: 50%;
+}
 /* login page */
 
 .login-card{
@@ -203,9 +230,20 @@ li.nav-item .nav-link:hover, li.nav-item .nav-link.active{
   align-items: center;
   margin-bottom: 20px;
 }
-.left img {
+/* .left img {
   width: 50%;
+} */
+
+
+/* home page */
+canvas#skillPieChart {
+  max-width: 90%;
 }
+.chart-container{
+  max-height: 400px;
+}
+
+
 @media (min-width: 576px) {
   .side-navbar-header {
       min-height:100vh;
@@ -262,10 +300,19 @@ li.nav-item .nav-link:hover, li.nav-item .nav-link.active{
     padding-bottom: 60px;
   }
   .logo{
-    width: 25%;
+    width: 50%;
   }
   .login-card{
     width: 90%;
   }
+  #navbar-half-hide-toggle{
+    display: none;
+  }
 
+  .logo-icon {
+    max-width: 16%;
+  }
+  .logo-name {
+    max-width: 50%;
+  }
 }

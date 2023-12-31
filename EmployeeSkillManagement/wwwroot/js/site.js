@@ -31,10 +31,10 @@ $(document).ready(function($){
     $('#navbar-half-hide-toggle').on('click', function(){
 
         if($(this).hasClass("nav-is-half-hide")){
-        
+            $(".logo-name").fadeIn();
             $(".side-navbar-header").removeClass("half-hide");
         }else{
-        
+            $(".logo-name").hide();
             $(".side-navbar-header").addClass("half-hide");
         }
 
@@ -49,6 +49,7 @@ $(document).ready(function($){
         const isNavbarSmall = JSON.parse(localStorage.getItem('isNavbarSmall')) || false;
         console.log(isNavbarSmall)
         if (isNavbarSmall) {
+          $(".logo-name").hide();
           $('.side-navbar-header').addClass('half-hide');
           $('#navbar-half-hide-toggle').addClass('nav-is-half-hide');
         }
