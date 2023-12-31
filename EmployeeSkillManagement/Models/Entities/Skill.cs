@@ -12,7 +12,7 @@ namespace EmployeeSkillManagement.Models
         [Key]
         public int Id { get; set; }
         [Required]
-        [DisplayName("Skill Name")]
+        [DisplayName("Skill")]
         public string SkillName { get; set; } = string.Empty;
 
         public List<EmployeeSkillAndLevel> EmployeeSkillAndLevels{get; set;} = new List<EmployeeSkillAndLevel>();

@@ -1,12 +1,38 @@
-﻿@{
+﻿@model EmployeeSkillManagement.Models.ViewModels.HomeViewModel
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
- <div class="form-header  p-1   mb-3">
-    <h4>Employees List</h4>
-</div>
-<div class="p-4 mt-2">
-    
+<h5 class="p-2 text-uppercase">Home</h5>
+<div class="p-4 mt-2 homepage">
+    @* <pre>
+         @System.Text.Json.JsonSerializer.Serialize(Model, new System.Text.Json.JsonSerializerOptions { WriteIndented = true })
+    </pre>  *@
+    <div class="mb-5">
+        <h4>Explore seamless employee management tool. Effortlessly view, create, and delete employees, add or remove skills, and even generate detailed reports. Utilize powerful search capabilities to find employees by name, employee id or skill.</h4>
+    </div>
+    <div class="d-flex gap-3 mb-4">
+        <div class="col-sm-4 col-6">
+            <h6>Total Number of <br class="d-sm-none"> Employees</h6>
+            <h3>@Model.TotalEmployees</h3>
+        </div>
+        <div class="col-sm-4 col-6">
+            <h6>Total Number of <br class="d-sm-none"> Skills</h6>
+            <h3>@Model.TotalSkills</h3>
+        </div>
+    </div>
+
+    <div class="d-flex flex-column flex-sm-row justify-content-center align-items-center">
+        <div class="left-content col-sm-6">
+            <h6>Skills Pie Chart</h6>
+            <h4>Illustrating the distribution of skills alongside the corresponding number of employees.
+        </h4></div>
+        <div class="col-sm-6 col-12 chart-container">
+            <canvas id="skillPieChart" ></canvas>
+        </div>
+    </div>
+
 
     
 

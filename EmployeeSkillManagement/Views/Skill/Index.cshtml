@@ -2,10 +2,11 @@
 @{
     ViewData["Title"] = "Skills";
 }
-<div class="d-flex">
-    <h5 class="p-2 col-4 text-uppercase">Skills List</h5>
-    <div class="col-3">
-        <a asp-controller="Skill" asp-action="Create" class="btn btn-primary  bg-gradient ">Create New Skill</a>
+<div class="d-flex justify-content-between">
+    <h5 class="p-2 col-4 text-uppercase"><i class="bi bi-kanban me-2"></i>Manage Skills</h5>
+    <div class="col-5 col-lg-4">
+        <a asp-controller="Skill" asp-action="Create" class="btn btn-primary  bg-gradient ">
+            <i class="bi bi-plus-circle-fill me-2"></i>Create New Skill</a>
     </div>
 </div>
 
@@ -14,26 +15,30 @@
         int index = 0;
         foreach (var skill in Model)
         {
-            <div class="row mb-2">
-                <div class="col-3">
+            <div class="row mb-4 mb-lg-2">
+                <div class="col-6 col-lg-3">
                     <input id="skill-@index" class="skill-name col-3 form-control" value="@skill.SkillName" disabled />
                 </div>
-                <div  class="col-2 justify-content-between mb-2">
-                    <button data-skill="skill-@index" class="btn edit-btn btn-secondary  bg-gradient w-100">Edit</button>
+                <div  class="col-6 col-lg-3 col-lg-2 justify-content-between mb-2">
+                    <button data-skill="skill-@index" class="btn edit-btn btn-secondary  bg-gradient w-100">
+                        <i class="bi bi-pencil-square me-2"></i>Edit</button>
                 </div>
 
-                <form asp-controller="Skill" asp-action="Update" method="post" class="col-3 justify-content-between mb-2">
+                <form asp-controller="Skill" asp-action="Update" method="post" class="col-6 col-lg-3 justify-content-between mb-2">
                     <input type="hidden" asp-for="@skill.Id" value="@skill.Id" />
                     <input id="update-skill-@index" type="hidden" asp-for="@skill.SkillName" value="@skill.SkillName" />
-                    <button type="submit" class="btn btn-warning  bg-gradient w-100" >Update</button>
+                    <button type="submit" class="btn btn-warning  bg-gradient w-100" >
+                        <i class="bi bi-database-gear me-2"></i>Update</button>
                 </form>
 
-                <form asp-controller="Skill" asp-action="Delete" method="post" class="col-3 justify-content-between mb-2">
-                    <input type="hidden" name="id" value="@skill.Id" />
-                    <button type="submit" class="btn btn-danger  bg-gradient w-100">Delete</button>
-                </form>
+                <div class="col-6 col-lg-3 mb-2">
+
+                    <button class="btn btn-danger  bg-gradient w-100 delete-skill" data-skill-id="@skill.Id">
+                        <i class="bi bi-trash3 me-2"></i>Delete</button></div>
             </div>
             index++;
         }   
     }
 </div>
+
+<div id="deleteSkillModal"></div>

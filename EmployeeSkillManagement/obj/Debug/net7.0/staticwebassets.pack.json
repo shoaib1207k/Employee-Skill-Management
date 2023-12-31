@@ -5,6 +5,10 @@
       "PackagePath": "staticwebassets\\EmployeeSkillManagement.bundle.scp.css"
     },
     {
+      "Id": "C:\\Projects\\EmployeeSkillManagement\\EmployeeSkillManagement\\wwwroot\\Content\\Images\\capgemini-logo.png",
+      "PackagePath": "staticwebassets\\Content\\Images\\capgemini-logo.png"
+    },
+    {
       "Id": "C:\\Projects\\EmployeeSkillManagement\\EmployeeSkillManagement\\wwwroot\\Content\\Images\\cg-logo.png",
       "PackagePath": "staticwebassets\\Content\\Images\\cg-logo.png"
     },
@@ -23,6 +27,10 @@
     {
       "Id": "C:\\Projects\\EmployeeSkillManagement\\EmployeeSkillManagement\\wwwroot\\js\\Employee.js",
       "PackagePath": "staticwebassets\\js\\Employee.js"
+    },
+    {
+      "Id": "C:\\Projects\\EmployeeSkillManagement\\EmployeeSkillManagement\\wwwroot\\js\\Home.js",
+      "PackagePath": "staticwebassets\\js\\Home.js"
     },
     {
       "Id": "C:\\Projects\\EmployeeSkillManagement\\EmployeeSkillManagement\\wwwroot\\js\\Skill.js",

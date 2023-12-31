@@ -82,6 +82,23 @@ namespace EmployeeSkillManagement.Controllers
             return RedirectToAction("Index", skill);
         }
 
+
+        public async Task<IActionResult> GetSkillDeleteModal(int skill_id){
+            if(skill_id == 0){
+                return NotFound();
+            }
+            
+            Skill? skill = await _skillRepository.GetSkillByIdAsync(skill_id);
+            
+            if(skill == null){
+                return NotFound();
+            }
+            var skillDeleteModal = PartialView("_DeleteSkillModal", skill);
+          
+            return skillDeleteModal;
+        }
+
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

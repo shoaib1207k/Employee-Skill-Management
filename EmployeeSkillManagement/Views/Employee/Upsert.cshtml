@@ -8,6 +8,8 @@
         ViewData["Title"] = "Update Employee";
         <h5 class="p-2 text-uppercase">Update Employee's Details</h5>
     }
+    ViewData["ActivePage"] = "Employee";
+
 }
 
 <div class="p-4 shadow-sm rounded mt-2 bg-white">
@@ -73,7 +75,8 @@
             </div>
 
             <div class="col-6 col-sm-3 mb-2">
-                <button id="addSkill" class="btn btn-secondary  bg-gradient  w-100">Add</button>
+                <button id="addSkill" class="btn btn-secondary  bg-gradient  w-100">
+                    <i class="bi bi-person-fill-gear me-2"></i>Add</button>
             </div>
         </div>
 
@@ -98,14 +101,14 @@
     <div class="from-group col-sm-5 mt-3">
         @{
             if(Model.EmployeeId==0){
-                <button type="submit" class="save-btn btn btn-primary bg-gradient col-sm-6">Save</button>
+                <button type="submit" class="save-btn btn btn-primary bg-gradient col-sm-6">
+                    <i class="bi bi-floppy me-2"></i>Save</button>
             }else{
-                <button type="submit" class="save-btn btn btn-primary bg-gradient col-sm-6">Update</button>
+                <button type="submit" class="save-btn btn btn-primary bg-gradient col-sm-6">
+                    <i class="bi bi-database-gear me-2"></i>Update</button>
             }
         }
     </div>
-
-    <div asp-validation-summary="All" class="text-danger"></div>
 
 </form>
 </div>
