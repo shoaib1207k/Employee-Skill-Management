@@ -26,7 +26,7 @@ namespace EmployeeSkillManagement.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public IActionResult Login(string returnUrl = null)
+        public IActionResult Login(string? returnUrl = null)
         {
             var model = new LoginViewModel(); 
             return View(model);
@@ -35,7 +35,7 @@ namespace EmployeeSkillManagement.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
+        public async Task<IActionResult> Login(LoginViewModel model, string? returnUrl = null)
         {
             if (ModelState.IsValid)
             {
@@ -44,38 +44,41 @@ namespace EmployeeSkillManagement.Controllers
                 if (result.Succeeded)
                 {
                     var user = await _userManager.FindByNameAsync(model.Username);
-                    var roles = await _userManager.GetRolesAsync(user);
+                    if(user!=null){
+                        var roles = await _userManager.GetRolesAsync(user);
 
-                    if (roles.Contains("Admin"))
-                    {
-                        // Create claims for the authenticated user, including roles
-                        var claims = new ClaimsIdentity(new[]
+                        if (roles.Contains("Admin"))
                         {
-                            new Claim(ClaimTypes.Name, user.UserName),
-                            new Claim(ClaimTypes.Role, "Admin"),
-                        }, CookieAuthenticationDefaults.AuthenticationScheme);
+                            // Create claims for the authenticated user, including roles
+                            var claims = new ClaimsIdentity(new[]
+                            {
+                                new Claim(ClaimTypes.Name, user.UserName!),
+                                new Claim(ClaimTypes.Role, "Admin"),
+                            }, CookieAuthenticationDefaults.AuthenticationScheme);
 
-                        var authProperties = new AuthenticationProperties
-                        {
-                            IsPersistent = model.RememberMe,
-                        };
+                            var authProperties = new AuthenticationProperties
+                            {
+                                IsPersistent = model.RememberMe,
+                            };
 
-                        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claims), authProperties);
+                            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claims), authProperties);
 
-                        if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
-                        {
-                            return Redirect(returnUrl);
+                            if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
+                            {
+                                return Redirect(returnUrl);
+                            }
+                            else
+                            {
+                                return RedirectToAction("Index", "Home");
+                            }
                         }
                         else
                         {
-                            return RedirectToAction("Index", "Home");
+                            await _signInManager.SignOutAsync();
+                            ModelState.AddModelError(string.Empty, "Invalid login attempt for an admin user.");
                         }
                     }
-                    else
-                    {
-                        await _signInManager.SignOutAsync();
-                        ModelState.AddModelError(string.Empty, "Invalid login attempt for an admin user.");
-                    }
+
                 }
                 else
                 {
