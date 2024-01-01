@@ -90,7 +90,7 @@ namespace EmployeeSkillManagement.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
         {
-            if (User.Identity.IsAuthenticated)
+            if (User.Identity!.IsAuthenticated)
             {
                 await _signInManager.SignOutAsync();
                 await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);

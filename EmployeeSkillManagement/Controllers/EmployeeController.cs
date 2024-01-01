@@ -23,13 +23,11 @@ namespace EmployeeSkillManagement.Controllers
         private readonly IEmployeeRepository _employeeRepository;
         private readonly ISkillRepository _skillRepository;
 
-        private readonly ApplicationDbContext _db;
         public EmployeeController(ILogger<EmployeeController> logger, IEmployeeRepository employeeRepository, 
-                                    ApplicationDbContext db, ISkillRepository skillRepository)
+                                 ISkillRepository skillRepository)
         {
             _logger = logger;
             _employeeRepository = employeeRepository;
-            _db = db;
             _skillRepository = skillRepository;
         }
 
@@ -37,7 +35,7 @@ namespace EmployeeSkillManagement.Controllers
         {
             EmployeesListViewModel employeesViewModel = new EmployeesListViewModel
             {
-                Skills = await GetSkillOptions(),
+                Skills = await _employeeRepository.GetSkillOptions(),
                 Employees = await _employeeRepository.GetAllEmployeesAsync()
             };
 
@@ -48,8 +46,8 @@ namespace EmployeeSkillManagement.Controllers
         public async Task<IActionResult> Create(){
 
             var viewModel = new UpsertEmployeeViewModel{
-                DesignationOptions = await GetDesignationOptions(),
-                SkillOptions = await GetSkillOptions(),
+                DesignationOptions = await _employeeRepository.GetDesignationOptions(),
+                SkillOptions = await _employeeRepository.GetSkillOptions(),
             };
 
             return View("Upsert",viewModel);
@@ -67,8 +65,8 @@ namespace EmployeeSkillManagement.Controllers
                     DateOfJoining = employee.DateOfJoining,
                     DesignationId = employee.Designation!.Id.ToString(),
                     EmployeeSkillsAndLevels = employee.EmployeeSkillsAndLevels,
-                    DesignationOptions = await GetDesignationOptions(),
-                    SkillOptions = await GetSkillOptions()
+                    DesignationOptions = await _employeeRepository.GetDesignationOptions(),
+                    SkillOptions = await _employeeRepository.GetSkillOptions()
                 };
                 return View("Upsert", viewModel);
             } catch(Exception ex){
@@ -98,8 +96,8 @@ namespace EmployeeSkillManagement.Controllers
             {
                 TempData["ErrorMessage"] = ex.Message;
             }
-            viewModel.SkillOptions = await GetSkillOptions();
-            viewModel.DesignationOptions = await GetDesignationOptions();
+            viewModel.SkillOptions = await _employeeRepository.GetSkillOptions();
+            viewModel.DesignationOptions = await _employeeRepository.GetDesignationOptions();
             return View("Upsert",viewModel);
         }
 
@@ -173,18 +171,6 @@ namespace EmployeeSkillManagement.Controllers
             var employeesFilteredHtml = PartialView("_EmployeeCard", employeesFiltered);
 
             return employeesFilteredHtml;
-        }
-
-        private async Task<List<SelectListItem>> GetSkillOptions()
-        {
-            var skills = await _db.Skills.ToListAsync();
-            return skills.Select(s => new SelectListItem { Value = s.Id.ToString(), Text = s.SkillName.ToString() }).ToList();
-        }
-
-        private async Task<List<SelectListItem>> GetDesignationOptions()
-        {
-            var designations = await _db.Designations.ToListAsync();
-            return designations.Select(s=>new SelectListItem{Value=s.Id.ToString(), Text=s.DesignationName!.ToString()}).ToList();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using EmployeeSkillManagement.Models;
 using EmployeeSkillManagement.Models.ViewModels;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace EmployeeSkillManagement.Repository
 {
@@ -18,7 +19,12 @@ namespace EmployeeSkillManagement.Repository
 
         public Task UpsertEmployeeFromCreateViewModelAsync(UpsertEmployeeViewModel viewModel);
 
-
         public Task DeleteEmployeeAsync(int id);
+
+        public Task<List<SelectListItem>> GetDesignationOptions();
+
+        public Task<List<SelectListItem>> GetSkillOptions();
+
+
     }
 }

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using EmployeeSkillManagement.Data;
 using EmployeeSkillManagement.Models;
 using EmployeeSkillManagement.Models.ViewModels;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace EmployeeSkillManagement.Repository
@@ -118,6 +119,18 @@ namespace EmployeeSkillManagement.Repository
 
             _db.Remove(employee);
             await _db.SaveChangesAsync();
+        }
+
+        public async Task<List<SelectListItem>> GetSkillOptions()
+        {
+            var skills = await _db.Skills.ToListAsync();
+            return skills.Select(s => new SelectListItem { Value = s.Id.ToString(), Text = s.SkillName.ToString() }).ToList();
+        }
+
+        public async Task<List<SelectListItem>> GetDesignationOptions()
+        {
+            var designations = await _db.Designations.ToListAsync();
+            return designations.Select(s=>new SelectListItem{Value=s.Id.ToString(), Text=s.DesignationName!.ToString()}).ToList();
         }
     }
 }
