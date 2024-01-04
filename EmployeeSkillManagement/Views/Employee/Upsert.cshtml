@@ -13,7 +13,6 @@
 }
 
 <div class="p-4 shadow-sm rounded mt-2 bg-white">
-
 <form class="row" method="post" asp-controller="Employee" asp-action="Upsert">
     <input hidden asp-for="EmployeeId" value="@Model.EmployeeId">
   <div class="form-group col-sm-6 col-md-5 mb-1">
@@ -55,7 +54,7 @@
             
             <div class="col-12 col-sm-4 mb-3">
                 <select id="SelectedSkillIds" name="SelectedSkillIds" class="form-select" >
-                    <option value="0" selected>Select Skill</option>
+                    <option value="0" selected>Skill</option>
 
                     @foreach (var skill in Model.SkillOptions)
                     {
@@ -66,7 +65,7 @@
             </div>
             <div class="col-12 col-sm-4 mb-3">
                 <select id="levelSelect" class="form-select">
-                    <option value="0" selected>Select Proficiency</option>
+                    <option value="0" selected>Proficiency</option>
                     @for(int i = 1; i<=10;i++){
                         <option value="@i">@i</option>
                     }
@@ -74,9 +73,19 @@
                 </select>
             </div>
 
+            <div class="col-12 col-sm-3">
+                <input id="skillYoe" type="number" class="form-control" placeholder="Experience" min=1 @if(Model.EmployeeSkillsAndLevels.Count>0){ <text></text>} else{<text> required</text>}>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="isPrimarySkill">
+                <label class="form-check-label" for="isPrimarySkill">
+                    Is Primary Skill?
+                </label>
+            </div>
+
             <div class="col-6 col-sm-3 mb-2">
                 <button id="addSkill" class="btn btn-secondary  bg-gradient  w-100">
-                    <i class="bi bi-person-fill-gear me-2"></i>Add</button>
+                    <i class="bi bi-person-fill-gear me-2"></i>Add Skill</button>
             </div>
         </div>
 
@@ -86,13 +95,15 @@
             {
                 var skill = Model.EmployeeSkillsAndLevels[index];
                 <div class="skill-level d-flex justify-content-around align-items-center border border-primary rounded col-3">
-                    @($"{skill.SkillName} Level-{skill.SkillLevel}")
+                    @($"{skill.SkillName} Level-{skill.SkillLevel} | YOE-{skill.SkillExperience}")
                     <div class="btn remove-skill"> 
                         <i class="bi bi-x-circle btn-outline-danger rounded-circle"></i>
                     </div>
                     <input type="hidden" value="@skill.SkillId" name="EmployeeSkillsAndLevels[@index].SkillId">
                     <input type="hidden" value="@skill.SkillName" name="EmployeeSkillsAndLevels[@index].SkillName">
                     <input type="hidden" value="@skill.SkillLevel" name="EmployeeSkillsAndLevels[@index].SkillLevel">
+                    <input type="hidden" value="@skill.SkillExperience" name="EmployeeSkillsAndLevels[@index].SkillExperience">
+                    <input type="hidden" value="@skill.IsPrimary.ToString().ToLower()" name="EmployeeSkillsAndLevels[@index].IsPrimary">
                 </div>
             }
         </div>

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace EmployeeSkillManagement.Migrations
 {
     /// <inheritdoc />
-    public partial class AdminAddedAndDatabaseFromScratch : Migration
+    public partial class UpdatedESLWithPrimarySkillsAndDBFromScratch : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -216,6 +216,8 @@ namespace EmployeeSkillManagement.Migrations
                     SkillId = table.Column<int>(type: "INTEGER", nullable: false),
                     SkillName = table.Column<string>(type: "TEXT", nullable: false),
                     SkillLevel = table.Column<int>(type: "INTEGER", nullable: false),
+                    SkillExperience = table.Column<int>(type: "INTEGER", nullable: false),
+                    IsPrimary = table.Column<bool>(type: "INTEGER", nullable: false),
                     EmployeeId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>

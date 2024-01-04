@@ -1,4 +1,4 @@
-@model EmployeeSkillManagement.Models.ViewModels.EmployeeReportViewModel
+@model List<EmployeeSkillManagement.Models.ViewModels.EmployeeReportViewModel>
    
 <div class="p-2">
     <h4 class="text-uppercase">Employees Report</h4>
@@ -13,38 +13,51 @@
                 <th>Email</th>
                 <th>Designation</th>
                 <th>DOJ</th>
-                @if(Model.PrimarySkill!=""){
-                    <th>Primary Skill</th>
-                    <th>Other Skills</th>
-                }else{
-                    <th>Skills</th>
-                }
+                <th>Primary Skills</th>
+                <th>Secondary Skills</th>
+                
             </tr>
         </thead>
         <tbody>
             <!-- Your data goes here -->
-            @if(Model.Employees != null){
+            @if(Model != null){
                 int index = 1;
-                @foreach(var employee in Model.Employees){
+                @foreach(var employee in Model){
                     <tr>
                         <td>@index</td>
                         <td>@employee.FirstName @employee.LastName</td>
                         <td>@employee.Email</td>
                         <td>@employee.Designation!.DesignationName</td>
                         <td>@employee.DateOfJoining</td>
-                        @if(Model.PrimarySkill!=""){
-                            <td>@Model.PrimarySkill</td>
-                        }
+                            <td>
+                        @if(employee.PrimarySkills!=null && employee.PrimarySkills.Count>0){
+                                @foreach(var pskills in employee.PrimarySkills){
+                                    @pskills.SkillName
+                                    @if (pskills != employee.PrimarySkills.Last()){
+                                        <text>, </text>
+                                    }
+                                }
+                                
+                            }else{
+                                <text>No Primary Skills</text>
+                            }
+                            </td>
                         <td>
-                            @foreach(var skills in employee.EmployeeSkillsAndLevels){
-                                @skills.SkillName
-                                @if (skills != employee.EmployeeSkillsAndLevels.Last())
+                            @if(employee.SecondarySkills!=null && employee.SecondarySkills.Count>0){
+
+                            @foreach(var secondarySkill in employee.SecondarySkills){
+                                @secondarySkill.SkillName
+                                @if (secondarySkill != employee.SecondarySkills.Last())
                                 {
                                     <text>, </text>
                                 }
                                 
                             }
+                        }else{
+                            <text>No Other Skills</text>
+                        }
                         </td>
+                       
                         
 
                     </tr>

@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EmployeeSkillManagement.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231226155432_AdminAddedAndDatabaseFromScratch")]
-    partial class AdminAddedAndDatabaseFromScratch
+    [Migration("20240104103329_UpdatedESLWithPrimarySkillsAndDBFromScratch")]
+    partial class UpdatedESLWithPrimarySkillsAndDBFromScratch
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -160,6 +160,12 @@ namespace EmployeeSkillManagement.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<int?>("EmployeeId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("IsPrimary")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("SkillExperience")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("SkillId")

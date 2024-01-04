@@ -6,9 +6,10 @@ jQuery(document).ready(function($){
         // var selectedOptionText = ;
         let level = $('#levelSelect').val();
         let skillId = $("#SelectedSkillIds").val();
+        let yoe = $("#skillYoe").val();
+        let isPrimary = $("#isPrimarySkill").prop("checked");
         let skill = $("#SelectedSkillIds").find("option[value='" + skillId + "']").text();
         let skillIndex = $('.skill-level').length;
-
          // Check if the skill is already added
         let isSkillAdded = false;
         $('#skillsContainer .skill-level').each(function() {
@@ -21,28 +22,34 @@ jQuery(document).ready(function($){
         if(isSkillAdded){
             $("#skill-form-error").show();
             $("#skill-form-error").text("This skill is already added!")
-        } else if(skill!=null && level !=null && skillId!=null && level!=0 && skillId!=0){
+        } else if(skill!=null && level !=null && skillId!=null && yoe!=null && level!=0 && skillId!=0 && yoe!=0 ){
             console.log(skillId);
             let skill_level =  `<div class="skill-level d-flex justify-content-around align-items-center border border-primary rounded col-3">`
-                                    +skill+` Level-`+level+`
+                                    +skill+` Level-`+level+` | YOE- `+yoe+`
                                     <div class="btn remove-skill"> 
                                         <i class="bi bi-x-circle btn-outline-danger rounded-circle"></i>
                                     </div>
                                     <input class="skill-id-input" type="text" value="${skillId}" name="EmployeeSkillsAndLevels[${skillIndex}].SkillId" hidden>
                                     <input type="text" value="${skill}" name="EmployeeSkillsAndLevels[${skillIndex}].SkillName" hidden>
                                     <input type="text" value="${level}" name="EmployeeSkillsAndLevels[${skillIndex}].SkillLevel" hidden>
+                                    <input type="text" value="${yoe}" name="EmployeeSkillsAndLevels[${skillIndex}].SkillExperience" hidden>
+                                    <input type="text" value="${isPrimary}" name="EmployeeSkillsAndLevels[${skillIndex}].IsPrimary" hidden>
 
                                 </div>`;
             $('#skillsContainer').append(skill_level);
             $('#SelectedSkillIds').prop('selectedIndex', 0);
             $('#levelSelect').prop('selectedIndex', 0);
-
+            $('#skillYoe').val('1');
+            $('#skillYoe').prop('placeholder', 'Experience');
+            $("#isPrimarySkill").prop("checked", false)
             $("#skill-form-error").hide();
         }else{
             $("#skill-form-error").show();
-            $("#skill-form-error").text("Please choose a skill and proficiency level");
+            $("#skill-form-error").text("Please choose a skill with proficiency level and experience");
             $("#SelectedSkillIds").addClass("input-validation-error");
             $("#levelSelect").addClass("input-validation-error");
+            $("#skillYoe").addClass("input-validation-error");
+
         }
 
     });
@@ -56,9 +63,13 @@ jQuery(document).ready(function($){
         if(!$('.skill-level').length > 0 && $('form').valid()){
             e.preventDefault();
             $("#skill-form-error").show();
-            $("#skill-form-error").text("Please choose a skill and proficiency level");
+            $("#skill-form-error").text("Please choose a skill with proficiency level and experience");
             $("#SelectedSkillIds").addClass("input-validation-error");
             $("#levelSelect").addClass("input-validation-error");
+            if($("#skillYoe").val()==0){
+                console.log(34);
+                $("#skillYoe").addClass("input-validation-error");
+            }
         }
 
         if(!$('.skill-level').length > 0 && !$('form').valid()){
@@ -66,6 +77,12 @@ jQuery(document).ready(function($){
             $("#skill-form-error").text("Please choose a skill and proficiency level");
             $("#SelectedSkillIds").addClass("input-validation-error");
             $("#levelSelect").addClass("input-validation-error");
+            // $("#skillYoe").addClass("input-validation-error");
+            if($("#skillYoe").val()==0){
+                console.log(34);
+                $("#skillYoe").removeClass("valid");
+                $("#skillYoe").addClass("input-validation-error");
+            }
         }
     })
     
@@ -132,19 +149,14 @@ jQuery(document).ready(function($){
         });
     }
 
-    $("select").forEach(function(){
-        if($(this).val==0){
-            $(this).addClass("text-muted");
-        }else{
-            $(this).removeClass("text-muted");
-        }
-    })
     // update indexing on remove 
     function updateSkillIndex() {
         $('.skill-level').each(function (index) {
             $(this).find('input[name$=".SkillId"]').attr('name', `EmployeeSkillsAndLevels[${index}].SkillId`);
             $(this).find('input[name$=".SkillName"]').attr('name', `EmployeeSkillsAndLevels[${index}].SkillName`);
             $(this).find('input[name$=".SkillLevel"]').attr('name', `EmployeeSkillsAndLevels[${index}].SkillLevel`);
+            $(this).find('input[name$=".SkillExperience"]').attr('name', `EmployeeSkillsAndLevels[${index}].SkillExperience`);
+            $(this).find('input[name$=".IsPrimary"]').attr('name', `EmployeeSkillsAndLevels[${index}].IsPrimary`);
         });
     }
 

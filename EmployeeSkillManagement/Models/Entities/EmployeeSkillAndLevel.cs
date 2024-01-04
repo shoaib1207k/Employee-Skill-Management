@@ -13,6 +13,9 @@ namespace EmployeeSkillManagement.Models
         public int SkillId { get; set; }
         public string SkillName { get; set; } = string.Empty;
         [Range(1,10)]
+        
         public int SkillLevel { get; set; }
+        public int SkillExperience { get; set; }
+        public bool IsPrimary { get; set; }
     }
 }

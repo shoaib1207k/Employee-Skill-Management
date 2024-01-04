@@ -159,6 +159,12 @@ namespace EmployeeSkillManagement.Migrations
                     b.Property<int?>("EmployeeId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("IsPrimary")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("SkillExperience")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("SkillId")
                         .HasColumnType("INTEGER");
 
