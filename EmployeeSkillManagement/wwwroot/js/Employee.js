@@ -112,10 +112,15 @@ jQuery(document).ready(function($){
 
     let timeOut;
     $("#filterNameOrId").on("input", function(){
-        clearTimeout(timeOut);
-        timeOut = setTimeout(() => {
-            employeesFilterAjax();
-        }, 500);
+        let value = $(this).val()
+        if(value && value.length>3){
+            clearTimeout(timeOut);
+            timeOut = setTimeout(() => {
+                employeesFilterAjax();
+            }, 500);
+        }if(!value){
+            employeesFilterAjax()
+        }
     });
 
     $("#filterSkill").on("change", function(){
