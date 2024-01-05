@@ -12,7 +12,7 @@ namespace EmployeeSkillManagement.Repository
         public Task<Skill> GetSkillByIdAsync(int id);
         public Task AddSkillAsync(Skill skill);
         public Task DeleteSkillAsync(int id);
-        public Task UpdateSkillAsync(Skill skill);
+        public Task<bool> UpdateSkillAsync(Skill skill);
         public Task<bool> IsSkillExistByNameAsync(Skill skill);
     }
 }

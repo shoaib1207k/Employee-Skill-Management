@@ -54,6 +54,8 @@ jQuery(document).ready(function($){
 
     });
 
+    $('[data-bs-toggle="tooltip"]').tooltip();
+
     $(document).on('click', '.remove-skill', function(){ 
         $(this).closest('.skill-level').remove();       
         updateSkillIndex();                             
@@ -91,14 +93,12 @@ jQuery(document).ready(function($){
     // Delete ajax function
     $(document).on('click', '.delete-employee', function(){
         let employee_id = $(this).attr('data-emp-id');
-        console.log(employee_id);
         try {
             $.ajax({
                 url: "/Employee/GetEmployeeDeleteModal",
                 type: "POST",
                 data: { employee_id: employee_id },
                 success: function (response) {
-                    console.log(response);
                     $("#deleteModal").html(response);
                     $("#deleteModal .modal").modal('show');
                 }
@@ -125,9 +125,7 @@ jQuery(document).ready(function($){
 
     let reportTable = $('#generatedReport').DataTable( {
         dom: 'Bfrtip',
-        buttons: [
-            'excel', 'pdf'
-        ],
+        buttons: ['excel', 'pdf'],
         searching: false,
         pageLength: 15,
     });
@@ -176,7 +174,6 @@ jQuery(document).ready(function($){
                 data: filterData,
                 success: function(response){
                     $('#spinner-container').addClass('d-none');
-                    console.log(response)
                     $("#employeeListDiv").html(response);
                 }
             });

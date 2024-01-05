@@ -70,10 +70,12 @@ namespace EmployeeSkillManagement.Controllers
             try{
                 if (ModelState.IsValid)
                 {
-                    await _skillRepository.UpdateSkillAsync(skill);
-
+                    bool result =  await _skillRepository.UpdateSkillAsync(skill);
+                    if(result){
                     TempData["SuccessMessage"] = "Skill updated successfully!";
-                    
+                    }else{
+                        TempData["ErrorMessage"] = "Error Occurred";
+                    }
                 }
             }catch(Exception ex){
                 TempData["ErrorMessage"] = ex.Message;

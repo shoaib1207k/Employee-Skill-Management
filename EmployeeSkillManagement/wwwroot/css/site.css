@@ -41,6 +41,11 @@ label{
   font-weight: 500;
 }
 
+.secondary-label{
+  font-size: 12px;
+  font-weight: 400;
+}
+
 footer{
   background: none;
   font-size: 14px;
@@ -288,7 +293,10 @@ canvas#skillPieChart {
 }
 @media (max-width:768px) {
   label{
-    font-size: 11px;
+    font-size: 12px;
+  }
+  .secondary-label{
+    font-size: 10px;
   }
   .login-card{
     width: 75%;

@@ -15,3 +15,6 @@
 .generate-report {
     transform: translateY(-3px);
 }
+.dt-buttons button.dt-button {
+    font-weight: 500;
+}

@@ -49,10 +49,11 @@
   </div>
 
     <div class="form-group">
-        <label>Add Skills</label>
+        <label>Add Skills <i class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="top" title="Make sure to click on add skills to save the skills for employee"></i></label>
         <div class="col-sm-12 col-md-10 d-flex justify-content-between flex-wrap">
             
             <div class="col-12 col-sm-4 mb-3">
+                <label class="secondary-label">Select Skills</label>
                 <select id="SelectedSkillIds" name="SelectedSkillIds" class="form-select" >
                     <option value="0" selected>Skill</option>
 
@@ -64,6 +65,7 @@
                 </select>
             </div>
             <div class="col-12 col-sm-4 mb-3">
+            <label class="secondary-label">Select Proficiency level</label>
                 <select id="levelSelect" class="form-select">
                     <option value="0" selected>Proficiency</option>
                     @for(int i = 1; i<=10;i++){
@@ -73,18 +75,20 @@
                 </select>
             </div>
 
-            <div class="col-12 col-sm-3">
+            <div class="col-12 col-sm-3 mb-3">
+                <label class="secondary-label">Add Experience</label>
+
                 <input id="skillYoe" type="number" class="form-control" placeholder="Experience" min=1 @if(Model.EmployeeSkillsAndLevels.Count>0){ <text></text>} else{<text> required</text>}>
             </div>
             <div class="form-check">
                 <input class="form-check-input" type="checkbox" value="" id="isPrimarySkill">
                 <label class="form-check-label" for="isPrimarySkill">
-                    Is Primary Skill?
+                    Is Primary Skill? <i class="bi bi-info-circle" data-bs-toggle="tooltip" data-bs-placement="top" title="Check if the skill you are adding is one of your primary skill."></i>
                 </label>
             </div>
 
             <div class="col-6 col-sm-3 mb-2">
-                <button id="addSkill" class="btn btn-secondary  bg-gradient  w-100">
+                <button id="addSkill" type="button" class="btn btn-secondary  bg-gradient  w-100" >
                     <i class="bi bi-person-fill-gear me-2"></i>Add Skill</button>
             </div>
         </div>
@@ -109,16 +113,18 @@
         </div>
     </div>
 
-    <div class="from-group col-sm-5 mt-3">
+    <div class="from-group col-sm-4 mt-3">
+            <button type="submit" class="save-btn btn btn-primary bg-gradient col-12">
         @{
             if(Model.EmployeeId==0){
-                <button type="submit" class="save-btn btn btn-primary bg-gradient col-sm-6">
-                    <i class="bi bi-floppy me-2"></i>Save</button>
+                
+                    <i class="bi bi-floppy me-2"></i><text>Save</text>
             }else{
-                <button type="submit" class="save-btn btn btn-primary bg-gradient col-sm-6">
-                    <i class="bi bi-database-gear me-2"></i>Update</button>
+               
+                    <i class="bi bi-database-gear me-2"></i><text>Update</text>
             }
         }
+        </button>
     </div>
 
 </form>
