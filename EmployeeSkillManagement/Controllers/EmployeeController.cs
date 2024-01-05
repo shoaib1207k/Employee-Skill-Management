@@ -157,16 +157,47 @@ namespace EmployeeSkillManagement.Controllers
             }
             if(generateReport){
                 
-                string primarySkill = "";
-                if(skillId!=0){
-                    primarySkill = _skillRepository.GetSkillByIdAsync(skillId).Result.SkillName;
-                    employeesFiltered.ForEach(employee => employee.EmployeeSkillsAndLevels.RemoveAll(skill => skill.SkillId == skillId));
+                List<EmployeeReportViewModel> employeeReportViewModels = new List<EmployeeReportViewModel>();
+
+                foreach(var employee in employeesFiltered){
+                    EmployeeReportViewModel employeeReportViewModel = new EmployeeReportViewModel{
+                        FirstName = employee.FirstName,
+                        LastName = employee.LastName,
+                        DateOfJoining = employee.DateOfJoining,
+                        Designation = employee.Designation,
+                        Email = employee.Email,
+                        EmployeeSkillsAndLevels = employee.EmployeeSkillsAndLevels,
+                        PrimarySkills = employee.EmployeeSkillsAndLevels
+                                .Where(esl => esl.IsPrimary)
+                                .Select(esl => new Skill
+                                {
+                                    Id = esl.SkillId,
+                                    SkillName = esl.SkillName,
+                                    // Add other properties if needed
+                                })
+                                .ToList() ?? new List<Skill>(),
+
+                        SecondarySkills = employee.EmployeeSkillsAndLevels
+                        .Where(esl => !esl.IsPrimary)
+                                .Select(esl => new Skill
+                                {
+                                    Id = esl.SkillId,
+                                    SkillName = esl.SkillName,
+                                    // Add other properties if needed
+                                })
+                                .ToList() ?? new List<Skill>()
+
+                    };
+
+                    employeeReportViewModels.Add(employeeReportViewModel);
                 }
-                EmployeeReportViewModel employeeReportViewModel = new EmployeeReportViewModel{
-                    Employees = employeesFiltered,
-                    PrimarySkill = primarySkill
-                };
-                return View("GenerateReport", employeeReportViewModel);
+
+                // EmployeeReportViewModel employeeReportViewModel = new EmployeeReportViewModel{
+                //     Employees = employeesFiltered,
+                //     PrimarySkills = primarySkills,
+                //     SecondarySkills = secondarySkills
+                // };
+                return View("GenerateReport", employeeReportViewModels);
             }
             var employeesFilteredHtml = PartialView("_EmployeeCard", employeesFiltered);
 
