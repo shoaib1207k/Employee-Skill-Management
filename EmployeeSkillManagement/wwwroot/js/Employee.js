@@ -32,10 +32,14 @@ jQuery(document).ready(function ($) {
             skillId != 0 &&
             yoe != 0
         ) {
+            let primaryStar = '';
+            if(isPrimary){
+                primaryStar='<i class="bi bi-star-fill text-warning me-1" title="Primary skill"></i>';
+            }
             console.log(skillId);
             let skill_level =
                 `<div class="skill-level d-flex justify-content-around align-items-center border border-primary rounded col-3">` +
-                skill + ` Level-` + level +` | YOE- ` + yoe +`
+                primaryStar + skill + ` Level-` + level +` | YOE- ` + yoe +`
                                     <div class="btn remove-skill"> 
                                         <i class="bi bi-x-circle btn-outline-danger rounded-circle"></i>
                                     </div>

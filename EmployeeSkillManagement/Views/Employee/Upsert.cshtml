@@ -95,10 +95,17 @@
 
         <div id="skill-form-error" class="text-danger"></div>
         <div id="skillsContainer" class="d-flex gap-4 flex-wrap col-sm-11 mt-1">
+            
+
             @for (int index = 0; index < Model.EmployeeSkillsAndLevels.Count; index++)
             {
                 var skill = Model.EmployeeSkillsAndLevels[index];
+           
                 <div class="skill-level d-flex justify-content-around align-items-center border border-primary rounded col-3">
+                    @if(skill.IsPrimary)
+                    {
+                        <i class="bi bi-star-fill text-warning me-1" title="Primary skill"></i> 
+                    }
                     @($"{skill.SkillName} Level-{skill.SkillLevel} | YOE-{skill.SkillExperience}")
                     <div class="btn remove-skill"> 
                         <i class="bi bi-x-circle btn-outline-danger rounded-circle"></i>

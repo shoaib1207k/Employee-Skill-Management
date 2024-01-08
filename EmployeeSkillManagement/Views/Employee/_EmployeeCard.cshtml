@@ -23,14 +23,14 @@
     </div>        
     <div class="col-sm-4 text-center border-start border-end border-info rounded mb-4 mt-4 m-lg-0 pt-2 pb-2">
         <div class="d-flex justify-content-around">
-            <div class="col-4 col-sm-3"><h6>Skills</h6></div>
+            <div class="col-4 col-sm-3 text-start"><h6>Skills</h6></div>
             <div class="col-4 col-sm-3"><h6>Proficiency</h6></div>
             <div class="col-4 col-sm-3"><h6>YOE</h6></div>
         </div>
         <div class="">
             @foreach (var skillLevel in employee.EmployeeSkillsAndLevels)
             {   <div class="d-flex justify-content-around">
-                    <div class="col-4 col-sm-3">@skillLevel.SkillName</div>
+                    <div class="col-4 col-sm-3 text-start">@skillLevel.SkillName @(skillLevel.IsPrimary ?  Html.Raw("<i class='bi bi-star-fill text-warning ms-1' title='Primary skill'></i>"):"") </div>
                     <div class="col-4 col-sm-3">@skillLevel.SkillLevel</div>
                     <div class="col-4 col-sm-3">@skillLevel.SkillExperience</div>
 
