@@ -53,6 +53,8 @@ namespace EmployeeSkillManagement.Controllers
             return View("Upsert",viewModel);
         }
 
+
+        // this method takes admin to upsert page where they can make changes
         [HttpPost]
         public async Task<IActionResult> Update(int id){
             try{
@@ -76,6 +78,7 @@ namespace EmployeeSkillManagement.Controllers
             
         }
 
+        // this method updates the data
         [HttpPost]
         public async Task<IActionResult> Upsert(UpsertEmployeeViewModel viewModel){
             try
