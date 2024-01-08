@@ -1,10 +1,12 @@
-.skill-level i {   
+.skill-level i {
     display: block;
     width: 16px;
     height: 16px;
     cursor: pointer;
 }
-.skill-level .bi::before, [class*=" bi-"]::before, [class^=bi-]::before {
+.skill-level .bi::before,
+[class*=" bi-"]::before,
+[class^="bi-"]::before {
     vertical-align: top;
 }
 .skill-level {
@@ -14,4 +16,7 @@
 }
 .generate-report {
     transform: translateY(-3px);
+}
+.dt-buttons button.dt-button {
+    font-weight: 500;
 }

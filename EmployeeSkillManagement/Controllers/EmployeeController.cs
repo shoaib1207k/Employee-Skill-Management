@@ -192,11 +192,6 @@ namespace EmployeeSkillManagement.Controllers
                     employeeReportViewModels.Add(employeeReportViewModel);
                 }
 
-                // EmployeeReportViewModel employeeReportViewModel = new EmployeeReportViewModel{
-                //     Employees = employeesFiltered,
-                //     PrimarySkills = primarySkills,
-                //     SecondarySkills = secondarySkills
-                // };
                 return View("GenerateReport", employeeReportViewModels);
             }
             var employeesFilteredHtml = PartialView("_EmployeeCard", employeesFiltered);

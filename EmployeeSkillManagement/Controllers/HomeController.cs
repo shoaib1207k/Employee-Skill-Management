@@ -22,9 +22,6 @@ public class HomeController : Controller
     public async Task<IActionResult> Index()
     {   
         var isAuthenticated = User.Identity!.IsAuthenticated;
-        // Log authentication state
-        _logger.LogInformation($"User is authenticated: {isAuthenticated}");
-
 
         HomeViewModel homeViewModel = new HomeViewModel{
             TotalEmployees = await _homeRepository.GetTotalEmployeesCount(),

@@ -22,6 +22,13 @@ namespace EmployeeSkillManagement.Repository
         {
             List<Employee> employees = await _db.Employees.Include(e=>e.Designation)
                             .Include(e => e.EmployeeSkillsAndLevels).ToListAsync();
+            // Sort the EmployeeSkillsAndLevels for each employee
+            foreach (var employee in employees)
+            {
+                employee.EmployeeSkillsAndLevels = employee.EmployeeSkillsAndLevels
+                    .OrderByDescending(skill => skill.IsPrimary)
+                    .ToList();
+            }
             return employees;
         }
 

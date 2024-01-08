@@ -51,11 +51,6 @@ namespace EmployeeSkillManagement.Data
                 );
             }
 
-            //  modelBuilder.Entity<Employee>()
-            //     .HasMany(e => e.EmployeeSkillsAndLevels)
-            //     .WithOne()
-            //     .OnDelete(DeleteBehavior.Cascade);
-
             modelBuilder.Entity<Skill>()
                 .HasMany(s => s.EmployeeSkillAndLevels)
                 .WithOne()

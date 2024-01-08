@@ -64,7 +64,7 @@ namespace EmployeeSkillManagement.Repository
            
         }
 
-        public async Task UpdateSkillAsync(Skill skill)
+        public async Task<bool> UpdateSkillAsync(Skill skill)
         {   
             if(await IsSkillExistByNameAsync(skill)){
 
@@ -99,7 +99,7 @@ namespace EmployeeSkillManagement.Repository
 
                     // Commit the transaction
                     transaction.Commit();
-
+                    return true;
                     // return RedirectToAction("Index");
                 }
                 catch (Exception)
@@ -107,6 +107,7 @@ namespace EmployeeSkillManagement.Repository
                     // Log or handle exceptions
                     transaction.Rollback();
                     // return View("Error");
+                    return false;
                 }
             }
         }
