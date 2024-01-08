@@ -56,12 +56,9 @@ namespace EmployeeSkillManagement.Controllers
                                 new Claim(ClaimTypes.Role, "Admin"),
                             }, CookieAuthenticationDefaults.AuthenticationScheme);
 
-                            var authProperties = new AuthenticationProperties
-                            {
-                                IsPersistent = model.RememberMe,
-                            };
+                            
 
-                            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claims), authProperties);
+                            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claims));
 
                             if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
                             {
