@@ -23,7 +23,7 @@
         <div class="form-group col-5 col-md-3 text-start mt-2 mb-2">
             <label for="filterSkill">Search by Skills</label>
             <select id="filterSkill" name="skillId" class="form-select " aria-label="Default select example">
-                <option selected>All</option>
+                <option selected>Any</option>
                 @foreach(var skill in Model.Skills){
                     <option value="@skill.Value">@skill.Text</option>
                 }
