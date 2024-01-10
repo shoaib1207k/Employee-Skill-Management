@@ -17,6 +17,9 @@
 .generate-report {
     transform: translateY(-3px);
 }
+#reportResult{
+    overflow: auto;
+}
 .dt-buttons button.dt-button {
     font-weight: 500;
 }

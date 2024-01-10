@@ -2,8 +2,8 @@
 
 @foreach(var employee in Model){
 
-<div class="d-sm-flex p-3 mb-2 shadow-sm border rounded bg-white justify-content-around flex-wrap">
-    <div class="col-sm-4 mb-4 mb-lg-0">
+<div class="d-lg-flex p-3 mb-2 shadow-sm border rounded bg-white justify-content-around flex-wrap">
+    <div class="col-lg-4 mb-4 mb-lg-0">
         <h6 class="text-primary fw-bold m-0 text-capitalize text-break">
             <i class="bi bi-person-vcard me-1"></i>@employee.FirstName @employee.LastName</h6>
         <p class="text-muted">
@@ -11,25 +11,23 @@
         <p class="mb-1">
             <span class="fw-normal ">
                 <i class="bi bi-calendar-day me-1"></i>Date of Joining:</span> 
-            <br class="d-none d-sm-block d-lg-none">
             <span class="fw-bold">@employee.DateOfJoining</span>
         </p>
         <p class="mb-1">
             <span class="fw-normal">
                 <i class="bi bi-envelope-at me-1"></i>Email Address:</span> 
-            <br class="d-none d-sm-block d-lg-none">
             <span class="fw-bold text-break">@employee.Email</span>
         </p>
     </div>        
-    <div class="col-sm-4 text-center border-start border-end border-info rounded mb-4 mt-4 m-lg-0 pt-2 pb-2">
-        <div class="d-flex justify-content-around">
+    <div class="col-lg-4 text-center border-start border-end border-info rounded mb-4 mt-4 m-lg-0 pt-2 pb-2">
+        <div class="d-flex justify-content-around px-1 px-sm-0">
             <div class="col-4 col-sm-3 text-start"><h6>Skills</h6></div>
             <div class="col-4 col-sm-3"><h6>Proficiency</h6></div>
             <div class="col-4 col-sm-3"><h6>YOE</h6></div>
         </div>
         <div class="">
             @foreach (var skillLevel in employee.EmployeeSkillsAndLevels)
-            {   <div class="d-flex justify-content-around">
+            {   <div class="d-flex justify-content-around px-1 px-sm-0">
                     <div class="col-4 col-sm-3 text-start">@skillLevel.SkillName @(skillLevel.IsPrimary ?  Html.Raw("<i class='bi bi-star-fill text-warning ms-1' title='Primary skill'></i>"):"") </div>
                     <div class="col-4 col-sm-3">@skillLevel.SkillLevel</div>
                     <div class="col-4 col-sm-3">@skillLevel.SkillExperience</div>

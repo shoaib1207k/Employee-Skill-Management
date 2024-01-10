@@ -28,9 +28,11 @@ $(document).ready(function ($) {
         if ($(this).hasClass("nav-is-half-hide")) {
             $(".logo-name").fadeIn();
             $(".side-navbar-header").removeClass("half-hide");
+            $(".side-navbar-header .navbar").removeClass("half-hide");
         } else {
             $(".logo-name").hide();
             $(".side-navbar-header").addClass("half-hide");
+            $(".side-navbar-header .navbar").addClass("half-hide");
         }
 
         const isNavbarSmall = $(".side-navbar-header").hasClass("half-hide");

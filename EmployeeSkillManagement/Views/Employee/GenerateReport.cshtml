@@ -4,7 +4,7 @@
     <h4 class="text-uppercase">Employees Report</h4>
 </div>
 
-<div id="result" class="mt-2 bg-white p-2 border rounded">
+<div id="reportResult" class="mt-2 bg-white p-2 border rounded">
     <div><h6>Export in desired format</h6></div>
 
     <table id="generatedReport" class="table table-striped table-bordered" style="width:100%">
@@ -28,7 +28,7 @@
                     <tr>
                         <td>@index</td>
                         <td>@employee.FirstName @employee.LastName</td>
-                        <td>@employee.Email</td>
+                        <td class="text-break">@employee.Email</td>
                         <td>@employee.Designation!.DesignationName</td>
                         <td>@employee.DateOfJoining</td>
                             <td>
