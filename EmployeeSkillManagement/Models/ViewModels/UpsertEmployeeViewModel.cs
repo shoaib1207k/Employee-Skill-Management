@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using EmployeeSkillManagement.Validations;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace EmployeeSkillManagement.Models.ViewModels
@@ -11,10 +12,12 @@ namespace EmployeeSkillManagement.Models.ViewModels
         public int EmployeeId { get; set; }
 
         [Required(ErrorMessage = "First Name is required")]
+        [NoNumbers(ErrorMessage = "Employee name cannot contain numbers")]
         [DisplayName("First Name")]
         public string FirstName { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Last Name is required")]
+        [NoNumbers(ErrorMessage = "Employee name cannot contain numbers")]
         [DisplayName("Last Name")]
         public string LastName { get; set; } = string.Empty;
 
