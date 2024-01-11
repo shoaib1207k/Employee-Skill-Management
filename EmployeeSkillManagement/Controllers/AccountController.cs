@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Logging;
 
 namespace EmployeeSkillManagement.Controllers
@@ -39,11 +40,15 @@ namespace EmployeeSkillManagement.Controllers
         {
             if (ModelState.IsValid)
             {
+                var user = await _userManager.FindByNameAsync(model.Username);
+                if(user==null){
+                    TempData["ErrorMessage"] = "No Admin user found with this username";
+                    return View(model);
+                }
                 var result = await _signInManager.PasswordSignInAsync(model.Username, model.Password, false, lockoutOnFailure: false);
 
                 if (result.Succeeded)
                 {
-                    var user = await _userManager.FindByNameAsync(model.Username);
                     if(user!=null){
                         var roles = await _userManager.GetRolesAsync(user);
 
@@ -60,6 +65,8 @@ namespace EmployeeSkillManagement.Controllers
 
                             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claims));
 
+                            TempData["SuccessMessage"] = "Logged in successfully.";
+
                             if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
                             {
                                 return Redirect(returnUrl);
@@ -68,18 +75,19 @@ namespace EmployeeSkillManagement.Controllers
                             {
                                 return RedirectToAction("Index", "Home");
                             }
+
                         }
                         else
                         {
                             await _signInManager.SignOutAsync();
-                            ModelState.AddModelError(string.Empty, "Invalid login attempt for an admin user.");
+                            TempData["ErrorMessage"] = "Invalid login attempt for an admin user.";
                         }
                     }
 
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    TempData["ErrorMessage"] = "Password is wrong.";
                 }
             }
 

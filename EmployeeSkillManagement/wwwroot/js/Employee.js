@@ -30,7 +30,7 @@ jQuery(document).ready(function ($) {
             yoe != null &&
             level != 0 &&
             skillId != 0 &&
-            yoe != 0
+            yoe >= 0
         ) {
             let primaryStar = '';
             if(isPrimary){
@@ -53,20 +53,27 @@ jQuery(document).ready(function ($) {
             $("#skillsContainer").append(skill_level);
             $("#SelectedSkillIds").prop("selectedIndex", 0);
             $("#levelSelect").prop("selectedIndex", 0);
-            $("#skillYoe").val("1");
+            $("#skillYoe").val("0");
             $("#skillYoe").prop("placeholder", "Experience");
             $("#isPrimarySkill").prop("checked", false);
             $("#skill-form-error").hide();
         } else {
             $("#skill-form-error").show();
             $("#skill-form-error").text(
-                "Please choose a skill with proficiency level and experience"
+                "Please choose a skill with valid proficiency level and experience"
             );
             $("#SelectedSkillIds").addClass("input-validation-error");
             $("#levelSelect").addClass("input-validation-error");
             $("#skillYoe").addClass("input-validation-error");
         }
     });
+
+
+    $("#DateOfJoining").change(function(){
+        console.log($(this).val());
+        $(this).val($(this).val());
+    })
+
 
     $('[data-bs-toggle="tooltip"]').tooltip();
 
@@ -99,7 +106,6 @@ jQuery(document).ready(function ($) {
             $("#levelSelect").addClass("input-validation-error");
             // $("#skillYoe").addClass("input-validation-error");
             if ($("#skillYoe").val() == 0) {
-                console.log(34);
                 $("#skillYoe").removeClass("valid");
                 $("#skillYoe").addClass("input-validation-error");
             }

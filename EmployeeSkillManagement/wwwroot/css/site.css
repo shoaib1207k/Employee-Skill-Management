@@ -111,7 +111,7 @@ main {
 }
 
 .form-group small {
-    height: 20px;
+    min-height: 20px;
     display: block;
 }
 

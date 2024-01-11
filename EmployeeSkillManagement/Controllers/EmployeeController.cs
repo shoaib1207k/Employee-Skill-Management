@@ -78,7 +78,7 @@ namespace EmployeeSkillManagement.Controllers
             
         }
 
-        // this method updates the data
+        // this method updates and create the data
         [HttpPost]
         public async Task<IActionResult> Upsert(UpsertEmployeeViewModel viewModel){
             try
