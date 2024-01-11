@@ -26,7 +26,7 @@ namespace EmployeeSkillManagement.Models.ViewModels
         public string DesignationId { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Email is required")]
-        [EmailAddress(ErrorMessage = "Invalid Email Address")]
+        [CustomEmail]
         [DisplayName("Email Address")]
         public string Email { get; set; } = string.Empty;
 

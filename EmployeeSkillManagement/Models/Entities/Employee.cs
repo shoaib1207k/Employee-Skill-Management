@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using EmployeeSkillManagement.Validations;
 
 namespace EmployeeSkillManagement.Models
 {
@@ -17,8 +18,9 @@ namespace EmployeeSkillManagement.Models
       
         [Required]
         public Designation? Designation { get; set; } = new Designation();
-          [Required]
-        [EmailAddress]
+        
+        [Required]
+        [CustomEmail]
         public String Email { get; set; } = string.Empty;
         [Required]
   

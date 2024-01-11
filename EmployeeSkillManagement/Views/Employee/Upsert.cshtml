@@ -43,8 +43,11 @@
         var dateValue = Model.DateOfJoining != default(DateOnly)
             ? Model.DateOfJoining.ToString("yyyy-MM-dd")
             : null;
+        
+        var today = DateTime.Today.ToString("yyyy-MM-dd");
+
     }
-    <input asp-for="DateOfJoining" class="form-control" type="date" placeholder="Date of joining" >
+    <input asp-for="DateOfJoining" class="form-control" type="date" max="@today" placeholder="Date of joining" value="@dateValue" >
     <small><span asp-validation-for="DateOfJoining" class="text-danger"></span></small>
   </div>
 
