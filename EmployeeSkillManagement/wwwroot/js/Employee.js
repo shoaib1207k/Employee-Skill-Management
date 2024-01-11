@@ -68,6 +68,13 @@ jQuery(document).ready(function ($) {
         }
     });
 
+
+    $("#DateOfJoining").change(function(){
+        console.log($(this).val());
+        $(this).val($(this).val());
+    })
+
+
     $('[data-bs-toggle="tooltip"]').tooltip();
 
     $(document).on("click", ".remove-skill", function () {

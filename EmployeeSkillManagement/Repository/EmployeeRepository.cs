@@ -95,6 +95,7 @@ namespace EmployeeSkillManagement.Repository
                 existingEmployee.FirstName = viewModel.FirstName;
                 existingEmployee.LastName = viewModel.LastName;
                 existingEmployee.Email = viewModel.Email;
+                existingEmployee.DateOfJoining = viewModel.DateOfJoining;
                 existingEmployee.Designation = await _db
                         .Designations.FirstOrDefaultAsync(u=>u.Id==int.Parse(viewModel.DesignationId));
                 
