@@ -65,6 +65,19 @@ namespace EmployeeSkillManagement.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpPost]
+        public async Task<IActionResult> UpdateSkill(int id){
+            try{
+            Skill skill = await _skillRepository.GetSkillByIdAsync(id);
+            return View(skill);
+
+            } catch(Exception ex){
+                TempData["ErrorMessage"] = ex.Message;
+            }
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
         public async Task<IActionResult> Update(Skill skill)
         {
             try{
