@@ -6,15 +6,15 @@ jQuery(document).ready(function ($) {
         let updateSkill = "#update-" + $(this).attr("id");
         $(updateSkill).attr("value", newValue);
     });
-    $(".edit-btn").on("click", function (event) {
-        event.preventDefault();
+    // $(".edit-btn").on("click", function (event) {
+    //     event.preventDefault();
 
-        $(".skill-name").prop("disabled", true);
-        let skill_input = "#" + $(this).attr("data-skill");
-        $(skill_input).removeAttr("disabled").focus();
-        var length = $(skill_input).val().length;
-        $(skill_input)[0].setSelectionRange(length, length);
-    });
+    //     $(".skill-name").prop("disabled", true);
+    //     let skill_input = "#" + $(this).attr("data-skill");
+    //     $(skill_input).removeAttr("disabled").focus();
+    //     var length = $(skill_input).val().length;
+    //     $(skill_input)[0].setSelectionRange(length, length);
+    // });
 
     $(document).on("click", ".delete-skill", function () {
         let skill_id = $(this).attr("data-skill-id");

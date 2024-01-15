@@ -15,20 +15,17 @@
         int index = 0;
         foreach (var skill in Model)
         {
-            <div class="row mb-4 mb-lg-2">
-                <div class="col-6 col-lg-3">
+            <div class="row mb-4 mb-lg-2 justify-content-around">
+                <div class="col-12 col-lg-4 mb-2">
                     <input id="skill-@index" class="skill-name col-3 form-control" value="@skill.SkillName" disabled />
                 </div>
-                <div  class="col-6 col-lg-3 col-lg-2 justify-content-between mb-2">
-                    <button data-skill="skill-@index" class="btn edit-btn btn-secondary  bg-gradient w-100">
+                <form asp-controller="Skill" asp-action="UpdateSkill" method="post" class="col-6 col-lg-3 col-lg-2 justify-content-between mb-2" >
+
+                <div  class="">
+                    <input name="id" value="@skill.Id" hidden/>
+                    <button type="submit" data-skill="skill-@index" class="btn edit-btn btn-secondary  bg-gradient w-100">
                         <i class="bi bi-pencil-square me-2"></i>Edit</button>
                 </div>
-
-                <form asp-controller="Skill" asp-action="Update" method="post" class="col-6 col-lg-3 justify-content-between mb-2">
-                    <input type="hidden" asp-for="@skill.Id" value="@skill.Id" />
-                    <input id="update-skill-@index" type="hidden" asp-for="@skill.SkillName" value="@skill.SkillName" />
-                    <button type="submit" class="btn btn-warning  bg-gradient w-100" >
-                        <i class="bi bi-database-gear me-2"></i>Update</button>
                 </form>
 
                 <div class="col-6 col-lg-3 mb-2">

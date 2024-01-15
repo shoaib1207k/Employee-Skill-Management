@@ -48,6 +48,7 @@ $(document).ready(function ($) {
         if (isNavbarSmall) {
             $(".logo-name").hide();
             $(".side-navbar-header").addClass("half-hide");
+            $(".side-navbar-header .navbar").addClass("half-hide");
             $("#navbar-half-hide-toggle").addClass("nav-is-half-hide");
         }
     }
